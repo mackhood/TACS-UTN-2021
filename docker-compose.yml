@@ -5,10 +5,11 @@ services:
   frontend:
     image: node:10
     container_name: frontend
+#    volumes:
+#      - ./Frontend/frontend/src:./usr/frontend/src
     build:
       context: ./Frontend
       dockerfile: ./Dockerfile
-
     networks:
       backend:
   backend:
@@ -19,4 +20,3 @@ services:
       dockerfile: Dockerfile
     networks:
       backend:
-
