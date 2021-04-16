@@ -8,5 +8,11 @@ import java.util.List;
 
 public interface IPlayerService  {
 
-    public Player getPlayerByName(String name) throws PlayerNotFoundException;
+    Player getPlayerByName(String name) throws PlayerNotFoundException;
+
+    Player createPlayer(Player player);
+
+    Player getPlayerById(Long id) throws PlayerNotFoundException;
+
+    void delete(Player player) ;;
 }

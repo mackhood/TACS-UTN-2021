@@ -19,9 +19,20 @@ public class PlayerService implements IPlayerService{
                 .orElseThrow(() -> new PlayerNotFoundException(playerId.toString()));
     }
 
+    @Override
+    public void delete(Player player) {
+        playerRepository.delete(player);
+    }
+
     public Player getPlayerByName(String name) throws PlayerNotFoundException {
         return playerRepository.findByName(name)
                 .orElseThrow(() -> new PlayerNotFoundException(name));
+    }
+
+
+    public Player createPlayer(Player player)  {
+        return playerRepository.save(player);
+
     }
 
 
