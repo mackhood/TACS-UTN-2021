@@ -19,12 +19,8 @@ public class Game {
     private Date dateOfCreation;
     private List<Duel> duels = new ArrayList<>();
     private State state;
-
-
-    public Game(){
-
-
-    }
+    private Player playerWithTurn;
+    private List<PlayerDeck> playerDecks = new ArrayList<>();
 
     public Game(Player creator, Player challenged, Deck deck) {
         this.creator = creator;
@@ -34,6 +30,12 @@ public class Game {
         this.state = new Created();
     }
 
+    public boolean startGame()
+    {
+        return this.state.startGame(this);
+    }
 
-
+    public void play(){
+        this.state.play(this);
+    }
 }

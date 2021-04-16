@@ -37,7 +37,7 @@ public class CardRepository implements ICardRepository {
         }
 
         ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        TypeReference<List<CardDTO>> typeReference = new TypeReference<>() { };
+        TypeReference<List<CardDTO>> typeReference = new TypeReference<List<CardDTO>>() { };
         List<CardDTO> listCards = null;
 
         try {
