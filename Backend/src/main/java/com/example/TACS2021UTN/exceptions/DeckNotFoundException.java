@@ -5,9 +5,9 @@ public class DeckNotFoundException extends Exception {
     private long deckId;
 
 
-    public DeckNotFoundException(String deckId) {
+    public DeckNotFoundException(String param) {
 
-            super(String.format("Deck is not found with id : '%s'", deckId));
+            super(String.format("Deck is not found with  : '%s'", param));
         }
 
 
