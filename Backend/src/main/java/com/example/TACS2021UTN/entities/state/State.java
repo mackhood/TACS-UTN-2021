@@ -1,4 +1,6 @@
-package com.example.TACS2021UTN.entities;
+package com.example.TACS2021UTN.entities.state;
+
+import com.example.TACS2021UTN.entities.Game;
 
 public abstract  class State {
     public abstract boolean startGame(Game game);

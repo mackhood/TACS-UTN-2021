@@ -1,5 +1,7 @@
 package com.example.TACS2021UTN.entities;
 
+import com.example.TACS2021UTN.entities.attribute.Attribute;
+
 import java.util.ArrayList;
 import java.util.List;
 

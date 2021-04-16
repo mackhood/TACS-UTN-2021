@@ -1,4 +1,9 @@
-package com.example.TACS2021UTN.entities;
+package com.example.TACS2021UTN.entities.state;
+
+import com.example.TACS2021UTN.entities.Card;
+import com.example.TACS2021UTN.entities.Game;
+import com.example.TACS2021UTN.entities.user.Player;
+import com.example.TACS2021UTN.entities.user.PlayerDeck;
 
 import java.util.ArrayList;
 import java.util.List;

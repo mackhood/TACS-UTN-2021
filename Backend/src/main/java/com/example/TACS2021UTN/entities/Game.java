@@ -1,6 +1,10 @@
 package com.example.TACS2021UTN.entities;
 
 
+import com.example.TACS2021UTN.entities.state.Created;
+import com.example.TACS2021UTN.entities.state.State;
+import com.example.TACS2021UTN.entities.user.Player;
+import com.example.TACS2021UTN.entities.user.PlayerDeck;
 import lombok.Getter;
 import lombok.Setter;
 

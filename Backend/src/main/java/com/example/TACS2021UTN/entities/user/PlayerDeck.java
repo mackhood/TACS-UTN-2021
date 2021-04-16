@@ -1,5 +1,8 @@
-package com.example.TACS2021UTN.entities;
+package com.example.TACS2021UTN.entities.user;
 
+import com.example.TACS2021UTN.entities.Card;
+import com.example.TACS2021UTN.entities.Game;
+import com.example.TACS2021UTN.entities.user.Player;
 import lombok.Getter;
 import lombok.Setter;
 
