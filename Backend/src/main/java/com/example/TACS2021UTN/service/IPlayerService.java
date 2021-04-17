@@ -14,5 +14,5 @@ public interface IPlayerService  {
 
     Player getPlayerById(Long id) throws PlayerNotFoundException;
 
-    void delete(Player player) ;;
+    void delete(Player player) ;
 }

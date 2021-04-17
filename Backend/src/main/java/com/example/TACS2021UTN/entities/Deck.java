@@ -15,7 +15,8 @@ public class Deck {
     private String name;
     private List<Card> cardList = new ArrayList<>();
 
-    public Deck(List<Card> cardList) {
+    public Deck(String name, List<Card> cardList) {
+        this.name = name;
         this.cardList = cardList;
     }
 
