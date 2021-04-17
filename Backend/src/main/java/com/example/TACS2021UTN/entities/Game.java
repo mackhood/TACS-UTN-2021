@@ -4,7 +4,7 @@ package com.example.TACS2021UTN.entities;
 import com.example.TACS2021UTN.entities.state.Created;
 import com.example.TACS2021UTN.entities.state.State;
 import com.example.TACS2021UTN.entities.user.Player;
-import com.example.TACS2021UTN.entities.user.PlayerDeck;
+import com.example.TACS2021UTN.entities.user.PlayerGame;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,21 +17,21 @@ import java.util.List;
 @Setter
 public class Game {
 
-    private Player creator;
-    private Player challenged;
+    private PlayerGame creator;
+    private PlayerGame challenged;
     private Deck deck;
     private Date dateOfCreation;
     private List<Duel> duels = new ArrayList<>();
     private State state;
-    private Player playerWithTurn;
-    private List<PlayerDeck> playerDecks = new ArrayList<>();
+    private List<PlayerGame> playerGames = new ArrayList<>();
 
-    public Game(Player creator, Player challenged, Deck deck) {
+    public Game(PlayerGame creator, PlayerGame challenged, Deck deck) {
         this.creator = creator;
         this.challenged = challenged;
         this.deck = deck;
         this.dateOfCreation = new Date();
         this.state = new Created();
+        //TODO set playerGame
     }
 
     public boolean startGame()

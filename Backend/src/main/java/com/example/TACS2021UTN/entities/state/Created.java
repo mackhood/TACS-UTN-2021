@@ -3,7 +3,7 @@ package com.example.TACS2021UTN.entities.state;
 import com.example.TACS2021UTN.entities.Card;
 import com.example.TACS2021UTN.entities.Game;
 import com.example.TACS2021UTN.entities.user.Player;
-import com.example.TACS2021UTN.entities.user.PlayerDeck;
+import com.example.TACS2021UTN.entities.user.PlayerGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +24,8 @@ public class Created extends State{
     public void flipCoin(Game game)
     {
         int number = new Random(2).nextInt();
-        Player playerWithTurn = number == 1 ? game.getCreator() : game.getChallenged();
-        game.setPlayerWithTurn(playerWithTurn);
+        PlayerGame playerWithTurn = number == 1 ? game.getCreator() : game.getChallenged();
+        playerWithTurn.setPlayerWithTurn();
     }
 
     @Override
@@ -36,10 +36,9 @@ public class Created extends State{
     private void dealCards(Game game){
         List<List<Card>> partitions = game.getDeck().splitInNParts(2);
 
-        List<PlayerDeck> playerDecks = new ArrayList<>();
-        playerDecks.add(new PlayerDeck(game.getCreator(), game, partitions.get(0)));
-        playerDecks.add(new PlayerDeck(game.getChallenged(), game, partitions.get(1)));
+        List<PlayerGame> playerGames = new ArrayList<>();
+        game.getCreator().setMainCards(partitions.get(0));
+        game.getChallenged().setMainCards(partitions.get(1));
 
-        game.setPlayerDecks(playerDecks);
     }
 }

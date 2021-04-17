@@ -11,13 +11,14 @@ import java.util.List;
 
 @Getter
 @Setter
-public class PlayerDeck {
+public class PlayerGame {
     private Player player;
     private Game game;
     private List<Card> mainCards = new ArrayList<>();
     private List<Card> gainedCards = new ArrayList<>();
+    private Boolean isMyTurn = false;
 
-    public PlayerDeck(Player player, Game game, List<Card> cards)
+    public PlayerGame(Player player, Game game, List<Card> cards)
     {
         this.player = player;
         this.game = game;
@@ -27,4 +28,10 @@ public class PlayerDeck {
     public Card getNextCard(){
         return this.getMainCards().stream().findFirst().orElse(null);
     }
+
+    public void setPlayerWithTurn() {
+        this.isMyTurn = true;
+    }
+
+
 }
