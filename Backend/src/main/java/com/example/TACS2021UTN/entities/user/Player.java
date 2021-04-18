@@ -4,11 +4,14 @@ import com.example.TACS2021UTN.entities.Deck;
 import com.example.TACS2021UTN.entities.Game;
 import com.example.TACS2021UTN.exceptions.DeckNotFoundException;
 import com.example.TACS2021UTN.exceptions.PlayerNotFoundException;
-import com.example.TACS2021UTN.service.DeckService;
-import com.example.TACS2021UTN.service.IDeckService;
-import com.example.TACS2021UTN.service.IPlayerService;
+import com.example.TACS2021UTN.service.deck.IDeckService;
+import com.example.TACS2021UTN.service.player.IPlayerService;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
+@Getter
+@Setter
 public class Player extends User{
 
 

@@ -1,17 +1,15 @@
 package com.example.TACS2021UTN.controller;
 
-import com.example.TACS2021UTN.DTO.CardDTO;
 import com.example.TACS2021UTN.entities.user.Player;
 import com.example.TACS2021UTN.exceptions.PlayerNotFoundException;
-import com.example.TACS2021UTN.service.ICardService;
-import com.example.TACS2021UTN.service.IPlayerService;
+import com.example.TACS2021UTN.service.player.IPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
+@RestController
 public class PlayerController {
 
     @Autowired
@@ -31,12 +29,12 @@ public class PlayerController {
     }
 
 
-    @PostMapping("/players")
+    @PostMapping("/player")
     public Player createPlayer(@Valid @RequestBody Player player) {
         return playerService.createPlayer(player);
     }
 
-    @DeleteMapping("/players/{id}")
+    @DeleteMapping("/player/{id}")
     public ResponseEntity<Player> deletePlayer(@PathVariable(value = "id") Long playerId) throws PlayerNotFoundException {
         Player player = playerService.getPlayerById(playerId);
 

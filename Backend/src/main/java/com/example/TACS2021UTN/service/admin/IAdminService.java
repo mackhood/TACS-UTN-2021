@@ -1,4 +1,4 @@
-package com.example.TACS2021UTN.service;
+package com.example.TACS2021UTN.service.admin;
 
 import com.example.TACS2021UTN.entities.user.Admin;
 import com.example.TACS2021UTN.entities.user.Player;

@@ -18,11 +18,10 @@ public class PlayerGame {
     private List<Card> gainedCards = new ArrayList<>();
     private Boolean isMyTurn = false;
 
-    public PlayerGame(Player player, Game game, List<Card> cards)
+    public PlayerGame(Player player, Game game)
     {
         this.player = player;
         this.game = game;
-        this.mainCards = cards;
     }
 
     public Card getNextCard(){
@@ -32,6 +31,5 @@ public class PlayerGame {
     public void setPlayerWithTurn() {
         this.isMyTurn = true;
     }
-
 
 }

@@ -2,19 +2,17 @@ package com.example.TACS2021UTN.controller;
 
 import com.example.TACS2021UTN.entities.Deck;
 import com.example.TACS2021UTN.entities.user.Admin;
-import com.example.TACS2021UTN.entities.user.Player;
 import com.example.TACS2021UTN.exceptions.AdminNotFoundException;
 import com.example.TACS2021UTN.exceptions.DeckNotFoundException;
-import com.example.TACS2021UTN.exceptions.PlayerNotFoundException;
-import com.example.TACS2021UTN.service.IAdminService;
-import com.example.TACS2021UTN.service.IDeckService;
-import com.example.TACS2021UTN.service.IPlayerService;
+import com.example.TACS2021UTN.service.admin.IAdminService;
+import com.example.TACS2021UTN.service.deck.IDeckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@RestController
 public class AdminController {
 
     @Autowired
@@ -51,11 +49,17 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
 
-
+    /*
+        /decks - GET
+        /decks/id - GET
+        /decks/id - POST   - solo usuario admin
+        /decks/id - PUT    - solo usuario admin
+        /decks/id - DELETE - solo usuario admin
+     */
 
     @PostMapping("/admins/createDeck")
-    public Deck createDeck(@Valid @RequestBody Deck deck) {
-        return deckService.createDeck(deck);
+    public void createDeck(@Valid @RequestBody Deck deck) {
+        deckService.createDeck(deck);
     }
 
 

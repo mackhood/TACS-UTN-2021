@@ -7,7 +7,9 @@ import com.example.TACS2021UTN.entities.user.Player;
 import com.example.TACS2021UTN.entities.user.PlayerGame;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.tomcat.jni.Local;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,18 +22,16 @@ public class Game {
     private PlayerGame creator;
     private PlayerGame challenged;
     private Deck deck;
-    private Date dateOfCreation;
+    private LocalDate dateOfCreation;
     private List<Duel> duels = new ArrayList<>();
     private State state;
-    private List<PlayerGame> playerGames = new ArrayList<>();
 
-    public Game(PlayerGame creator, PlayerGame challenged, Deck deck) {
-        this.creator = creator;
-        this.challenged = challenged;
+    public Game(Player creator, Player challenged, Deck deck) {
+        this.creator = new PlayerGame(creator, this);
+        this.challenged = new PlayerGame(challenged, this);
         this.deck = deck;
-        this.dateOfCreation = new Date();
+        this.dateOfCreation = LocalDate.now();
         this.state = new Created();
-        //TODO set playerGame
     }
 
     public boolean startGame()
@@ -41,5 +41,13 @@ public class Game {
 
     public void play(){
         this.state.play(this);
+    }
+
+    public Long getIdFromCreator(){
+        return getCreator().getPlayer().getId();
+    }
+
+    public Long getIdFromChallenged(){
+        return getChallenged().getPlayer().getId();
     }
 }

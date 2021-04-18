@@ -33,6 +33,11 @@ public class Created extends State{
         return;
     }
 
+    @Override
+    public Player winner() {
+        return null;
+    }
+
     private void dealCards(Game game){
         List<List<Card>> partitions = game.getDeck().splitInNParts(2);
 
