@@ -5,11 +5,16 @@ import com.example.TACS2021UTN.entities.Deck;
 import com.example.TACS2021UTN.service.deck.IDeckService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.util.List;
 
-public class Admin {
+@Entity
+public class Admin extends User{
+
 
     @Autowired
+    @Transient
     private IDeckService deckService;
 
     public Deck createDeck(String name, List<Card> cards){

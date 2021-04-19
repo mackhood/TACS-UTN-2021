@@ -10,13 +10,19 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
 @Getter
 @Setter
+@Entity
 public class Player extends User{
 
 
     @Autowired
+    @Transient
     private IDeckService deckService;
+    @Transient
     private IPlayerService playerService;
 
 

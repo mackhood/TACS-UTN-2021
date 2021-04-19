@@ -1,7 +1,11 @@
 package com.example.TACS2021UTN.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,11 +13,12 @@ import java.util.List;
 
 @Getter
 @Setter
+@Entity
+@NoArgsConstructor
+public class Deck extends PersistantEntity{
 
-public class Deck {
-
-    private Long id;
     private String name;
+    @Transient
     private List<Card> cardList = new ArrayList<>();
 
     public Deck(String name, List<Card> cardList) {

@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.tomcat.jni.Local;
 
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,13 +19,19 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Game {
-
+@Entity
+public class Game extends PersistantEntity{
+    @Transient
     private PlayerGame creator;
+    @Transient
     private PlayerGame challenged;
+    @Transient
     private Deck deck;
+    @Transient
     private LocalDate dateOfCreation;
+    @Transient
     private List<Duel> duels = new ArrayList<>();
+    @Transient
     private State state;
 
     public Game(Player creator, Player challenged, Deck deck) {
