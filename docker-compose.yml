@@ -1,4 +1,4 @@
-version: '3'
+version: '2.1'
 networks:
   backend:
 services:
@@ -21,22 +21,22 @@ services:
     environment:
       DB_HOST: tacs_db
       DB_NAME: tacs_db
-      DB_USER: "tacs"
-      DB_USER_PASSWORD: "tacs"
+      DB_USER: root
+      DB_USER_PASSWORD: root
     ports:
       - '8087:8080'
     depends_on:
-      - tacs_db
-
-
+      tacs_db:
+        condition: service_started
     networks:
       backend:
 
   tacs_db:
-    image: mariadb
+    image: 'mysql/mysql-server:5.7'
     container_name: tacs_db
     expose: [3306]
     #    ports: ["3306:3306"]
+    restart: always
     environment:
       MYSQL_DATABASE: tacs_db
       MYSQL_USER: "tacs"
