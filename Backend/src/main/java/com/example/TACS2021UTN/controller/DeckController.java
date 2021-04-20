@@ -8,6 +8,9 @@ import com.example.TACS2021UTN.service.deck.IDeckService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import javax.validation.Valid;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -122,12 +125,17 @@ public class DeckController {
     }
 
     @PutMapping("/decks/{id}")
-    public void modifyDeck(@RequestBody DeckDTO deckModified, @PathVariable Long id) throws DeckNotFoundException {
-        Deck mappedDeck = modelMapper.map(deckModified, Deck.class);
-        Deck deckToModify = service.getDeckById(id);
-        deckToModify.setCardList(mappedDeck.getCardList());
-        deckToModify.setName(mappedDeck.getName());
-        service.updateDeck(id, deckToModify);
+    public Deck modifyDeck(@Valid @RequestBody Deck deckModified, @PathVariable Long id) throws DeckNotFoundException {
+//         Deck mappedDeck = modelMapper.map(deckModified, Deck.class);
+//         Deck deckToModify = service.getDeckById(id);
+//         deckToModify.setCardList(mappedDeck.getCardList());
+//         deckToModify.setName(mappedDeck.getName());
+//         service.updateDeck(id, deckToModify);
+        deckModified.setId(id);
+        return deckModified;
+
+
+//         return ResponseEntity.noContent().build();
     }
 
 }
