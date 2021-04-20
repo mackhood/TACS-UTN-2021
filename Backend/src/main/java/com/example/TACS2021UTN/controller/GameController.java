@@ -140,6 +140,28 @@ public class GameController {
         //return this.adminService.getAdminById(id);
     }
 
+    @PostMapping("/games/{id}/dropout")
+    public List<Duel> endgame(@PathVariable(value = "id") Long id) {
+        Player player1 = new Player();
+        player1.setId((long) 1);
+        player1.setName("A");
+
+        List<Duel> duels = new ArrayList<>();
+
+        Duel duel1 = new Duel();
+        duel1.setId((long) 1);
+        duel1.setGanador(player1);
+
+        Duel duel2 = new Duel();
+        duel2.setId((long) 2);
+        duel2.setGanador(player1);
+
+        duels.add(duel1);
+        duels.add(duel2);
+
+        return duels;
+    }
+
     @GetMapping("/games/{id}/stats")
     public GameStatisticsDTO getGameStats(){
         GameStatisticsDTO gameStatisticsDTO = new GameStatisticsDTO();
