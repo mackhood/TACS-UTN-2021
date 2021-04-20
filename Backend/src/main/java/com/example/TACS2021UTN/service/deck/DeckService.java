@@ -1,16 +1,21 @@
-package com.example.TACS2021UTN.service;
+package com.example.TACS2021UTN.service.deck;
 
 import com.example.TACS2021UTN.entities.Deck;
 import com.example.TACS2021UTN.exceptions.DeckNotFoundException;
-import com.example.TACS2021UTN.repository.DeckRepository;
+import com.example.TACS2021UTN.repository.deck.IDeckRepository;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Service
 public class DeckService implements IDeckService {
 
-    DeckRepository deckRepository;
+    IDeckRepository deckRepository;
+
+    public DeckService(IDeckRepository deckRepo){
+        this.deckRepository = deckRepo;
+    }
 
     public Deck getDeckBy(Long deckId) throws DeckNotFoundException {
         return deckRepository.findById(deckId)
@@ -31,6 +36,10 @@ public class DeckService implements IDeckService {
         deckRepository.delete(deck);
     }
 
+    public void deleteDeckbyId(Long id) {
+        deckRepository.deleteById(id);
+    }
+
     @Override
     public Deck getDeckById(Long deckId) throws DeckNotFoundException {
         return deckRepository.findById(deckId)
@@ -48,6 +57,12 @@ public class DeckService implements IDeckService {
         Deck updatedItem = deckRepository.save(deck);
 
         return updatedItem;
+
+    }
+
+    @Override
+    public List<Deck> getAllDecks() {
+        return deckRepository.findAll();
 
     }
 

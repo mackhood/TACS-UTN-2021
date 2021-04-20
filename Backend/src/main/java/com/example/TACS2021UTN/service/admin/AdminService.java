@@ -1,14 +1,14 @@
-package com.example.TACS2021UTN.service;
+package com.example.TACS2021UTN.service.admin;
 
-import com.example.TACS2021UTN.entities.Deck;
 import com.example.TACS2021UTN.entities.user.Admin;
 import com.example.TACS2021UTN.exceptions.AdminNotFoundException;
-import com.example.TACS2021UTN.exceptions.DeckNotFoundException;
 import com.example.TACS2021UTN.repository.IAdminRepository;
-import com.example.TACS2021UTN.repository.ICardRepository;
+import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+import java.util.List;
 
+@Service
 public class AdminService implements IAdminService {
 
     private IAdminRepository adminRepository;
@@ -33,6 +33,7 @@ public class AdminService implements IAdminService {
 
     @Override
     public Admin createAdmin(@Valid Admin admin) {
+
         return adminRepository.save(admin);
 
     }

@@ -1,7 +1,6 @@
-package com.example.TACS2021UTN.repository;
+package com.example.TACS2021UTN.repository.deck;
 
-
-import com.example.TACS2021UTN.DTO.CardDTO;
+import com.example.TACS2021UTN.entities.Deck;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,46 +11,50 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class CardRepository implements ICardRepository {
+public class DeckRepository {
 
+    private List<Deck> database;
 
-    private List<CardDTO> database;
-
-
-    public CardRepository() {
+    public DeckRepository(){
         this.database = load();
     }
 
-    private List<CardDTO> load(){
+    public Optional<Deck> findByName(String deck) {
+        return Optional.empty();
+    }
+/*
+    @Override
+    public List<Deck> getAllDecks() {
+        return this.database;
+    }
+*/
+    private List<Deck> load(){
 
         File file = null;
 
         try{
 
-            file = ResourceUtils.getFile("classpath:cards.json");
+            file = ResourceUtils.getFile("classpath:decks.json");
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
         ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        TypeReference<List<CardDTO>> typeReference = new TypeReference<List<CardDTO>>() { };
-        List<CardDTO> listCards = null;
+        TypeReference<List<Deck>> typeReference = new TypeReference<List<Deck>>() { };
+        List<Deck> listDecks = null;
 
         try {
-            listCards = objectMapper.readValue(file,typeReference);
+            listDecks = objectMapper.readValue(file,typeReference);
 
         } catch (IOException exception){
             exception.printStackTrace();
         }
-        return listCards;
+        return listDecks;
 
     }
 
-    @Override
-    public List<CardDTO> getAllCards() {
-        return database;
-    }
 }

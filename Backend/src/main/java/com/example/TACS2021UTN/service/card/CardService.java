@@ -1,8 +1,8 @@
-package com.example.TACS2021UTN.service;
+package com.example.TACS2021UTN.service.card;
 
 
 import com.example.TACS2021UTN.DTO.CardDTO;
-import com.example.TACS2021UTN.repository.ICardRepository;
+import com.example.TACS2021UTN.repository.card.ICardRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

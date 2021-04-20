@@ -1,6 +1,4 @@
 import com.example.TACS2021UTN.entities.Deck;
-import com.example.TACS2021UTN.repository.CardRepository;
-import com.example.TACS2021UTN.repository.ICardRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
