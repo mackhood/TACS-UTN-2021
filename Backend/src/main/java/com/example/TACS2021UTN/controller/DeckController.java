@@ -118,8 +118,10 @@ public class DeckController {
     @DeleteMapping("/decks/{id}")
     //No retorna nada o un statusCode
     //Solo para usuario admin tiene que ser
-    public void deleteDeck(@PathVariable Long id){
-        service.deleteDeckbyId(id);
+    public ResponseEntity<Deck> deleteDeck(@PathVariable Long id){
+//         service.deleteDeckbyId(id);
+        return ResponseEntity.noContent().build();
+
     }
 
     @PutMapping("/decks/{id}")
