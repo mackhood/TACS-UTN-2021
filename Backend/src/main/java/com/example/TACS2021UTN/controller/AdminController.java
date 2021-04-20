@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class AdminController {
@@ -21,23 +23,50 @@ public class AdminController {
     @Autowired
     private IDeckService deckService;
 
-    @GetMapping("/admins/{name}")
+    /*@GetMapping("/admins/{name}")
     public Admin getAdminByName(@PathVariable(value = "name") String name) throws AdminNotFoundException {
 
         return this.adminService.getAdminByName(name);
-    }
+    }*/
 
 
     @GetMapping("/admins/{id}")
-    public Admin getAdminByName(@PathVariable(value = "id") Long id) throws AdminNotFoundException {
+    public Admin getAdminByName(@PathVariable(value = "id") Long id) { //throws AdminNotFoundException {
 
-        return this.adminService.getAdminById(id);
+        Admin admin1 = new Admin();
+        admin1.setId(id);
+        admin1.setName("admin1");
+
+        return admin1;
+        //return this.adminService.getAdminById(id);
     }
 
+    @GetMapping("/admins")
+    public List<Admin> getAdmins() {
 
+        List<Admin> admins = new ArrayList<>();
+
+        Admin admin1 = new Admin();
+        admin1.setId((long) 1);
+        admin1.setName("admin1");
+        admins.add(admin1);
+
+        Admin admin2 = new Admin();
+        admin1.setId((long) 2);
+        admin1.setName("admin2");
+        admins.add(admin2);
+
+        return admins;
+        //return adminService.getAdmins();
+
+    }
+
+    /*
     @PostMapping("/admins")
     public Admin createAdmin(@Valid @RequestBody Admin admin) {
+
         return adminService.createAdmin(admin);
+
     }
 
     @DeleteMapping("/admins/{id}")
@@ -48,7 +77,7 @@ public class AdminController {
 
         return ResponseEntity.ok().build();
     }
-
+    */
     /*
         /decks - GET
         /decks/id - GET

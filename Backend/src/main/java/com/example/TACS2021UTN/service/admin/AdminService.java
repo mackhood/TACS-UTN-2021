@@ -6,6 +6,7 @@ import com.example.TACS2021UTN.repository.IAdminRepository;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Service
 public class AdminService implements IAdminService {
@@ -32,6 +33,7 @@ public class AdminService implements IAdminService {
 
     @Override
     public Admin createAdmin(@Valid Admin admin) {
+
         return adminRepository.save(admin);
 
     }

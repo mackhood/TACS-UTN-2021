@@ -14,6 +14,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class GameController {
@@ -36,6 +38,25 @@ public class GameController {
     @PostMapping("/games/{id}/drop")
     public void leaveGame(@PathVariable Long id){
         service.leaveGame(id, user);
+    }
+
+    @GetMapping("/games")
+    public List<Game> getGames(){
+
+        Deck deck1 = new Deck();
+        Player player1 = new Player();
+        Player player2 = new Player();
+
+        List<Game> games = new ArrayList<>();
+
+        Game game1 = new Game(player1, player2, deck1);
+        games.add(game1);
+
+        Game game2 = new Game(player1, player2, deck1);
+        games.add(game2);
+
+        return games;
+
     }
 
     @GetMapping(value = "/games", params = {"from_date", "to_date"})
