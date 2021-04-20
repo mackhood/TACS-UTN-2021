@@ -32,7 +32,7 @@ public class AdminController {
 
 
     @GetMapping("/admins/{id}")
-    public Admin getAdminByName(@PathVariable(value = "id") Long id) { //throws AdminNotFoundException {
+    public Admin getAdmin(@PathVariable(value = "id") Long id) { //throws AdminNotFoundException {
 
         Admin admin1 = new Admin();
         admin1.setId(id);

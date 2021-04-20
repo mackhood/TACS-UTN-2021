@@ -7,8 +7,7 @@ import lombok.Setter;
 @Setter
 public class GameStatisticsDTO {
 
-    private Integer created = 0;
-    private Integer inProgress = 0;
-    private Integer Finished = 0;
+    private Integer cards_remaining = 0;
+    private Integer cards_gained = 0;
 
 }

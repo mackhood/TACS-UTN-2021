@@ -25,7 +25,6 @@ public class Player extends User{
     @Transient
     private IPlayerService playerService;
 
-
     public Game createGame(String paramDeck, String challenged) throws DeckNotFoundException, PlayerNotFoundException {
 
         Deck deck = chooseDeck(paramDeck);

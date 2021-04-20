@@ -99,10 +99,10 @@ public class GameRepository implements IGameRepository {
 
     private void playerLeavesGame(Player player, Game game){
         if(game.getIdFromCreator().equals(player.getId())){
-            game.setState(new Finished(game.getChallenged().getPlayer()));
+            //game.setState(new Finished(game.getChallenged().getPlayer()));
         }
         else{
-            game.setState(new Finished(game.getCreator().getPlayer()));
+            //game.setState(new Finished(game.getCreator().getPlayer()));
         }
     }
 
