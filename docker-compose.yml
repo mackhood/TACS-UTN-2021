@@ -1,0 +1,51 @@
+version: '3'
+networks:
+  backend:
+services:
+  #  frontend:
+  #    image: node:10
+  #    container_name: frontend
+  #    #    volumes:
+  #    #      - ./Frontend/frontend/src:./usr/frontend/src
+  #    build:
+  #      context: ./Frontend
+  #      dockerfile: ./Dockerfile
+  #    networks:
+  #      backend:
+  backend:
+    image: openjdk:8-jdk-alpine
+    container_name: backend
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: tacs_db
+      DB_NAME: tacs_db
+      DB_USER: "tacs"
+      DB_USER_PASSWORD: "tacs"
+    ports:
+      - '8087:8080'
+    depends_on:
+      - tacs_db
+
+
+    networks:
+      backend:
+
+  tacs_db:
+    image: mariadb
+    container_name: tacs_db
+    expose: [3306]
+    #    ports: ["3306:3306"]
+    environment:
+      MYSQL_DATABASE: tacs_db
+      MYSQL_USER: "tacs"
+      MYSQL_PASSWORD: "tacs"
+      MYSQL_ROOT_PASSWORD: root
+    #    volumes:
+    #    Si queremos levantar la DB partiendo de un script
+    #      - ./db/:/docker-entrypoint-initdb.d/
+    #    Si queremos guardar el estado de la DB tenemos que crear un volumen para mappearlo con un directorio del host
+    #      - ./db/mysql:/var/lib/mysql
+    networks:
+      backend:
