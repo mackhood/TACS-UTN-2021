@@ -16,7 +16,7 @@ public class Created extends State{
         game.getDeck().shuffle();
         flipCoin(game);
         dealCards(game);
-        game.setState(new InProgress());
+        //game.setState(new InProgress());
         return true;
     }
 

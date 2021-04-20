@@ -42,7 +42,7 @@ public class GameService implements IGameService {
         List<Game> games = gameRepository.showGamesByFilters(from, to);
         GameStatisticsDTO statistics = new GameStatisticsDTO();
         for(Game game : games){
-            if(game.getState().getClass().getSimpleName().equals("Created")){
+            /*if(game.getState().getClass().getSimpleName().equals("Created")){
                 statistics.setCreated(statistics.getCreated() + 1);
             }
             else if(game.getState().getClass().getSimpleName().equals("InProgress")){
@@ -50,7 +50,7 @@ public class GameService implements IGameService {
             }
             else{
                 statistics.setCreated(statistics.getFinished() + 1);
-            }
+            }*/
         }
         return statistics;
     }

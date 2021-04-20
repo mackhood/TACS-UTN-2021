@@ -101,9 +101,6 @@ public class DeckController {
 
                 return deck;
 
-//         Deck deck = service.getDeckById(id);
-//         DeckDTO deckReturned = modelMapper.map(deck, DeckDTO.class);
-//         return deckReturned;
     }
 
     @PostMapping("/deck")
