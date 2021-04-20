@@ -106,12 +106,13 @@ public class DeckController {
 
     }
 
-    @PostMapping("/deck")
+    @PostMapping("/decks")
     //No retorna nada o un statusCode
     //Solo para usuario admin tiene que ser
-    public void createNewDeck(@RequestBody DeckDTO newDeck) {
-        Deck mappedDeck = modelMapper.map(newDeck, Deck.class);
-        service.createDeck(mappedDeck);
+    public Deck createNewDeck(@Valid @RequestBody Deck newDeck) {
+//         Deck mappedDeck = modelMapper.map(newDeck, Deck.class);
+//         service.createDeck(mappedDeck);
+        return newDeck;
     }
 
     @DeleteMapping("/decks/{id}")
