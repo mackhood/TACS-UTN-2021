@@ -8,6 +8,7 @@ import com.example.TACS2021UTN.service.admin.IAdminService;
 import com.example.TACS2021UTN.service.deck.IDeckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -68,16 +69,17 @@ public class AdminController {
         return adminService.createAdmin(admin);
 
     }
+    */
 
     @DeleteMapping("/admins/{id}")
-    public ResponseEntity<Admin> deleteAdmin(@PathVariable(value = "id") Long adminId) throws AdminNotFoundException {
-        Admin admin = adminService.getAdminById(adminId);
+    public ResponseEntity<Admin> deleteAdmin(@PathVariable(value = "id") Long adminId) {
+//         Admin admin = adminService.getAdminById(adminId);
+//
+//         adminService.delete(admin);
 
-        adminService.delete(admin);
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
-    */
+
     /*
         /decks - GET
         /decks/id - GET
@@ -86,19 +88,12 @@ public class AdminController {
         /decks/id - DELETE - solo usuario admin
      */
 
-    @PostMapping("/admins/createDeck")
+    @PostMapping("/admins")
     public void createDeck(@Valid @RequestBody Deck deck) {
         deckService.createDeck(deck);
     }
 
-
-    @PostMapping("/admins/deleteDeck/{id}")
-    public void deleteDeck(@Valid @RequestBody Deck deck) {
-        deckService.deleteDeck(deck);
-    }
-
-
-    @PutMapping("/admins/updateDeck/{id}")
+    @PutMapping("/admins/{id}")
     public Deck updateDeck(@PathVariable(value = "id") Long deckId,
                            @Valid @RequestBody Deck deckDetails) throws DeckNotFoundException{
         Deck updatedDeck = deckService.updateDeck(deckId,deckDetails);
