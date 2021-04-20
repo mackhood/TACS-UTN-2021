@@ -2,6 +2,8 @@ package com.example.TACS2021UTN.controller;
 
 import com.example.TACS2021UTN.DTO.GameDTO;
 import com.example.TACS2021UTN.DTO.GameStatisticsDTO;
+import com.example.TACS2021UTN.DTO.GamesStatisticsDTO;
+import com.example.TACS2021UTN.DTO.ScoreboardDTO;
 import com.example.TACS2021UTN.entities.Deck;
 import com.example.TACS2021UTN.entities.Duel;
 import com.example.TACS2021UTN.entities.Game;
@@ -146,24 +148,71 @@ public class GameController {
         return gameStatisticsDTO;
     }
 
-    /*
-    @GetMapping(value = "/games", params = {"from_date", "to_date"})
-    public GameStatisticsDTO getRangeOfGames(@RequestParam(name="from_date")@DateTimeFormat(pattern = "dd-MM-yyyy") String conditionByDateFrom,
-                                             @RequestParam(name="to_date")@DateTimeFormat(pattern = "dd-MM-yyyy") String conditionByDateTo){
-        LocalDate dateFrom = DateAnalizer.transformStringToLocalDate(conditionByDateFrom);
-        LocalDate dateTo = DateAnalizer.transformStringToLocalDate(conditionByDateTo);
 
+    @GetMapping(value = "/gamesStats", params = {"from_date", "to_date"})
+    public GamesStatisticsDTO getRangeOfGames(@RequestParam(name="from_date")@DateTimeFormat(pattern = "dd-MM-yyyy") String conditionByDateFrom,
+                                              @RequestParam(name="to_date")@DateTimeFormat(pattern = "dd-MM-yyyy") String conditionByDateTo){
+        //LocalDate dateFrom = DateAnalizer.transformStringToLocalDate(conditionByDateFrom);
+        //LocalDate dateTo = DateAnalizer.transformStringToLocalDate(conditionByDateTo);
+
+        GamesStatisticsDTO gamesStatisticsDTO = new GamesStatisticsDTO();
+        gamesStatisticsDTO.setCreated(4);
+        gamesStatisticsDTO.setFinished(7);
+        gamesStatisticsDTO.setInProgress(2);
+
+        return gamesStatisticsDTO;
+
+        /*
         if(DateAnalizer.validateOrderOfDatesInserted(dateFrom, dateTo)){
-            //List<Game> games = service.showGamesByFilters(dateFrom, dateTo);
-            //List<GameDTO> gamesDTO = games.stream().map(game -> modelMapper.map(game, GameDTO.class)).collect(Collectors.toList());
-            //return gamesDTO;
+            List<Game> games = service.showGamesByFilters(dateFrom, dateTo);
+            List<GameDTO> gamesDTO = games.stream().map(game -> modelMapper.map(game, GameDTO.class)).collect(Collectors.toList());
+            return gamesDTO;
 
             return service.showGamesByFilters(dateFrom, dateTo);
         }
         else{
             throw new BadDatesInserted("The dateFrom is greater than the dateTo");
         }
+         */
     }
-     */
+
+    @GetMapping("/scoreboard")
+    public List<ScoreboardDTO> getScoreboard(){
+
+        List<ScoreboardDTO> scoreboardDTOS = new ArrayList<>();
+
+        GamesStatisticsDTO gamesStatisticsDTO = new GamesStatisticsDTO();
+        gamesStatisticsDTO.setCreated(4);
+        gamesStatisticsDTO.setFinished(7);
+        gamesStatisticsDTO.setInProgress(2);
+
+        Player player1 = new Player();
+        player1.setId((long) 1);
+        player1.setName("A");
+
+        ScoreboardDTO scoreboardDTO = new ScoreboardDTO();
+        scoreboardDTO.setGamesStatisticsDTO(gamesStatisticsDTO);
+        scoreboardDTO.setPlayer(player1);
+
+        scoreboardDTOS.add(scoreboardDTO);
+
+        GamesStatisticsDTO gamesStatisticsDTO2 = new GamesStatisticsDTO();
+        gamesStatisticsDTO2.setCreated(1);
+        gamesStatisticsDTO2.setFinished(3);
+        gamesStatisticsDTO2.setInProgress(1);
+
+        Player player2 = new Player();
+        player2.setId((long) 2);
+        player2.setName("B");
+
+        ScoreboardDTO scoreboardDTO2 = new ScoreboardDTO();
+        scoreboardDTO2.setGamesStatisticsDTO(gamesStatisticsDTO2);
+        scoreboardDTO2.setPlayer(player2);
+
+        scoreboardDTOS.add(scoreboardDTO2);
+
+        return scoreboardDTOS;
+    }
+
 
 }

@@ -1,9 +1,11 @@
 package com.example.TACS2021UTN.controller;
 
+import com.example.TACS2021UTN.DTO.GamesStatisticsDTO;
 import com.example.TACS2021UTN.entities.user.Player;
 import com.example.TACS2021UTN.exceptions.PlayerNotFoundException;
 import com.example.TACS2021UTN.service.player.IPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,6 +73,30 @@ public class PlayerController {
         //playerService.delete(player);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/users/{id}/stats")
+    public GamesStatisticsDTO getUserStats(){
+
+        GamesStatisticsDTO gamesStatisticsDTO = new GamesStatisticsDTO();
+        gamesStatisticsDTO.setCreated(1);
+        gamesStatisticsDTO.setFinished(3);
+        gamesStatisticsDTO.setInProgress(0);
+
+        return gamesStatisticsDTO;
+
+        /*
+        if(DateAnalizer.validateOrderOfDatesInserted(dateFrom, dateTo)){
+            List<Game> games = service.showGamesByFilters(dateFrom, dateTo);
+            List<GameDTO> gamesDTO = games.stream().map(game -> modelMapper.map(game, GameDTO.class)).collect(Collectors.toList());
+            return gamesDTO;
+
+            return service.showGamesByFilters(dateFrom, dateTo);
+        }
+        else{
+            throw new BadDatesInserted("The dateFrom is greater than the dateTo");
+        }
+         */
     }
 
 }
