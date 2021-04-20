@@ -1,4 +1,4 @@
-package com.example.TACS2021UTN.service;
+package com.example.TACS2021UTN.service.player;
 
 import com.example.TACS2021UTN.DTO.CardDTO;
 import com.example.TACS2021UTN.entities.user.Player;

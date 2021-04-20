@@ -16,7 +16,7 @@ public class Created extends State{
         game.getDeck().shuffle();
         flipCoin(game);
         dealCards(game);
-        game.setState(new InProgress());
+        //game.setState(new InProgress());
         return true;
     }
 
@@ -31,6 +31,11 @@ public class Created extends State{
     @Override
     public void play(Game game) {
         return;
+    }
+
+    @Override
+    public Player winner() {
+        return null;
     }
 
     private void dealCards(Game game){
