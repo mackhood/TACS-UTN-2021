@@ -138,21 +138,12 @@ public class GameController {
         //return this.adminService.getAdminById(id);
     }
 
-    @PostMapping("/games/{id}/dropout")
-    public Game dropGame(){
-        Deck deck1 = new Deck("deck1", new ArrayList<>());
-
-        Player player1 = new Player();
-        player1.setId((long) 1);
-        player1.setName("A");
-
-        Player player2 = new Player();
-        player2.setId((long) 2);
-        player2.setName("A");
-
-        Game game = new Game(player1, player2, deck1);
-
-        return game;
+    @GetMapping("/games/{id}/stats")
+    public GameStatisticsDTO getGameStats(){
+        GameStatisticsDTO gameStatisticsDTO = new GameStatisticsDTO();
+        gameStatisticsDTO.setCards_gained(1);
+        gameStatisticsDTO.setCards_remaining(5);
+        return gameStatisticsDTO;
     }
 
     /*
