@@ -138,4 +138,32 @@ public class DeckController {
 //         return ResponseEntity.noContent().build();
     }
 
+
+    @GetMapping("/decks/{id}/cards")
+    public List<Card> getDeckCards(@PathVariable Long id){
+
+    List<Card> cards = new ArrayList<>();
+                    Card card1 = new Card();
+                    card1.setName("Atom IV");
+                    card1.setIntelligence(100);
+                    card1.setSpeed(27);
+                    card1.setDurability(35);
+                    card1.setPower(3);
+                    card1.setCombat(70);
+                    card1.setId(new Long(55));
+
+                    Card card2 = new Card();
+                    card2.setName("Anti-Spawn");
+                    card2.setIntelligence(7);
+                    card2.setSpeed(33);
+                    card2.setDurability(0);
+                    card2.setPower(37);
+                    card2.setCombat(50);
+                    card2.setId(new Long(50));
+
+                    cards.add(card1);
+                    cards.add(card2);
+                    return cards;
+    }
+
 }
