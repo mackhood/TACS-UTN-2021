@@ -11,12 +11,19 @@ import java.util.Collections;
 import java.util.List;
 
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
 public class Deck extends PersistantEntity{
 
+    @Id @GeneratedValue
+    private Long id;
     private String name;
     @Transient
     private List<Card> cardList = new ArrayList<>();
