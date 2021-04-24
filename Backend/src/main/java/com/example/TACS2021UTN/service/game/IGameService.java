@@ -1,9 +1,9 @@
 package com.example.TACS2021UTN.service.game;
 
 import com.example.TACS2021UTN.DTO.GameStatisticsDTO;
-import com.example.TACS2021UTN.entities.Deck;
-import com.example.TACS2021UTN.entities.Game;
-import com.example.TACS2021UTN.entities.user.Player;
+import com.example.TACS2021UTN.models.Deck;
+import com.example.TACS2021UTN.models.Game;
+import com.example.TACS2021UTN.models.user.Player;
 
 import java.time.LocalDate;
 

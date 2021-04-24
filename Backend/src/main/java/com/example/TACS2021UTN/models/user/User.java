@@ -1,4 +1,4 @@
-package com.example.TACS2021UTN.entities.user;
+package com.example.TACS2021UTN.models.user;
 
 import lombok.Getter;
 import lombok.Setter;

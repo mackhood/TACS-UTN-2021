@@ -1,8 +1,8 @@
-package com.example.TACS2021UTN.repository.game;
+package com.example.TACS2021UTN.repositories.game;
 
-import com.example.TACS2021UTN.entities.Deck;
-import com.example.TACS2021UTN.entities.Game;
-import com.example.TACS2021UTN.entities.user.Player;
+import com.example.TACS2021UTN.models.Deck;
+import com.example.TACS2021UTN.models.Game;
+import com.example.TACS2021UTN.models.user.Player;
 
 import java.time.LocalDate;
 import java.util.List;

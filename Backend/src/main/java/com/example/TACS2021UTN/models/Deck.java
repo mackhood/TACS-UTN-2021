@@ -1,4 +1,4 @@
-package com.example.TACS2021UTN.entities;
+package com.example.TACS2021UTN.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,6 @@ import java.util.List;
 
 
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 

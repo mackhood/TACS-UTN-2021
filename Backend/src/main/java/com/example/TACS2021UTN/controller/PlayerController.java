@@ -1,11 +1,10 @@
 package com.example.TACS2021UTN.controller;
 
 import com.example.TACS2021UTN.DTO.GamesStatisticsDTO;
-import com.example.TACS2021UTN.entities.user.Player;
+import com.example.TACS2021UTN.models.user.Player;
 import com.example.TACS2021UTN.exceptions.PlayerNotFoundException;
 import com.example.TACS2021UTN.service.player.IPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

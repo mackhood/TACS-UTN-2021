@@ -1,11 +1,10 @@
 package com.example.TACS2021UTN.service.game;
 
-import com.example.TACS2021UTN.DTO.GameDTO;
 import com.example.TACS2021UTN.DTO.GameStatisticsDTO;
-import com.example.TACS2021UTN.entities.Deck;
-import com.example.TACS2021UTN.entities.Game;
-import com.example.TACS2021UTN.entities.user.Player;
-import com.example.TACS2021UTN.repository.game.IGameRepository;
+import com.example.TACS2021UTN.models.Deck;
+import com.example.TACS2021UTN.models.Game;
+import com.example.TACS2021UTN.models.user.Player;
+import com.example.TACS2021UTN.repositories.game.IGameRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
-package com.example.TACS2021UTN.entities.state;
+package com.example.TACS2021UTN.models.state;
 
-import com.example.TACS2021UTN.entities.Game;
-import com.example.TACS2021UTN.entities.user.Player;
+import com.example.TACS2021UTN.models.Game;
+import com.example.TACS2021UTN.models.user.Player;
 
 public class InProgress extends State {
 

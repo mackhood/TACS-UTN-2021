@@ -1,4 +1,4 @@
-package com.example.TACS2021UTN.entities;
+package com.example.TACS2021UTN.models;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

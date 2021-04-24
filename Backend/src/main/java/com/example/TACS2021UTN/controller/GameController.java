@@ -4,20 +4,16 @@ import com.example.TACS2021UTN.DTO.GameDTO;
 import com.example.TACS2021UTN.DTO.GameStatisticsDTO;
 import com.example.TACS2021UTN.DTO.GamesStatisticsDTO;
 import com.example.TACS2021UTN.DTO.ScoreboardDTO;
-import com.example.TACS2021UTN.entities.Deck;
-import com.example.TACS2021UTN.entities.Duel;
-import com.example.TACS2021UTN.entities.Game;
-import com.example.TACS2021UTN.entities.user.Admin;
-import com.example.TACS2021UTN.entities.user.Player;
-import com.example.TACS2021UTN.exceptions.BadDatesInserted;
-import com.example.TACS2021UTN.functions.DateAnalizer;
+import com.example.TACS2021UTN.models.Deck;
+import com.example.TACS2021UTN.models.Duel;
+import com.example.TACS2021UTN.models.Game;
+import com.example.TACS2021UTN.models.user.Player;
 import com.example.TACS2021UTN.service.game.IGameService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

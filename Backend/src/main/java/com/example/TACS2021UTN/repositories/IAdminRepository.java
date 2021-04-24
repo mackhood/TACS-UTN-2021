@@ -1,9 +1,7 @@
-package com.example.TACS2021UTN.repository;
+package com.example.TACS2021UTN.repositories;
 
-import com.example.TACS2021UTN.entities.user.Admin;
-import com.example.TACS2021UTN.entities.user.Player;
+import com.example.TACS2021UTN.models.user.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 

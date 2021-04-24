@@ -1,6 +1,6 @@
-package com.example.TACS2021UTN.repository.deck;
+package com.example.TACS2021UTN.repositories.deck;
 
-import com.example.TACS2021UTN.entities.Deck;
+import com.example.TACS2021UTN.models.Deck;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

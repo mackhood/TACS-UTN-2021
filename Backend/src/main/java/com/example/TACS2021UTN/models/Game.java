@@ -1,22 +1,16 @@
-package com.example.TACS2021UTN.entities;
+package com.example.TACS2021UTN.models;
 
 
-import com.example.TACS2021UTN.entities.state.Created;
-import com.example.TACS2021UTN.entities.state.State;
-import com.example.TACS2021UTN.entities.user.Player;
-import com.example.TACS2021UTN.entities.user.PlayerGame;
+import com.example.TACS2021UTN.models.user.Player;
+import com.example.TACS2021UTN.models.user.PlayerGame;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.tomcat.jni.Local;
 
 import javax.persistence.Entity;
 import javax.persistence.Transient;
-import javax.swing.text.View;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 

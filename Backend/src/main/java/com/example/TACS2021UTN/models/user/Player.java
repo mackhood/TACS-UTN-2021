@@ -1,7 +1,7 @@
-package com.example.TACS2021UTN.entities.user;
+package com.example.TACS2021UTN.models.user;
 
-import com.example.TACS2021UTN.entities.Deck;
-import com.example.TACS2021UTN.entities.Game;
+import com.example.TACS2021UTN.models.Deck;
+import com.example.TACS2021UTN.models.Game;
 import com.example.TACS2021UTN.exceptions.DeckNotFoundException;
 import com.example.TACS2021UTN.exceptions.PlayerNotFoundException;
 import com.example.TACS2021UTN.service.deck.IDeckService;

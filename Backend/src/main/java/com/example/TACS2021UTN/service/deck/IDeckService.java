@@ -1,6 +1,7 @@
 package com.example.TACS2021UTN.service.deck;
 
-import com.example.TACS2021UTN.entities.Deck;
+import com.example.TACS2021UTN.DTO.DeckDTO;
+import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.exceptions.DeckNotFoundException;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface IDeckService {
 
     Deck getDeckByName(String name) throws  DeckNotFoundException;
 
-    Deck createDeck(Deck deck);
+    DeckDTO createDeck(DeckDTO deck);
 
     void deleteDeck(Deck deck);
 
@@ -19,5 +20,7 @@ public interface IDeckService {
 
     Deck updateDeck(Long deckId, Deck deck) throws  DeckNotFoundException;
 
-    List<Deck> getAllDecks();
+    List<DeckDTO> getAllDecks();
+
+    DeckDTO findById(long id);
 }
