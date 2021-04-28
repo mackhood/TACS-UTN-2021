@@ -37,8 +37,11 @@ public class DeckService implements IDeckService {
                 .orElseThrow(() -> new DeckNotFoundException(deck));
     }
 
-    public void deleteDeck(@Valid Deck deck) {
-        deckRepository.delete(deck);
+    public void deleteDeck(@Valid DeckDTO deck) {
+
+        //TODO: realizar mappeo de DeckDTO a Deck
+
+        deckRepository.delete(new Deck());
     }
 
     public void deleteDeckbyId(Long id) {
@@ -46,13 +49,7 @@ public class DeckService implements IDeckService {
     }
 
     @Override
-    public Deck getDeckById(Long deckId) throws DeckNotFoundException {
-        return deckRepository.findById(deckId)
-                .orElseThrow(() -> new DeckNotFoundException(deckId.toString()));
-    }
-
-    @Override
-    public Deck updateDeck(Long deckId, Deck deckDetails) throws DeckNotFoundException {
+    public void updateDeck(Long deckId, Deck deckDetails) throws DeckNotFoundException {
 
         Deck deck = deckRepository.findById(deckId)
                 .orElseThrow(() -> new NotFoundException(
@@ -61,22 +58,32 @@ public class DeckService implements IDeckService {
 
         deck.setCardList(deckDetails.getCardList());
         deck.setName(deckDetails.getName());
-        Deck updatedItem = deckRepository.save(deck);
-
-        return updatedItem;
+        deckRepository.save(deck);
 
     }
 
     @Override
     public List<DeckDTO> getAllDecks() {
         List<Deck> decks = deckRepository.findAll();
-        List<DeckDTO> deckDTOS =
-                decks.stream().map(d -> modelMapper.map(d, DeckDTO.class)).collect(Collectors.toList());
-        return deckDTOS;
+        return decks.stream().map(d -> deckToDTO(d)).collect(Collectors.toList());
     }
 
     @Override
-    public DeckDTO findById(long id)
+    public List<CardDTO> getDeckCards(Long id) {
+        Optional<Deck> deck = deckRepository.findById(id);
+
+        if(!deck.isPresent()){
+            //TODO: arriba tirar orElseThrow...
+        }
+
+        List<Card> deckCards = deck.get().getCardList();
+
+        return deckCards.stream().map(card -> cardToDTO(card)).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public DeckDTO findById(Long id)
     {
         Deck deck = deckRepository.findById(id).orElseThrow(() ->
              new NotFoundException("Deck not found with id: " + id)
@@ -95,4 +102,14 @@ public class DeckService implements IDeckService {
 
         return deckRequest;
     }
+
+    DeckDTO deckToDTO(Deck deck){
+        return new DeckDTO(deck.getName(), deck.getCardList());
+    }
+
+    //TODO: falta implementar
+    CardDTO cardToDTO(Card card){
+        return new CardDTO();
+    }
+
 }

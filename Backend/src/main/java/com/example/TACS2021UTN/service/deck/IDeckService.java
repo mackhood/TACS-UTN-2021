@@ -1,5 +1,6 @@
 package com.example.TACS2021UTN.service.deck;
 
+import com.example.TACS2021UTN.DTO.CardDTO;
 import com.example.TACS2021UTN.DTO.DeckDTO;
 import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.exceptions.DeckNotFoundException;
@@ -12,15 +13,15 @@ public interface IDeckService {
 
     DeckDTO createDeck(DeckDTO deck);
 
-    void deleteDeck(Deck deck);
+    void deleteDeck(DeckDTO deck);
 
     void deleteDeckbyId(Long id);
 
-    Deck getDeckById(Long deckId) throws DeckNotFoundException;
-
-    Deck updateDeck(Long deckId, Deck deck) throws  DeckNotFoundException;
+    void updateDeck(Long deckId, Deck deck) throws  DeckNotFoundException;
 
     List<DeckDTO> getAllDecks();
 
-    DeckDTO findById(long id);
+    DeckDTO findById(Long id);
+
+    List<CardDTO> getDeckCards(Long id);
 }

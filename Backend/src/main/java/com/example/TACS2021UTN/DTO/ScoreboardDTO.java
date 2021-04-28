@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class ScoreboardDTO {
 
-    Player player;
-    GamesStatisticsDTO gamesStatisticsDTO;
+    private String player;
+    private GamesStatisticsDTO gamesStatisticsDTO;
 
 }

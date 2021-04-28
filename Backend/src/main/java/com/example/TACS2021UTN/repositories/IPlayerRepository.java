@@ -5,6 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface IPlayerRepository extends JpaRepository<Player, Long> {
+public interface IPlayerRepository {
     Optional<Player> findByName(String name);
+    Optional<Player> findById(Long id);
+    Player save(Player player);
+    void delete(Player player);
 }

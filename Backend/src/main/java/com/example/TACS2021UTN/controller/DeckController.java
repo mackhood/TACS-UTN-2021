@@ -1,5 +1,6 @@
 package com.example.TACS2021UTN.controller;
 
+import com.example.TACS2021UTN.DTO.CardDTO;
 import com.example.TACS2021UTN.DTO.DeckDTO;
 import com.example.TACS2021UTN.DTO.StatusCodeDTO;
 import com.example.TACS2021UTN.models.Deck;
@@ -52,7 +53,7 @@ public class DeckController {
     }
 
     @PutMapping("/decks/{id}")
-    public Deck modifyDeck(@Valid @RequestBody Deck deckModified, @PathVariable Long id) throws DeckNotFoundException {
+    public DeckDTO modifyDeck(@Valid @RequestBody DeckDTO deckModified, @PathVariable Long id) throws DeckNotFoundException {
 //         Deck mappedDeck = modelMapper.map(deckModified, Deck.class);
 //         Deck deckToModify = service.getDeckById(id);
 //         deckToModify.setCardList(mappedDeck.getCardList());
@@ -61,35 +62,16 @@ public class DeckController {
         deckModified.setId(id);
         return deckModified;
 
+        //TODO: revisar. el update del service paso a void. ver que conviene
+
 
 //         return ResponseEntity.noContent().build();
     }
 
 
     @GetMapping("/decks/{id}/cards")
-    public List<Card> getDeckCards(@PathVariable Long id){
-        List<Card> cards = new ArrayList<>();
-        Card card1 = new Card();
-        card1.setName("Atom IV");
-        card1.setIntelligence(100);
-        card1.setSpeed(27);
-        card1.setDurability(35);
-        card1.setPower(3);
-        card1.setCombat(70);
-        card1.setId(new Long(55));
-
-        Card card2 = new Card();
-        card2.setName("Anti-Spawn");
-        card2.setIntelligence(7);
-        card2.setSpeed(33);
-        card2.setDurability(0);
-        card2.setPower(37);
-        card2.setCombat(50);
-        card2.setId(new Long(50));
-
-        cards.add(card1);
-        cards.add(card2);
-        return cards;
+    public List<CardDTO> getDeckCards(@PathVariable Long id){
+        return service.getDeckCards(id);
     }
 
     //TODO return 201 created

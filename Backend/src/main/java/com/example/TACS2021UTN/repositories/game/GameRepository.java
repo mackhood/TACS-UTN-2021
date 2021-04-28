@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class GameRepository implements IGameRepository {
@@ -25,35 +26,14 @@ public class GameRepository implements IGameRepository {
         this.database = load();
     }
 
-    private List<Game> load(){
-
-        File file = null;
-
-        try{
-
-            file = ResourceUtils.getFile("classpath:games.json");
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        TypeReference<List<Game>> typeReference = new TypeReference<List<Game>>() { };
-        List<Game> listCards = null;
-
-        try {
-            listCards = objectMapper.readValue(file,typeReference);
-
-        } catch (IOException exception){
-            exception.printStackTrace();
-        }
-        return listCards;
-
-    }
-
     @Override
     public List<Game> getAllGames() {
         return database;
+    }
+
+    @Override
+    public Optional<Game> findById(Long id) {
+        return Optional.empty();
     }
 
     @Override
@@ -109,5 +89,31 @@ public class GameRepository implements IGameRepository {
                 game.getDateOfCreation().equals(from)) &&
                 ((game.getDateOfCreation().isAfter(to)) ||
                         game.getDateOfCreation().equals(to));
+    }
+
+    private List<Game> load(){
+
+        File file = null;
+
+        try{
+
+            file = ResourceUtils.getFile("classpath:games.json");
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        TypeReference<List<Game>> typeReference = new TypeReference<List<Game>>() { };
+        List<Game> listCards = null;
+
+        try {
+            listCards = objectMapper.readValue(file,typeReference);
+
+        } catch (IOException exception){
+            exception.printStackTrace();
+        }
+        return listCards;
+
     }
 }
