@@ -1,36 +1,24 @@
 package com.example.TACS2021UTN.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-
 @Getter
 @Setter
-@Entity
 @NoArgsConstructor
+@AllArgsConstructor
 public class Deck extends PersistantEntity{
 
-    @Id @GeneratedValue
-    private Long id;
     private String name;
-    @Transient
     private List<Card> cardList = new ArrayList<>();
-
-    public Deck(String name, List<Card> cardList) {
-        this.name = name;
-        this.cardList = cardList;
-    }
 
     public void shuffle()
     {

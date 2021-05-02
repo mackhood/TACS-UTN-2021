@@ -1,6 +1,6 @@
 version: '2.1'
 networks:
-  backend:
+  tacs:
 services:
   #  frontend:
   #    image: node:10
@@ -23,19 +23,22 @@ services:
       DB_NAME: tacs_db
       DB_USER: root
       DB_USER_PASSWORD: root
+      SPRING_DATASOURCE_URL: jdbc:mysql://tacs_db:3306/tacs_db?autoReconnect=true&useSSL=false
     ports:
       - '8087:8080'
     depends_on:
       tacs_db:
         condition: service_started
+
     networks:
-      backend:
+      tacs:
 
   tacs_db:
-    image: 'mysql/mysql-server:5.7'
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
     container_name: tacs_db
-    expose: [3306]
-    #    ports: ["3306:3306"]
+    #expose: [3306]
+    ports: ["3307:3306"]
     restart: always
     environment:
       MYSQL_DATABASE: tacs_db
@@ -48,4 +51,4 @@ services:
     #    Si queremos guardar el estado de la DB tenemos que crear un volumen para mappearlo con un directorio del host
     #      - ./db/mysql:/var/lib/mysql
     networks:
-      backend:
+      tacs:

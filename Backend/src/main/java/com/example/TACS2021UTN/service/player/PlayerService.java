@@ -9,26 +9,30 @@ import org.springframework.stereotype.Service;
 @Service
 public class PlayerService implements IPlayerService {
 
-    IPlayerRepository playerRepository;
+    private final IPlayerRepository repository;
+
+    public PlayerService(IPlayerRepository playerRepository){
+        this.repository = playerRepository;
+    }
 
     public Player getPlayerById(Long playerId) throws PlayerNotFoundException {
-        return playerRepository.findById(playerId)
+        return repository.findById(playerId)
                 .orElseThrow(() -> new PlayerNotFoundException(playerId.toString()));
     }
 
     @Override
     public void delete(Player player) {
-        playerRepository.delete(player);
+        repository.delete(player);
     }
 
     public Player getPlayerByName(String name) throws PlayerNotFoundException {
-        return playerRepository.findByName(name)
+        return repository.findByName(name)
                 .orElseThrow(() -> new PlayerNotFoundException(name));
     }
 
 
     public Player createPlayer(Player player)  {
-        return playerRepository.save(player);
+        return repository.save(player);
 
     }
 

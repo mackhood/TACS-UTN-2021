@@ -1,6 +1,8 @@
 package com.example.TACS2021UTN.controller;
 
+import com.example.TACS2021UTN.DTO.CardDTO;
 import com.example.TACS2021UTN.DTO.GamesStatisticsDTO;
+import com.example.TACS2021UTN.functions.JSONWrapper;
 import com.example.TACS2021UTN.models.user.Player;
 import com.example.TACS2021UTN.exceptions.PlayerNotFoundException;
 import com.example.TACS2021UTN.service.player.IPlayerService;
@@ -15,8 +17,14 @@ import java.util.List;
 @RestController
 public class PlayerController {
 
+    private final IPlayerService service;
+
+    public PlayerController(IPlayerService playerService){
+        this.service = playerService;
+    }
+
     @GetMapping("/players")
-    public List<Player> getPlayers() throws PlayerNotFoundException {
+    public ResponseEntity<JSONWrapper> getPlayers() throws PlayerNotFoundException {
 
         List<Player> players = new ArrayList<>();
 
@@ -30,13 +38,9 @@ public class PlayerController {
         player2.setName("player 2");
         players.add(player2);
 
-        return players;
-        //return this.playerService.getPlayerById(id);
+        return ResponseEntity.ok(new JSONWrapper<>((List<Player>) players));
+
     }
-
-
-    @Autowired
-    private IPlayerService playerService;
 
     /*@GetMapping("/players/{name}")
     public Player getPlayerByName(@PathVariable(value = "name") String name) throws PlayerNotFoundException {
@@ -46,21 +50,21 @@ public class PlayerController {
 
 
     @GetMapping("/players/{id}")
-    public Player getPlayerById(@PathVariable(value = "id") Long id) throws PlayerNotFoundException {
+    public ResponseEntity<Player> getPlayerById(@PathVariable(value = "id") Long id) throws PlayerNotFoundException {
 
         Player player1 = new Player();
         player1.setId(id);
         player1.setName("player 1");
 
-        return player1;
+        return ResponseEntity.ok(player1);
         //return this.playerService.getPlayerById(id);
     }
 
 
     @PostMapping("/players")
-    public Player createPlayer(@Valid @RequestBody Player player) {
+    public ResponseEntity createPlayer(@Valid @RequestBody Player player) {
 
-        return player;
+        return ResponseEntity.status(204).build();
 
         //return playerService.createPlayer(player);
     }
@@ -71,18 +75,18 @@ public class PlayerController {
 
         //playerService.delete(player);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping(value = "/users/{id}/stats")
-    public GamesStatisticsDTO getUserStats(){
+    public ResponseEntity<GamesStatisticsDTO> getUserStats(){
 
         GamesStatisticsDTO gamesStatisticsDTO = new GamesStatisticsDTO();
         gamesStatisticsDTO.setCreated(1);
         gamesStatisticsDTO.setFinished(3);
         gamesStatisticsDTO.setInProgress(0);
 
-        return gamesStatisticsDTO;
+        return ResponseEntity.ok(gamesStatisticsDTO);
 
         /*
         if(DateAnalizer.validateOrderOfDatesInserted(dateFrom, dateTo)){
