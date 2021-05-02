@@ -3,6 +3,7 @@ package com.example.TACS2021UTN.service.deck;
 import com.example.TACS2021UTN.DTO.CardDTO;
 import com.example.TACS2021UTN.DTO.DeckDTO;
 import com.example.TACS2021UTN.DTO.request.DeckRequestDTO;
+import com.example.TACS2021UTN.exceptions.CardNotFoundException;
 import com.example.TACS2021UTN.exceptions.NotFoundException;
 import com.example.TACS2021UTN.models.Card;
 import com.example.TACS2021UTN.models.Deck;
@@ -58,13 +59,18 @@ public class DeckService implements IDeckService {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public void save(DeckRequestDTO deckRequest)
-    {
+    public void save(DeckRequestDTO deckRequest) throws CardNotFoundException {
         List<Card> cardList = new ArrayList<>();
 
         for(Long cardId : deckRequest.getCardListId()){
             Card card = cardRepository.findById(cardId).orElseThrow(() -> new NotFoundException("Card not found with id: " + cardId));
-            cardList.add(card);
+            if(card.correctCard()) {
+                cardList.add(card); //validation of the card if it has all the attributes
+            }else{
+                //card not available message showned
+                throw new CardNotFoundException("card does not have all the attributes needed");
+            }
+
         }
 
         Deck deck = new Deck(deckRequest.getName(), cardList);

@@ -3,6 +3,7 @@ package com.example.TACS2021UTN.service.deck;
 import com.example.TACS2021UTN.DTO.CardDTO;
 import com.example.TACS2021UTN.DTO.DeckDTO;
 import com.example.TACS2021UTN.DTO.request.DeckRequestDTO;
+import com.example.TACS2021UTN.exceptions.CardNotFoundException;
 import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.exceptions.DeckNotFoundException;
 
@@ -12,7 +13,7 @@ public interface IDeckService {
 
     Deck getDeckByName(String name) throws  DeckNotFoundException;
 
-    void save(DeckRequestDTO deck);
+    void save(DeckRequestDTO deck) throws CardNotFoundException;
 
     void deleteDeckbyId(Long id);
 
