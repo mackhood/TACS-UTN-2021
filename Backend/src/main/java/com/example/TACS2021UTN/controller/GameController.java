@@ -1,19 +1,19 @@
 package com.example.TACS2021UTN.controller;
 
-import com.example.TACS2021UTN.DTO.GameDTO;
-import com.example.TACS2021UTN.DTO.GameStatisticsDTO;
-import com.example.TACS2021UTN.DTO.GamesStatisticsDTO;
-import com.example.TACS2021UTN.DTO.ScoreboardDTO;
+import com.example.TACS2021UTN.DTO.*;
 import com.example.TACS2021UTN.exceptions.BadDatesInserted;
 import com.example.TACS2021UTN.functions.DateAnalizer;
+import com.example.TACS2021UTN.functions.JSONWrapper;
 import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.models.Duel;
 import com.example.TACS2021UTN.models.Game;
 import com.example.TACS2021UTN.models.user.Player;
 import com.example.TACS2021UTN.service.game.IGameService;
+import com.fasterxml.jackson.core.json.JsonWriteContext;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -32,23 +32,24 @@ public class GameController {
 
 
     @PostMapping("/games")
-    public GameDTO createNewGame(@RequestBody GameDTO gameDTO){
-        return service.createNewGame(gameDTO);
+    public ResponseEntity<GameDTO> createNewGame(@RequestBody GameDTO gameDTO){
+        service.createNewGame(gameDTO);
+        return ResponseEntity.status(204).build();
     }
 
     @GetMapping("/games/{id}")
-    public GameDTO getGame(@PathVariable Long id) {
-        return service.findById(id);
+    public ResponseEntity<GameDTO> getGame(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findById(id));
     }
 
     @GetMapping("/games")
-    public List<GameDTO> getAllGames(){
-        return service.getAllGames();
+    public ResponseEntity<JSONWrapper> getAllGames(){
+        return ResponseEntity.ok(new JSONWrapper<>((List<GameDTO>) service.getAllGames()));
     }
 
 
     @GetMapping("/games/{id}/replay")
-    public List<Duel> getDuels(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<JSONWrapper> getDuels(@PathVariable(value = "id") Long id) {
 
         Player player1 = new Player();
         player1.setId((long) 1);
@@ -67,11 +68,11 @@ public class GameController {
         duels.add(duel1);
         duels.add(duel2);
 
-        return duels;
+        return ResponseEntity.ok(new JSONWrapper<>((List<Duel>) duels));
     }
 
     @PostMapping("/games/{id}/dropout")
-    public List<Duel> endGame(@PathVariable(value = "id") Long id) {
+    public ResponseEntity endGame(@PathVariable(value = "id") Long id) {
         Player player1 = new Player();
         player1.setId((long) 1);
         player1.setName("A");
@@ -89,39 +90,39 @@ public class GameController {
         duels.add(duel1);
         duels.add(duel2);
 
-        return duels;
+        return ResponseEntity.status(204).build();
     }
 
     @GetMapping("/games/{id}/stats")
-    public GameStatisticsDTO getGameStats(){
+    public ResponseEntity getGameStats(){
         GameStatisticsDTO gameStatisticsDTO = new GameStatisticsDTO();
         gameStatisticsDTO.setCards_gained(1);
         gameStatisticsDTO.setCards_remaining(5);
-        return gameStatisticsDTO;
+        return ResponseEntity.ok(gameStatisticsDTO);
     }
 
 
     @GetMapping(value = "/gamesStats", params = {"from_date", "to_date"})
-    public GamesStatisticsDTO getRangeOfGames(@RequestParam(name="from_date")@DateTimeFormat(pattern = "dd-MM-yyyy") String conditionByDateFrom,
+    public ResponseEntity getRangeOfGames(@RequestParam(name="from_date")@DateTimeFormat(pattern = "dd-MM-yyyy") String conditionByDateFrom,
                                               @RequestParam(name="to_date")@DateTimeFormat(pattern = "dd-MM-yyyy") String conditionByDateTo){
         LocalDate dateFrom = DateAnalizer.transformStringToLocalDate(conditionByDateFrom);
         LocalDate dateTo = DateAnalizer.transformStringToLocalDate(conditionByDateTo);
 
 
 
-        if(DateAnalizer.validateOrderOfDatesInserted(dateFrom, dateTo)){
-            return service.showGamesByFilters(dateFrom, dateTo);
-        }
-        else{
+        if(!DateAnalizer.validateOrderOfDatesInserted(dateFrom, dateTo)){
             throw new BadDatesInserted("The dateFrom is greater than the dateTo");
         }
+
+        return ResponseEntity.ok(service.showGamesByFilters(dateFrom, dateTo));
 
     }
 
     @GetMapping("/scoreboard")
-    public List<ScoreboardDTO> getScoreboard(){
+    public ResponseEntity<JSONWrapper> getScoreboard(){
         //TODO ver el tema de victorias o derrotas de un jugador
-        return null;
+
+        return ResponseEntity.ok().build();
     }
 
 
