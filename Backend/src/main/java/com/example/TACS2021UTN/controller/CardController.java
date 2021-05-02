@@ -15,16 +15,20 @@ import java.util.ArrayList;
 @RestController
 public class CardController {
 
-    @Autowired
-    private ICardService cardService;
+
+    private final ICardService service;
+
+    public CardController(ICardService cardService){
+        this.service = cardService;
+    }
 
     @GetMapping("/cards")
     public List<CardDTO> getAllCards(){
-        return cardService.getAllCards();
+        return service.getAllCards();
     }
 
     @GetMapping("/cards/{id}")
     public CardDTO getCardById(@PathVariable Long id){
-        return cardService.findById(id);
+        return service.findById(id);
     }
 }

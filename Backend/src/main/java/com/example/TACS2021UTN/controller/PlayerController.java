@@ -15,6 +15,12 @@ import java.util.List;
 @RestController
 public class PlayerController {
 
+    private final IPlayerService service;
+
+    public PlayerController(IPlayerService playerService){
+        this.service = playerService;
+    }
+
     @GetMapping("/players")
     public List<Player> getPlayers() throws PlayerNotFoundException {
 
@@ -33,10 +39,6 @@ public class PlayerController {
         return players;
         //return this.playerService.getPlayerById(id);
     }
-
-
-    @Autowired
-    private IPlayerService playerService;
 
     /*@GetMapping("/players/{name}")
     public Player getPlayerByName(@PathVariable(value = "name") String name) throws PlayerNotFoundException {

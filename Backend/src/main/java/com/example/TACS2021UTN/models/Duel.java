@@ -9,11 +9,8 @@ import javax.persistence.Transient;
 
 @Getter
 @Setter
-@Entity
 public class Duel extends PersistantEntity{
-    @Transient
-    public long id;
-    @Transient
+
     public Player ganador;
 
 }

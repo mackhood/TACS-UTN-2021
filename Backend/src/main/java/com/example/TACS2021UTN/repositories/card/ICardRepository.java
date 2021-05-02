@@ -6,7 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface ICardRepository extends JpaRepository<Card, Long> {
+public interface ICardRepository {
+    Optional<Card> findById(Long cardId);
 
+    List<Card> findAll();
 }

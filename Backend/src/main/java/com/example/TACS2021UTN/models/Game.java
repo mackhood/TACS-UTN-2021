@@ -17,7 +17,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Game {
+public class Game extends PersistantEntity {
 
     private PlayerGame creator;
 

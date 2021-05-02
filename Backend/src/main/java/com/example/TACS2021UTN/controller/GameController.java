@@ -24,26 +24,17 @@ import java.util.stream.Collectors;
 @RestController
 public class GameController {
 
-    @Autowired
-    private IGameService service;
+    private final IGameService service;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
-    private Player user;
+    public GameController(IGameService gameService){
+        this.service = gameService;
+    }
 
 
     @PostMapping("/games")
     public GameDTO createNewGame(@RequestBody GameDTO gameDTO){
         return service.createNewGame(gameDTO);
     }
-
-    /*
-    @PostMapping("/games/{id}/drop")
-    public void leaveGame(@PathVariable Long id){
-        service.leaveGame(id, user);
-    }
-    */
 
     @GetMapping("/games/{id}")
     public GameDTO getGame(@PathVariable Long id) {
@@ -77,7 +68,6 @@ public class GameController {
         duels.add(duel2);
 
         return duels;
-        //return this.adminService.getAdminById(id);
     }
 
     @PostMapping("/games/{id}/dropout")

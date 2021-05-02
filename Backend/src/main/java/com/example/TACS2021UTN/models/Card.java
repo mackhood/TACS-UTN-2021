@@ -5,21 +5,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Getter @Setter @NoArgsConstructor
+@AllArgsConstructor
 public class Card extends PersistantEntity{
 
-//     @Transient
-//     private List<Attribute> atributes = new ArrayList<>();
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String name;
     private Integer strength;
     private Integer intelligence;

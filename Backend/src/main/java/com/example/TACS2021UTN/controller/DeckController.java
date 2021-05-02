@@ -3,6 +3,7 @@ package com.example.TACS2021UTN.controller;
 import com.example.TACS2021UTN.DTO.CardDTO;
 import com.example.TACS2021UTN.DTO.DeckDTO;
 import com.example.TACS2021UTN.DTO.StatusCodeDTO;
+import com.example.TACS2021UTN.DTO.request.DeckRequestDTO;
 import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.models.Card;
 import com.example.TACS2021UTN.exceptions.DeckNotFoundException;
@@ -23,8 +24,11 @@ import java.util.ArrayList;
 @RestController
 public class DeckController {
 
-    @Autowired
-    private IDeckService service;
+    private final IDeckService service;
+
+    public DeckController(IDeckService deckService){
+        this.service = deckService;
+    }
 
     @GetMapping("/decks")
     public List<DeckDTO> getAllDecks()
@@ -39,33 +43,24 @@ public class DeckController {
     }
 
     @PostMapping("/decks")
-
-    public DeckDTO createNewDeck(@Valid @RequestBody DeckDTO newDeck, HttpServletResponse response)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createNewDeck(@Valid @RequestBody DeckRequestDTO newDeck)
     {
-        response.setStatus(HttpStatus.CREATED.value());
-        return service.createDeck(newDeck);
+        service.save(newDeck);
     }
 
     @DeleteMapping("/decks/{id}")
-    public ResponseEntity<?> deleteDeck(@PathVariable Long id){
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteDeck(@PathVariable Long id){
         service.deleteDeckbyId(id);
-        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/decks/{id}")
-    public DeckDTO modifyDeck(@Valid @RequestBody DeckDTO deckModified, @PathVariable Long id) throws DeckNotFoundException {
-//         Deck mappedDeck = modelMapper.map(deckModified, Deck.class);
-//         Deck deckToModify = service.getDeckById(id);
-//         deckToModify.setCardList(mappedDeck.getCardList());
-//         deckToModify.setName(mappedDeck.getName());
-//         service.updateDeck(id, deckToModify);
-        deckModified.setId(id);
-        return deckModified;
+    public ResponseEntity<?> modifyDeck(@Valid @RequestBody DeckDTO deckModified, @PathVariable Long id) throws DeckNotFoundException {
 
-        //TODO: revisar. el update del service paso a void. ver que conviene
+        //Update
 
-
-//         return ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build();
     }
 
 
@@ -74,7 +69,6 @@ public class DeckController {
         return service.getDeckCards(id);
     }
 
-    //TODO return 201 created
     @PostMapping("/decks/{id}/cards")
     public ResponseEntity<Deck> addCardToDeck(@PathVariable Long id){
         return ResponseEntity.ok().build();
