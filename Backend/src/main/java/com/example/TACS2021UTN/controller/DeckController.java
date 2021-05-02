@@ -34,13 +34,13 @@ public class DeckController {
     public List<DeckDTO> getAllDecks()
     {
         return service.getAllDecks();
-    }
+    } //OK
 
     @GetMapping("/decks/{id}")
     public DeckDTO getDeckById(@PathVariable Long id)
     {
         return service.findById(id);
-    }
+    } //OK
 
     @PostMapping("/decks")
     @ResponseStatus(HttpStatus.CREATED)
