@@ -4,25 +4,24 @@ import {Route, Switch} from "react-router-dom";
 import Login from "./Pages/Login";
 import Administration from "./Pages/Administration";
 import PersistentDrawerLeft from "./Components/AppBar";
+import {PrivateRoute} from "./Auth/PrivateRoute";
 
 function App() {
   return (
     <div className="App">
-      <div style={{paddingBottom: "100px"}}>
         <PersistentDrawerLeft/>
-      </div>
-      <Switch>
+        <Switch>
         <Route exact path="/">
-          <div>Hola</div>
+          <div>Home Page</div>
         </Route>
         <Route exact path="/login">
           <Login />
         </Route>
 
-        <Route exact path="/admin">
-          <Administration />
-        </Route>
-      </Switch>
+          <PrivateRoute exact path="/admin">
+              <Administration />
+          </PrivateRoute>
+        </Switch>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import clsx from 'clsx';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -18,12 +18,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import {Link} from "react-router-dom";
+import {useAuth} from "../Auth/useAuth";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
+        paddingBottom: "100px"
     },
     appBar: {
         transition: theme.transitions.create(['margin', 'width'], {
@@ -82,6 +84,7 @@ export default function PersistentDrawerLeft() {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const [user] = useState(useAuth().user);
 
     const handleDrawerOpen = () => {
         setOpen(true);

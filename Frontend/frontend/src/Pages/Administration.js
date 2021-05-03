@@ -8,6 +8,7 @@ import getDecks from "../Resources/getDecks";
 import * as _ from 'lodash';
 import DeckCardWithButtons from "../Components/DeckCardWithButtons";
 import CardList from "../Components/CardList";
+import {useAuth} from "../Auth/useAuth";
 
 const useStyles = makeStyles((theme) => ({
     layout:{
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Administration() {
-
+    const [user] = useState(useAuth().user);
     const [decks, setDecks] = React.useState(getDecks()[0].data);
     const [heroes] = useState(getCards());
     const [left, setLeft] = React.useState(heroes);
