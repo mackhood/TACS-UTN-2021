@@ -1,13 +1,13 @@
 package com.example.TACS2021UTN.models.state;
 
 import com.example.TACS2021UTN.models.Game;
-import com.example.TACS2021UTN.models.user.Player;
+import com.example.TACS2021UTN.models.user.User;
 
 public class Finished extends State{
 
-    private Player winner;
+    private User winner;
 
-    public Finished(Player player){
+    public Finished(User player){
         this.winner = player;
     }
 
@@ -27,7 +27,7 @@ public class Finished extends State{
     }
 
     @Override
-    public Player winner() {
+    public User winner() {
         return this.winner;
     }
 }

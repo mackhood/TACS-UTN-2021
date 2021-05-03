@@ -2,27 +2,20 @@ package com.example.TACS2021UTN.controller;
 
 import com.example.TACS2021UTN.DTO.CardDTO;
 import com.example.TACS2021UTN.DTO.DeckDTO;
-import com.example.TACS2021UTN.DTO.StatusCodeDTO;
 import com.example.TACS2021UTN.DTO.request.DeckRequestDTO;
 import com.example.TACS2021UTN.exceptions.CardNotFoundException;
 import com.example.TACS2021UTN.functions.JSONWrapper;
 import com.example.TACS2021UTN.models.Deck;
-import com.example.TACS2021UTN.models.Card;
 import com.example.TACS2021UTN.exceptions.DeckNotFoundException;
-import com.example.TACS2021UTN.models.user.Admin;
-import com.example.TACS2021UTN.repositories.deck.IDeckRepository;
 import com.example.TACS2021UTN.service.deck.IDeckService;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import java.util.List;
-import java.util.ArrayList;
 
 @RestController
 public class DeckController {
@@ -35,6 +28,7 @@ public class DeckController {
     }
 
     @GetMapping("/decks")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<JSONWrapper>  getAllDecks()
     {
 

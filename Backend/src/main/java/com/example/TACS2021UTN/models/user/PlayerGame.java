@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 public class PlayerGame {
     @JsonIdentityReference(alwaysAsId = true)
-    private Player player;
+    private User player;
     @JsonIgnore
     private Game game;
     @JsonIdentityReference(alwaysAsId = true)
@@ -24,7 +24,7 @@ public class PlayerGame {
 
     private Boolean isMyTurn = false;
 
-    public PlayerGame(Player player, Game game)
+    public PlayerGame(User player, Game game)
     {
         this.player = player;
         this.game = game;

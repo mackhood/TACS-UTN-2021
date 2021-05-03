@@ -3,14 +3,11 @@ package com.example.TACS2021UTN.models;
 
 import com.example.TACS2021UTN.models.state.Created;
 import com.example.TACS2021UTN.models.state.State;
-import com.example.TACS2021UTN.models.user.Player;
 import com.example.TACS2021UTN.models.user.PlayerGame;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.example.TACS2021UTN.models.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Transient;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +29,7 @@ public class Game extends PersistantEntity {
     private State state;
 
 
-    public Game(Player creator, Player challenged, Deck deck) {
+    public Game(User creator, User challenged, Deck deck) {
         this.creator =  new PlayerGame(creator, this);
         this.challenged =  new PlayerGame(challenged, this);
         this.deck = deck;

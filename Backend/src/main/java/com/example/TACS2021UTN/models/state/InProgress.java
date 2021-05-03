@@ -1,7 +1,7 @@
 package com.example.TACS2021UTN.models.state;
 
 import com.example.TACS2021UTN.models.Game;
-import com.example.TACS2021UTN.models.user.Player;
+import com.example.TACS2021UTN.models.user.User;
 
 public class InProgress extends State {
 
@@ -22,7 +22,7 @@ public class InProgress extends State {
     }
 
     @Override
-    public Player winner() {
+    public User winner() {
         return null;
     }
 }
