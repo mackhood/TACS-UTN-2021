@@ -1,16 +1,14 @@
 package com.example.TACS2021UTN.service.game;
 
 import com.example.TACS2021UTN.DTO.GameDTO;
-import com.example.TACS2021UTN.DTO.GameStatisticsDTO;
 import com.example.TACS2021UTN.DTO.GamesStatisticsDTO;
 import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.models.Game;
-import com.example.TACS2021UTN.models.user.Player;
-import com.example.TACS2021UTN.repositories.IPlayerRepository;
+import com.example.TACS2021UTN.models.user.User;
 import com.example.TACS2021UTN.repositories.deck.IDeckRepository;
 import com.example.TACS2021UTN.repositories.game.IGameRepository;
+import com.example.TACS2021UTN.repositories.user.IUserRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,13 +22,13 @@ public class GameService implements IGameService {
     private ModelMapper modelMapper;
 
     private IGameRepository gameRepository;
-    private IPlayerRepository playerRepository;
+    private IUserRepository userRepository;
     private IDeckRepository deckRepository;
 
-    public GameService(IGameRepository gameRepository, IPlayerRepository playerRepository, IDeckRepository deckRepository, ModelMapper modelMapper){
+    public GameService(IGameRepository gameRepository, IUserRepository userRepository, IDeckRepository deckRepository, ModelMapper modelMapper){
         this.deckRepository = deckRepository;
         this.gameRepository = gameRepository;
-        this.playerRepository = playerRepository;
+        this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -42,8 +40,8 @@ public class GameService implements IGameService {
 
     @Override
     public GameDTO createNewGame(GameDTO gameDTO) {
-        Optional<Player> aCreator = playerRepository.findById(gameDTO.getCreatorId());
-        Optional<Player> aChallenged = playerRepository.findById(gameDTO.getChallengedId());
+        Optional<User> aCreator = userRepository.findById(gameDTO.getCreatorId());
+        Optional<User> aChallenged = userRepository.findById(gameDTO.getChallengedId());
         Optional<Deck> aDeck = deckRepository.findById(gameDTO.getDeckId());
 
         if(true){
@@ -56,7 +54,7 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public void leaveGame(Long id, Player player) {
+    public void leaveGame(Long id, User player) {
         gameRepository.leaveGame(id, player);
     }
 

@@ -2,7 +2,7 @@ package com.example.TACS2021UTN.repositories.game;
 
 import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.models.Game;
-import com.example.TACS2021UTN.models.user.Player;
+import com.example.TACS2021UTN.models.user.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,14 +38,14 @@ public class GameRepository implements IGameRepository {
     }
 
     @Override
-    public Game createNewGame(Player creator, Player challenged, Deck deck) {
+    public Game createNewGame(User creator, User challenged, Deck deck) {
         Game newGame = new Game(creator, challenged, deck);
         database.add(newGame);
         return newGame;
     }
 
     @Override
-    public Game leaveGame(Long id, Player player) {
+    public Game leaveGame(Long id, User player) {
         List<Game> games = this.database;
         Game gameSearched = null;
         for(Game game : games){
@@ -76,7 +76,7 @@ public class GameRepository implements IGameRepository {
         return filtered;
     }
 
-    private void playerLeavesGame(Player player, Game game){
+    private void playerLeavesGame(User player, Game game){
         if(game.getIdFromCreator().equals(player.getId())){
             //game.setState(new Finished(game.getChallenged().getPlayer()));
         }

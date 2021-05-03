@@ -2,8 +2,8 @@ package com.example.TACS2021UTN.models.state;
 
 import com.example.TACS2021UTN.models.Card;
 import com.example.TACS2021UTN.models.Game;
-import com.example.TACS2021UTN.models.user.Player;
 import com.example.TACS2021UTN.models.user.PlayerGame;
+import com.example.TACS2021UTN.models.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public class Created extends State{
     }
 
     @Override
-    public Player winner() {
+    public User winner() {
         return null;
     }
 

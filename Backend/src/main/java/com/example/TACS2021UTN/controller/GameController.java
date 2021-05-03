@@ -4,14 +4,9 @@ import com.example.TACS2021UTN.DTO.*;
 import com.example.TACS2021UTN.exceptions.BadDatesInserted;
 import com.example.TACS2021UTN.functions.DateAnalizer;
 import com.example.TACS2021UTN.functions.JSONWrapper;
-import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.models.Duel;
-import com.example.TACS2021UTN.models.Game;
-import com.example.TACS2021UTN.models.user.Player;
+import com.example.TACS2021UTN.models.user.User;
 import com.example.TACS2021UTN.service.game.IGameService;
-import com.fasterxml.jackson.core.json.JsonWriteContext;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class GameController {
@@ -51,9 +45,9 @@ public class GameController {
     @GetMapping("/games/{id}/replay")
     public ResponseEntity<JSONWrapper> getDuels(@PathVariable(value = "id") Long id) {
 
-        Player player1 = new Player();
+        User player1 = new User();
         player1.setId((long) 1);
-        player1.setName("A");
+        player1.setUsername("A");
 
         List<Duel> duels = new ArrayList<>();
 
@@ -73,9 +67,9 @@ public class GameController {
 
     @PostMapping("/games/{id}/dropout")
     public ResponseEntity endGame(@PathVariable(value = "id") Long id) {
-        Player player1 = new Player();
+        User player1 = new User();
         player1.setId((long) 1);
-        player1.setName("A");
+        player1.setUsername("A");
 
         List<Duel> duels = new ArrayList<>();
 
