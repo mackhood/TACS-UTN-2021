@@ -7,6 +7,7 @@ import {
   Link
 } from "react-router-dom";
 import Login from "./Pages/Login";
+import TransferList from "./Components/TransferList";
 
 function App() {
   return (
@@ -34,7 +35,7 @@ function App() {
         </Route>
 
         <Route exact path="/decks">
-          <div>Hola</div>
+          <TransferList />
         </Route>
       </Switch>
     </div>
