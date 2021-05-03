@@ -32,9 +32,9 @@ public class Card extends PersistantEntity{
     //TODO make entity attribute and refactor
     public Boolean correctCard(){
 
-        return !this.name.equals(null) && !this.strength.equals(null) && !this.intelligence.equals(null)
-                && !this.speed.equals(null) && !this.durability.equals(null) && !this.power.equals(null)
-                && !this.combat.equals(null);
+        return this.name != null && this.strength != null && this.intelligence != null
+                && this.speed != null && this.durability != null && this.power != null
+                && this.combat != null;
     }
 
 
