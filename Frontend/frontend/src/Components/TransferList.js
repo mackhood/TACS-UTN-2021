@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Divider from "@material-ui/core/Divider";
 import CardHeader from "@material-ui/core/CardHeader";
-import HeroeCard from "./HeroeCard";
 
 const useStyles = makeStyles((theme) => ({
     root: {
