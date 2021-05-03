@@ -73,6 +73,7 @@ public class DeckService implements IDeckService {
 //                System.out.println("Card does not have all the attributes");//TODO Message for response
                 //card not available message showned
                 throw new CardNotFoundException("card does not have all the attributes needed");
+
             }
 
         }
