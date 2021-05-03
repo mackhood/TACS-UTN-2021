@@ -1,26 +1,16 @@
 import './App.css';
 import React from "react";
-import {Link, Route, Switch} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import Login from "./Pages/Login";
 import Administration from "./Pages/Administration";
+import PersistentDrawerLeft from "./Components/AppBar";
 
 function App() {
   return (
     <div className="App">
       <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/admin">Gestionar Mazos</Link>
-          </li>
-        </ul>
+        <PersistentDrawerLeft/>
       </div>
-        <hr />
       <Switch>
         <Route exact path="/">
           <div>Hola</div>
