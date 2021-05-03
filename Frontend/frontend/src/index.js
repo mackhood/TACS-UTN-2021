@@ -3,10 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter as Router} from "react-router-dom";
+import {ProvideAuth} from "./Auth/ProvideAuth";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <ProvideAuth>
+          <Router>
+              <App />
+          </Router>
+      </ProvideAuth>
+
   </React.StrictMode>,
   document.getElementById('root')
 );
