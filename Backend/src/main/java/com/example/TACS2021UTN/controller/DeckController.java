@@ -30,6 +30,7 @@ public class DeckController {
     @GetMapping("/decks")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<JSONWrapper>  getAllDecks()
+
     {
 
         return ResponseEntity.ok(new JSONWrapper<>((List<DeckDTO>) service.getAllDecks()));

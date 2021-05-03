@@ -1,6 +1,8 @@
 package com.example.TACS2021UTN.service.user;
 
+import com.example.TACS2021UTN.DTO.RoleDTO;
 import com.example.TACS2021UTN.DTO.TokenDTO;
+import com.example.TACS2021UTN.DTO.UserDTO;
 import com.example.TACS2021UTN.DTO.request.LoginRequestDTO;
 import com.example.TACS2021UTN.models.user.User;
 import com.example.TACS2021UTN.models.user.UserPrincipal;
@@ -10,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService implements IUserService, UserDetailsService {
@@ -29,6 +34,8 @@ public class UserService implements IUserService, UserDetailsService {
         return UserPrincipal.create(user);
     }
 
+
+
     @Override
     public TokenDTO authenticate(LoginRequestDTO loginRequestDTO)
     {
@@ -39,8 +46,18 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     public User findByUserName(String username) throws UsernameNotFoundException{
-        return this.userRepository.findByUserName(username).orElseThrow(
+        User user = this.userRepository.findByUserName(username).orElseThrow(
                 () -> new UsernameNotFoundException("User not found: " + username)
         );
+
+        return user;
     }
+
+    public void save(User user) throws UsernameNotFoundException{
+
+        userRepository.save(user);
+
+
+    }
+
 }
