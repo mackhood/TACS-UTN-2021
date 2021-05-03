@@ -1,11 +1,6 @@
 import './App.css';
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import {Link, Route, Switch} from "react-router-dom";
 import Login from "./Pages/Login";
 import TransferList from "./Components/TransferList";
 

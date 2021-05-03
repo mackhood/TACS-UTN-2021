@@ -1,5 +1,5 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useState} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -11,6 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import getCards from "../Resources/getCards";
 import Divider from "@material-ui/core/Divider";
 import CardHeader from "@material-ui/core/CardHeader";
+import HeroeCard from "./HeroeCard";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -40,7 +41,8 @@ function intersection(a, b) {
 export default function TransferList() {
     const classes = useStyles();
     const [checked, setChecked] = React.useState([]);
-    const [left, setLeft] = React.useState(getCards());
+    const [heores] = useState(getCards());
+    const [left, setLeft] = React.useState(heores);
     const [right, setRight] = React.useState([]);
 
     const leftChecked = intersection(checked, left);
@@ -103,55 +105,74 @@ export default function TransferList() {
     );
 
     return (
-        <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
-            <Grid item>
-                <CardHeader
-                    className={classes.cardHeader}
-                    title={"Todas las cartas"}
-                />
-                {customList(left)}
-            </Grid>
-            <Grid item>
-                <Grid container direction="column" alignItems="center">
-                    <Button
-                        variant="outlined"
-                        size="small"
-                        className={classes.button}
-                        onClick={handleCheckedRight}
-                        disabled={leftChecked.length === 0}
-                        aria-label="move selected right"
-                    >
-                        &gt;
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        size="small"
-                        className={classes.button}
-                        onClick={handleCheckedLeft}
-                        disabled={rightChecked.length === 0}
-                        aria-label="move selected left"
-                    >
-                        &lt;
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        size="small"
-                        className={classes.button}
-                        onClick={handleAllLeft}
-                        disabled={right.length === 0}
-                        aria-label="move all left"
-                    >
-                        ≪
-                    </Button>
+        <div>
+            <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
+                <Grid item>
+                    <CardHeader
+                        className={classes.cardHeader}
+                        title={"Todas las cartas"}
+                    />
+                    {customList(left)}
                 </Grid>
+                <Grid item>
+                    <Grid container direction="column" alignItems="center">
+                        <Button
+                            variant="outlined"
+                            size="small"
+                            className={classes.button}
+                            onClick={handleCheckedRight}
+                            disabled={leftChecked.length === 0}
+                            aria-label="move selected right"
+                        >
+                            &gt;
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            size="small"
+                            className={classes.button}
+                            onClick={handleCheckedLeft}
+                            disabled={rightChecked.length === 0}
+                            aria-label="move selected left"
+                        >
+                            &lt;
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            size="small"
+                            className={classes.button}
+                            onClick={handleAllLeft}
+                            disabled={right.length === 0}
+                            aria-label="move all left"
+                        >
+                            ≪
+                        </Button>
+                    </Grid>
+                </Grid>
+                <Grid item>
+                    <CardHeader
+                        className={classes.cardHeader}
+                        title={"Nuevo Mazo"}
+                    />
+                    {customList(right)}
+                </Grid>
+                <Divider variant={"fullWidth"}/>
+
             </Grid>
-            <Grid item>
-                <CardHeader
-                    className={classes.cardHeader}
-                    title={"Nuevo Mazo"}
-                />
-                {customList(right)}
+            <Grid container spacing={2} justify={"center"} alignItems={"center"}>
+                {heores.map((heroe) => {
+                    return (
+                        <div>
+                            <HeroeCard
+                                name={heroe.name}
+                                powerstats={heroe.powerstats}
+                                image={heroe.image}
+                            />
+                        </div>
+
+                        )
+                })}
+
             </Grid>
-        </Grid>
+        </div>
     );
 }
