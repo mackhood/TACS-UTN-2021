@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 export default function DeckCardWithButtons(props) {
     const classes = useStyles();
 
-    const {deck, deleteDeck, populateDeck} = props;
+    const {deck, deleteDeck, showDeck, populateDeck} = props;
 
     return (
         <Card className={classes.root}>
@@ -37,7 +37,7 @@ export default function DeckCardWithButtons(props) {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary" onClick={() => {}}>
+                <Button size="small" color="primary" onClick={() => {showDeck(deck)}}>
                     Ver
                 </Button>
                 <Button size="small" color="primary" onClick={() => populateDeck(deck)}>

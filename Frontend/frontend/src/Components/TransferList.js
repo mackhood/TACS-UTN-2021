@@ -155,22 +155,6 @@ export default function TransferList(props) {
                     {customList(right)}
                 </Grid>
                 <Divider variant={"fullWidth"}/>
-
-            </Grid>
-            <Grid container spacing={2} justify={"center"} alignItems={"center"}>
-                {right.map((heroe, index) => {
-                    return (
-                        <Grid item xs={12} sm={6} key={index}>
-                            <HeroeCard
-                                name={heroe.name}
-                                powerstats={heroe.powerstats}
-                                image={heroe.image}
-                            />
-                        </Grid>
-
-                        )
-                })}
-
             </Grid>
         </div>
     );

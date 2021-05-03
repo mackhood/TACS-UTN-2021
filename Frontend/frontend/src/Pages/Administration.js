@@ -7,6 +7,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import getDecks from "../Resources/getDecks";
 import * as _ from 'lodash';
 import DeckCardWithButtons from "../Components/DeckCardWithButtons";
+import CardList from "../Components/CardList";
 
 const useStyles = makeStyles((theme) => ({
     layout:{
@@ -29,6 +30,8 @@ export default function Administration() {
     const [left, setLeft] = React.useState(heroes);
     const [right, setRight] = React.useState([]);
     const [creating, setCreating] = useState(true);
+
+    const [cards, setCards] = useState([]);
 
     const [currentDeck, setCurrentDeck] = useState({});
 
@@ -58,18 +61,23 @@ export default function Administration() {
     }
 
     const populateDeck = (deck) => {
+        setLeft(heroes);
         let deckIds = deck.cardList.map(function (obj) {
             return obj.id
         }).concat(right.map(function (obj) {
             return obj.id
         })).sort();
-        let newObj = _.filter(left, function (card) {
+        let newLeft = _.filter(left, function (card) {
             return _.indexOf(deckIds, card.id) === -1;
         });
         setCreating(false);
         setCurrentDeck(deck);
-        setLeft(newObj);
+        setLeft(newLeft);
         setRight(deck.cardList);
+    }
+
+    const showDeck = (deck) => {
+        setCards(deck.cardList);
     }
 
     return (
@@ -81,6 +89,7 @@ export default function Administration() {
                         <Grid item xs={12} sm={4} key={index}>
                             <DeckCardWithButtons
                                 deck={deck}
+                                showDeck={showDeck}
                                 deleteDeck={deleteDeck}
                                 populateDeck={populateDeck}
                             />
@@ -105,6 +114,7 @@ export default function Administration() {
                         setRight={setRight}
                     />
                 </Grid>
+                <CardList cards={cards}/>
             </Grid>
 
         </div>
