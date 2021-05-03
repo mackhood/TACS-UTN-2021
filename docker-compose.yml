@@ -23,7 +23,8 @@ services:
       DB_NAME: tacs_db
       DB_USER: root
       DB_USER_PASSWORD: root
-      SPRING_DATASOURCE_URL: jdbc:mysql://tacs_db:3306/tacs_db?autoReconnect=true&useSSL=false
+      SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb
+      API_SUPERHERO_URL: https://superheroapi.com/api/${SUPERHERO_TOKEN}/
     ports:
       - '8087:8080'
     depends_on:
