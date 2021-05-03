@@ -91,16 +91,28 @@ public class DeckService implements IDeckService {
     }
 
     @Override
-    public void updateDeck(Long deckId, Deck deckDetails) throws DeckNotFoundException {
+    public void updateDeck(Long deckId, DeckRequestDTO deckRequest) throws DeckNotFoundException, CardNotFoundException {
 
         Deck deck = deckRepository.findById(deckId)
                 .orElseThrow(() -> new NotFoundException(
                         "Deck not found with id: " + deckId.toString())
                 );
 
-        deck.setCardList(deckDetails.getCardList());
-        deck.setName(deckDetails.getName());
-        deckRepository.save(deck);
+        List<Card> cardList = new ArrayList<>();
+
+        for(Long cardId : deckRequest.getCardListId()){
+            Card card = cardRepository.findById(cardId).orElseThrow(() -> new NotFoundException("Card not found with id: " + cardId));
+            if(card.correctCard()) {
+                cardList.add(card); //validation of the card if it has all the attributes
+            }else{
+                throw new CardNotFoundException("card does not have all the attributes needed");
+            }
+
+        }
+
+        deck.setCardList(cardList);
+        deck.setName(deckRequest.getName());
+        deckRepository.update(deck);
 
     }
 

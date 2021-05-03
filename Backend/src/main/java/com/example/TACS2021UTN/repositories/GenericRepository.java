@@ -25,9 +25,16 @@ public abstract class GenericRepository<T extends PersistantEntity> {
         return maxId;
     }
 
+    //TODO for updating an existing object it will always create a new one
     public void save(T deckToSave) {
         deckToSave.setId(nextId());
         database.add(deckToSave);
+    }
+
+//TODO I would use jpa to avoid this problems implementation
+    public void update(T deckToUpdate){
+        deleteById(deckToUpdate.getId());
+        database.add(deckToUpdate);
     }
 
     public Optional<T> findById(Long id){
