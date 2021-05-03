@@ -23,7 +23,8 @@ public class GameRepository implements IGameRepository {
     private List<Game> database;
 
     public GameRepository() {
-        this.database = load();
+        //this.database = load(); spirng does gives error
+        //TODO i think the only game required should be load up in the memory
     }
 
     @Override

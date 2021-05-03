@@ -10,6 +10,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter @Setter @NoArgsConstructor
 @AllArgsConstructor
 public class Card extends PersistantEntity{
@@ -21,4 +24,21 @@ public class Card extends PersistantEntity{
     private Integer durability;
     private Integer power;
     private Integer combat;
+
+
+    /**
+     * @return validates if the card is correct to be added to the deck
+     */
+    //TODO make entity attribute and refactor
+    public Boolean correctCard(){
+
+        return this.name != null && this.strength != null && this.intelligence != null
+                && this.speed != null && this.durability != null && this.power != null
+                && this.combat != null;
+    }
+
+
+
+
+
 }

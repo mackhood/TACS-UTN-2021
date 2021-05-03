@@ -17,4 +17,6 @@ public interface IDeckRepository {
     void delete(Deck deck);
 
     void deleteById(Long id);
+
+    void update(Deck deck);
 }

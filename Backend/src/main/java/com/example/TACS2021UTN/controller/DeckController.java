@@ -4,6 +4,7 @@ import com.example.TACS2021UTN.DTO.CardDTO;
 import com.example.TACS2021UTN.DTO.DeckDTO;
 import com.example.TACS2021UTN.DTO.StatusCodeDTO;
 import com.example.TACS2021UTN.DTO.request.DeckRequestDTO;
+import com.example.TACS2021UTN.exceptions.CardNotFoundException;
 import com.example.TACS2021UTN.functions.JSONWrapper;
 import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.models.Card;
@@ -49,11 +50,14 @@ public class DeckController {
 
     @PostMapping("/decks")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity createNewDeck(@Valid @RequestBody DeckRequestDTO newDeck)
-    {
+    public ResponseEntity createNewDeck(@Valid @RequestBody DeckRequestDTO newDeck) throws CardNotFoundException {
 
-        service.save(newDeck);
-        return ResponseEntity.status(204).build();
+        try{
+            service.save(newDeck);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("/decks/{id}")
@@ -64,8 +68,9 @@ public class DeckController {
     }
 
     @PutMapping("/decks/{id}")
-    public ResponseEntity<?> modifyDeck(@Valid @RequestBody DeckDTO deckModified, @PathVariable Long id) throws DeckNotFoundException {
-        return ResponseEntity.noContent().build();
+    public ResponseEntity modifyDeck(@Valid @RequestBody DeckRequestDTO deckModified, @PathVariable Long id) throws DeckNotFoundException, CardNotFoundException {
+        service.updateDeck(id,deckModified);
+        return ResponseEntity.status(204).build();
     }
 
 
