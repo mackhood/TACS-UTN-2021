@@ -54,6 +54,7 @@ export default function Administration() {
     }
 
     const populateDeck = (deck) => {
+        console.log(deck);
         let nonSelectedHeroes = _.differenceWith(left, deck.cardList, ({ id }, { associatedID }) => id === associatedID);
         setCreating(false);
         setLeft(nonSelectedHeroes);
@@ -62,14 +63,12 @@ export default function Administration() {
 
     return (
         <div className={classes.layout}>
-
             <Grid container alignItems={"center"} alignContent={"center"}>
                 <div style={{width:"100%"}}>DECKS</div>
 
                     {decks.map((deck, index) => (
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} sm={4} key={index}>
                             <DeckCardWithButtons
-                                key={index}
                                 deck={deck}
                                 updateDeck={updateDeck}
                                 deleteDeck={deleteDeck}
@@ -79,20 +78,25 @@ export default function Administration() {
                     ))}
 
             </Grid>
-            <TransferList
-                left={left}
-                setLeft={setLeft}
-                right={right}
-                setRight={setRight}
-            />
             <Grid container spacing={4} alignItems={"center"} alignContent={"center"}>
-                <Button variant="contained" color="primary" disabled={right.length == 0} onClick={() => {
-                    creating ? createDeck(right) : updateDeck(right);
-                    setCreating(true);
-                }}>
-                    {creating ? 'Crear Mazo' : 'Actualizar Mazo'}
-                </Button>
+                <Grid item xs={12}>
+                    <Button variant="contained" color="primary" disabled={right.length === 0} onClick={() => {
+                        creating ? createDeck(right) : updateDeck(right);
+                        setCreating(true);
+                    }}>
+                        {creating ? 'Crear Mazo' : 'Actualizar Mazo'}
+                    </Button>
+                </Grid>
+                <Grid item xs={12}>
+                    <TransferList
+                        left={left}
+                        setLeft={setLeft}
+                        right={right}
+                        setRight={setRight}
+                    />
+                </Grid>
             </Grid>
+
         </div>
     );
 }

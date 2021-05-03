@@ -81,11 +81,11 @@ export default function TransferList(props) {
         <Paper className={classes.paper}>
             <Divider/>
             <List dense component="div" role="list">
-                {items.map((value) => {
+                {items.map((value, index) => {
                     const labelId = `transfer-list-item-${value.id}-label`;
 
                     return (
-                        <ListItem key={value.id} role="listitem" button onClick={handleToggle(value)}>
+                        <ListItem key={index} role="listitem" button onClick={handleToggle(value)}>
                             <ListItemIcon>
                                 <Checkbox
                                     checked={checked.indexOf(value) !== -1}
@@ -158,9 +158,9 @@ export default function TransferList(props) {
 
             </Grid>
             <Grid container spacing={2} justify={"center"} alignItems={"center"}>
-                {right.map((heroe) => {
+                {right.map((heroe, index) => {
                     return (
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} sm={6} key={index}>
                             <HeroeCard
                                 name={heroe.name}
                                 powerstats={heroe.powerstats}

@@ -8,7 +8,7 @@ import PersistentDrawerLeft from "./Components/AppBar";
 function App() {
   return (
     <div className="App">
-      <div>
+      <div style={{paddingBottom: "100px"}}>
         <PersistentDrawerLeft/>
       </div>
       <Switch>
