@@ -30,20 +30,24 @@ export default function Administration() {
     const [right, setRight] = React.useState([]);
     const [creating, setCreating] = useState(true);
 
+    const [currentDeck, setCurrentDeck] = useState({});
+
     const classes = useStyles();
 
     const createDeck = (newDeck) => {
-        let newDecks = _.union(decks, [newDeck]);
+        let newDecks = _.union(decks, [{id :-1, name:"saraza", cardList:newDeck}]);
         setDecks(newDecks);
         setLeft(heroes);
         setRight([]);
     }
     const updateDeck = (deck) => {
         let newDecks = _.map(decks, function (elem) {
-            return elem.id === deck.id ? deck : elem;
+            return elem.id === currentDeck.id ? {...deck, cardList: deck} : elem;
         });
         setDecks(newDecks);
-
+        setLeft(heroes);
+        setRight([]);
+        setCurrentDeck({});
     }
 
     const deleteDeck = (deckId) => {
@@ -54,10 +58,17 @@ export default function Administration() {
     }
 
     const populateDeck = (deck) => {
-        console.log(deck);
-        let nonSelectedHeroes = _.differenceWith(left, deck.cardList, ({ id }, { associatedID }) => id === associatedID);
+        let deckIds = deck.cardList.map(function (obj) {
+            return obj.id
+        }).concat(right.map(function (obj) {
+            return obj.id
+        })).sort();
+        let newObj = _.filter(left, function (card) {
+            return _.indexOf(deckIds, card.id) === -1;
+        });
         setCreating(false);
-        setLeft(nonSelectedHeroes);
+        setCurrentDeck(deck);
+        setLeft(newObj);
         setRight(deck.cardList);
     }
 
@@ -70,7 +81,6 @@ export default function Administration() {
                         <Grid item xs={12} sm={4} key={index}>
                             <DeckCardWithButtons
                                 deck={deck}
-                                updateDeck={updateDeck}
                                 deleteDeck={deleteDeck}
                                 populateDeck={populateDeck}
                             />

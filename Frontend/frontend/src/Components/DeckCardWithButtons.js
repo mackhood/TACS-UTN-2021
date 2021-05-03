@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 export default function DeckCardWithButtons(props) {
     const classes = useStyles();
 
-    const {deck, updateDeck, deleteDeck, populateDeck} = props;
+    const {deck, deleteDeck, populateDeck} = props;
 
     return (
         <Card className={classes.root}>
