@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
@@ -8,7 +8,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-import getCards from "../Resources/getCards";
 import Divider from "@material-ui/core/Divider";
 import CardHeader from "@material-ui/core/CardHeader";
 import HeroeCard from "./HeroeCard";
@@ -38,12 +37,12 @@ function intersection(a, b) {
     return a.filter((value) => b.indexOf(value) !== -1);
 }
 
-export default function TransferList() {
+export default function TransferList(props) {
     const classes = useStyles();
+
+    const {decks, left, setLeft, right, setRight} = props;
     const [checked, setChecked] = React.useState([]);
-    const [heores] = useState(getCards());
-    const [left, setLeft] = React.useState(heores);
-    const [right, setRight] = React.useState([]);
+
 
     const leftChecked = intersection(checked, left);
     const rightChecked = intersection(checked, right);
@@ -106,7 +105,7 @@ export default function TransferList() {
 
     return (
         <div>
-            <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
+            <Grid container spacing={4} justify="center" alignItems="center" className={classes.root}>
                 <Grid item>
                     <CardHeader
                         className={classes.cardHeader}
@@ -159,15 +158,15 @@ export default function TransferList() {
 
             </Grid>
             <Grid container spacing={2} justify={"center"} alignItems={"center"}>
-                {heores.map((heroe) => {
+                {right.map((heroe) => {
                     return (
-                        <div>
+                        <Grid item xs={12} sm={6}>
                             <HeroeCard
                                 name={heroe.name}
                                 powerstats={heroe.powerstats}
                                 image={heroe.image}
                             />
-                        </div>
+                        </Grid>
 
                         )
                 })}

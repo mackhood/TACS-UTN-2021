@@ -2,7 +2,7 @@ import './App.css';
 import React from "react";
 import {Link, Route, Switch} from "react-router-dom";
 import Login from "./Pages/Login";
-import TransferList from "./Components/TransferList";
+import Administration from "./Pages/Administration";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
             <Link to="/login">Login</Link>
           </li>
           <li>
-            <Link to="/decks">Mazos</Link>
+            <Link to="/admin">Gestionar Mazos</Link>
           </li>
         </ul>
       </div>
@@ -29,8 +29,8 @@ function App() {
           <Login />
         </Route>
 
-        <Route exact path="/decks">
-          <TransferList />
+        <Route exact path="/admin">
+          <Administration />
         </Route>
       </Switch>
     </div>
