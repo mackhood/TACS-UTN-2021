@@ -183,6 +183,33 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"admin\",\"password\":\"admin\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -258,6 +285,16 @@
 				{
 					"name": "Listar Mazos - OK",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjIwMTU4MjQ4LCJleHAiOjE2MjAxNTg4NDh9.tDdlC5diEna5LwGfWkkr7uBDUJaqADiUYCBFs5AY1mE",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -276,17 +313,27 @@
 				{
 					"name": "Ver Mazo - OK",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjIwMTQ4NjgzLCJleHAiOjE2MjAxNDkyODN9.qHsYusPmdtXnypKrQuMuWUez6eSmbPFCWk8m1LoV9pM",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/decks/1",
+							"raw": "localhost:8080/decks/7",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"decks",
-								"1"
+								"7"
 							]
 						}
 					},
@@ -324,17 +371,32 @@
 				{
 					"name": "Crear Mazo - OK",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjIwMTU4MjQ4LCJleHAiOjE2MjAxNTg4NDh9.tDdlC5diEna5LwGfWkkr7uBDUJaqADiUYCBFs5AY1mE",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json",
 								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": 1,\n    \"name\": \"Mazo Ganador\",\n    \"cardList\": [\n        {\n            \"id\": 1,\n            \"name\": \"Batman\",\n            \"strength\": null,\n            \"intelligence\": 100,\n            \"speed\": 27,\n            \"durability\": 35,\n            \"power\": 50,\n            \"combat\": 70\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Robin\",\n            \"strength\": null,\n            \"intelligence\": 7,\n            \"speed\": 33,\n            \"durability\": 25,\n            \"power\": 30,\n            \"combat\": 50\n        }\n    ]\n}"
+							"raw": "{\"name\":\"mazo 7\",\"cardListId\":[1]}"
 						},
 						"url": {
 							"raw": "localhost:8080/decks",
@@ -576,6 +638,16 @@
 				{
 					"name": "Listar Cartas - OK",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjIwMTQ4NjgzLCJleHAiOjE2MjAxNDkyODN9.qHsYusPmdtXnypKrQuMuWUez6eSmbPFCWk8m1LoV9pM",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
