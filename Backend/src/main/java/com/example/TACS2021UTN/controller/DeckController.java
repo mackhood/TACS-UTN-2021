@@ -10,13 +10,16 @@ import com.example.TACS2021UTN.exceptions.DeckNotFoundException;
 import com.example.TACS2021UTN.service.deck.IDeckService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
+
 import org.springframework.http.ResponseEntity;
 
 import javax.validation.Valid;
 
 import java.util.List;
 
+@CrossOrigin(origins ="*",maxAge = 3600)
 @RestController
 public class DeckController {
 
