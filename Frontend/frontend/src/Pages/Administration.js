@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import DeckCardWithButtons from "../Components/DeckCardWithButtons";
 import CardList from "../Components/CardList";
 import {useAuth} from "../Auth/useAuth";
+import AdminService from "../Api/AdminService";
 
 const useStyles = makeStyles((theme) => ({
     layout:{
@@ -38,27 +39,38 @@ export default function Administration() {
 
     const classes = useStyles();
 
-    const createDeck = (newDeck) => {
+    const createDeck = async (newDeck) => {
         let newDecks = _.union(decks, [{id :-1, name:"saraza", cardList:newDeck}]);
-        setDecks(newDecks);
+        await AdminService.createDeck(newDeck, user).then(res => {
+            console.log(res, 'res');
+            setDecks(newDecks);
+        }).catch(err => console.log(err, 'err'));
         setLeft(heroes);
         setRight([]);
     }
-    const updateDeck = (deck) => {
+    const updateDeck = async (deck) => {
         let newDecks = _.map(decks, function (elem) {
             return elem.id === currentDeck.id ? {...deck, cardList: deck} : elem;
         });
-        setDecks(newDecks);
+        await AdminService.modifyDeck(deck, user).then(res => {
+            console.log(res, 'res');
+            setDecks(newDecks);
+        }).catch(err => console.log(err));
+
         setLeft(heroes);
         setRight([]);
         setCurrentDeck({});
     }
 
-    const deleteDeck = (deckId) => {
+    const deleteDeck = async (deckId) => {
         let newDecks = _.filter(decks, function (elem) {
             return elem.id !== deckId;
         });
-        setDecks(newDecks);
+        await AdminService.deleteDeck(deckId, user).then(res => {
+            console.log(res);
+            setDecks(newDecks);
+        }).catch(err=>console.log(err));
+
     }
 
     const populateDeck = (deck) => {

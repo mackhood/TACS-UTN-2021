@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useAuth} from "../Auth/useAuth";
-import {useHistory, useLocation} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 
 function Copyright() {
     return (
@@ -52,7 +52,6 @@ export default function Login() {
     const classes = useStyles();
 
     let history = useHistory();
-    let location = useLocation();
     let auth = useAuth();
 
     let login = (e) => {
