@@ -18,6 +18,7 @@ services:
       environment:
         REACT_APP_LOGIN_REST_API_URL: backend
         REACT_APP_DECK_REST_API_URL: backend/decks
+        REACT_APP_CARD_REST_API_URL: backend/cards
 
     backend:
       image: openjdk:8-jdk-alpine
