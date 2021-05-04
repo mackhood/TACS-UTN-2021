@@ -69,10 +69,10 @@ export default function Administration() {
         setCurrentDeck({});
     }
     const deleteDeck = async (deckId) => {
-        let newDecks = _.filter(decks, function (elem) {
-            return elem.id !== deckId;
-        });
         await AdminService.deleteDeck(deckId, user).then(res => {
+            let newDecks = _.filter(decks, function (elem) {
+                return elem.id !== deckId;
+            });
             setDecks(newDecks);
         }).catch(err=>console.log(err));
 

@@ -17,13 +17,13 @@ class AdminService{
     }
 
     modifyDeck(deck, token){
-        return axios.put(REACT_APP_DECK_REST_API_URL + '/' + deck.id , this.generateBody(deck), {
+        return axios.put(REACT_APP_DECK_REST_API_URL + '/' + parseInt(deck.id) , this.generateBody(deck), {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
         });
     }
     deleteDeck(deckId, token){
-        return axios.delete(REACT_APP_DECK_REST_API_URL + '/' + deckId , {
+        return axios.delete(REACT_APP_DECK_REST_API_URL + '/' + parseInt(deckId) , {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
         });
