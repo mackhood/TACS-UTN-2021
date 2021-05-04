@@ -28,7 +28,7 @@ public class CardRepository extends GenericRepository<Card> implements ICardRepo
         card3.setId(2L);
         cardList.add(card3);
         Card card4 = new Card("Abomination", 20, 20, 20, 20, 20, 20);
-        card3.setId(4L);
+        card4.setId(4L);
         cardList.add(card4);
         return cardList;
     }

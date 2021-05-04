@@ -9,6 +9,7 @@ import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.exceptions.DeckNotFoundException;
 import com.example.TACS2021UTN.repositories.card.ICardRepository;
 import com.example.TACS2021UTN.repositories.deck.IDeckRepository;
+import com.example.TACS2021UTN.service.card.CardService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -127,7 +128,7 @@ public class DeckService implements IDeckService {
 
         List<Card> deckCards = deck.get().getCardList();
 
-        return deckCards.stream().map(card -> cardToDTO(card)).collect(Collectors.toList());
+        return deckCards.stream().map(card ->CardService.cardToDTO(card)).collect(Collectors.toList());
 
     }
 
@@ -140,7 +141,7 @@ public class DeckService implements IDeckService {
         List<CardDTO> deckDTOList = new ArrayList<>();
 
         for(Card card : deck.getCardList()){
-            CardDTO cardDTO = cardToDTO(card);
+            CardDTO cardDTO = CardService.cardToDTO(card);
             deckDTOList.add(cardDTO);
         }
 
@@ -148,23 +149,6 @@ public class DeckService implements IDeckService {
     }
 
     //TODO: falta implementar
-    private static CardDTO cardToDTO(Card card){
-        CardDTO cardDTO = new CardDTO();
-        cardDTO.setId(card.getId().toString());
-        cardDTO.setName(card.getName());
-        AppearenceStatDTO appearenceStatDTO = new AppearenceStatDTO();//TODO ADD ALL THE ATTRIBUTES to the initial DTO
-        PowerStatDTO powerStatDTO = new PowerStatDTO();
-        powerStatDTO.setPower(card.getPower().toString());
-        powerStatDTO.setCombat(card.getCombat().toString());
-        powerStatDTO.setIntelligence(card.getIntelligence().toString());
-        powerStatDTO.setStrength(card.getStrength().toString());
-        powerStatDTO.setSpeed(card.getSpeed().toString());
 
-        cardDTO.setAppearance(appearenceStatDTO);
-        cardDTO.setPowerstats(powerStatDTO);
-        ImageDTO imageDTO = new ImageDTO();//TODO
-
-        return cardDTO;
-    }
 
 }
