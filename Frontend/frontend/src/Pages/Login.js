@@ -78,10 +78,10 @@ export default function Login() {
                         required
                         fullWidth
                         id="email"
-                        label="Email Address"
+                        label="Email"
                         name="email"
-                        autoComplete="email"
-                        autoFocus
+                        autoComplete="admin"
+                        disabled
                     />
                     <TextField
                         variant="outlined"
@@ -89,10 +89,11 @@ export default function Login() {
                         required
                         fullWidth
                         name="password"
-                        label="Password"
+                        label="Contraseña"
                         type="password"
                         id="password"
-                        autoComplete="current-password"
+                        autoComplete="admin"
+                        disabled
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
