@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -17,8 +17,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {useAuth} from "../Auth/useAuth";
+import Button from "@material-ui/core/Button";
 
 const drawerWidth = 240;
 
@@ -84,7 +85,8 @@ export default function PersistentDrawerLeft() {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    const [user] = useState(useAuth().user);
+    let auth = useAuth();
+    let history = useHistory();
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -93,6 +95,16 @@ export default function PersistentDrawerLeft() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    const logout = () => {
+        auth.signout(() => {
+            history.replace('/login');
+        })
+    };
+
+    function handleLogin() {
+        history.push('/login');
+    }
 
     return (
         <div className={classes.root}>
@@ -116,6 +128,12 @@ export default function PersistentDrawerLeft() {
                     <Typography variant="h6" noWrap>
                         Cartas Cromy
                     </Typography>
+                    {auth.user ?
+                        (<Button onClick={logout}>Logout</Button>) :
+                        (<Button onClick={handleLogin}>Login</Button>)
+                    }
+
+
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -134,19 +152,18 @@ export default function PersistentDrawerLeft() {
                 </div>
                 <Divider />
                 <List>
-                    {[
-                        {name: 'Home', url: '/'},
-                        {name: 'Login', url: '/login'},
-                        {name: 'Gestionar Mazos', url: '/admin'}]
-                        .map((item, index) => (
-                        <Link to={item.url} key={index}>
-                            <ListItem button key={item.name}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={item.name} />
-                            </ListItem>
-                        </Link>
-
-                    ))}
+                    <Link to="/home">
+                        <ListItem button>
+                            <ListItemIcon><InboxIcon /></ListItemIcon>
+                            <ListItemText primary="Home" />
+                        </ListItem>
+                    </Link>
+                    {auth.user && (<Link to="/admin">
+                        <ListItem button>
+                            <ListItemIcon><MailIcon/></ListItemIcon>
+                            <ListItemText primary="Gestionar Mazos"/>
+                        </ListItem>
+                    </Link>)}
                 </List>
             </Drawer>
         </div>

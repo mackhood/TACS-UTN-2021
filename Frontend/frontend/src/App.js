@@ -9,18 +9,18 @@ import {PrivateRoute} from "./Auth/PrivateRoute";
 function App() {
   return (
     <div className="App">
-        <PersistentDrawerLeft/>
-        <Switch>
-        <Route exact path="/">
-          <div>Home Page</div>
-        </Route>
-        <Route exact path="/login">
-          <Login />
-        </Route>
+            <PersistentDrawerLeft/>
+            <Switch>
+            <Route exact path="/">
+              <div>Home Page</div>
+            </Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
 
-          <PrivateRoute exact path="/admin">
+            <PrivateRoute exact path="/admin">
               <Administration />
-          </PrivateRoute>
+            </PrivateRoute>
         </Switch>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {authContext} from './AuthContext'
+import LoginService from "../Api/LoginService";
 
 export function ProvideAuth({ children }) {
     const auth = useProvideAuth();
@@ -13,22 +14,20 @@ export function ProvideAuth({ children }) {
 function useProvideAuth() {
     const [user, setUser] = useState(null);
 
-    const signin = cb => {
-        return fakeAuth.signin(() => {
-            // setUser("user");
-            setUser({
-                username: "admin",
-                jwt: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwiaWF0IjoxNjIwMDYyNjg1LCJleHAiOjE2MjAwNjMyODV9._pA2cR6OfHyX9yBuj0CdbMHKBgOL5aSCQGcihXnx3E0"
+    const signin = async cb => {
+
+        await LoginService
+            .login({username: "admin", password: "admin"})
+            .then(res => {
+                setUser(res);
             });
-            cb();
-        });
+        return cb();
     };
 
-    const signout = cb => {
-        return fakeAuth.signout(() => {
-            setUser(null);
-            cb();
-        });
+    const signout = async cb => {
+        setTimeout(() => {}, 400);
+        setUser(null);
+        return cb();
     };
 
     return {
@@ -37,15 +36,3 @@ function useProvideAuth() {
         signout
     };
 }
-
-const fakeAuth = {
-    isAuthenticated: false,
-    signin(cb) {
-        fakeAuth.isAuthenticated = true;
-        setTimeout(cb, 100); // fake async
-    },
-    signout(cb) {
-        fakeAuth.isAuthenticated = false;
-        setTimeout(cb, 100);
-    }
-};

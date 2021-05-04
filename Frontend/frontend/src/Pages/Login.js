@@ -55,11 +55,10 @@ export default function Login() {
     let location = useLocation();
     let auth = useAuth();
 
-    let { from } = location.state || { from: { pathname: "/" } };
     let login = (e) => {
         e.preventDefault();
         auth.signin(() => {
-            history.replace(from);
+            history.push('/admin');
         });
     };
 
