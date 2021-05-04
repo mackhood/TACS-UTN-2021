@@ -15,6 +15,7 @@ public class CardDTO {
     private ImageDTO image;
 
 
+
 }
 
 

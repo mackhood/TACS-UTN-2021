@@ -1,0 +1,58 @@
+version: '3.6'
+networks:
+  tacs:
+
+services:
+    frontend:
+      image: node:10
+      container_name: frontend
+#      volumes:
+#        - /frontend/src:/app/src
+      ports:
+        - '3001:3000'
+      build:
+        context: ./Frontend
+        dockerfile: ./Dockerfile
+      networks:
+        tacs:
+      environment:
+        REACT_APP_LOGIN_REST_API_URL: backend
+        REACT_APP_DECK_REST_API_URL: backend/decks
+        REACT_APP_CARD_REST_API_URL: backend/cards
+
+    backend:
+      image: openjdk:8-jdk-alpine
+      container_name: backend
+      build:
+        context: ./Backend
+        dockerfile: Dockerfile
+      environment:
+        DB_HOST: tacs_db
+        DB_NAME: tacs_db
+        DB_USER: root
+        DB_USER_PASSWORD: root
+        SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb
+        API_SUPERHERO_URL: https://superheroapi.com/api/${SUPERHERO_TOKEN}/
+      ports:
+        - '8087:8080'
+      networks:
+        tacs:
+
+    tacs_db:
+      image: mysql:8.0
+      command: --default-authentication-plugin=mysql_native_password
+      container_name: tacs_db
+      ports: ["3307:3306"]
+      restart: always
+      environment:
+        MYSQL_DATABASE: tacs_db
+        MYSQL_USER: "tacs"
+        MYSQL_PASSWORD: "tacs"
+        MYSQL_ROOT_PASSWORD: root
+      #    volumes:
+      #    Si queremos levantar la DB partiendo de un script
+      #      - ./db/:/docker-entrypoint-initdb.d/
+      #    Si queremos guardar el estado de la DB tenemos que crear un volumen para mappearlo con un directorio del host
+      #      - ./db/mysql:/var/lib/mysql
+      networks:
+        tacs:

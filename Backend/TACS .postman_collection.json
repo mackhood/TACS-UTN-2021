@@ -1,0 +1,616 @@
+{
+	"info": {
+		"_postman_id": "4a579993-f04f-46a0-b3be-e9eca0fb4a55",
+		"name": "TACS ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Player",
+					"item": [
+						{
+							"name": "Listar Players - OK",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/players",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"players"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mostrar Player - OK",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/players/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"players",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Crear Player - OK",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"player 1\",\r\n    \"accessToken\": null,\r\n    \"deckService\": null,\r\n    \"playerService\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/players",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"players"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Player - OK",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/players/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"players",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "Listar Admins - OK",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/admins",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admins"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Mostrar Admin - OK",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/admins/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admins",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Crear Admin - OK",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 2,\r\n        \"name\": \"admin2\",\r\n        \"accessToken\": null\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/admins",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admins"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Admin",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/admins/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admins",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Mazos",
+			"item": [
+				{
+					"name": "Mazos/:id/Cartas",
+					"item": [
+						{
+							"name": "Ver Cartas de Mazo - OK",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/decks/2/cards",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"decks",
+										"2",
+										"cards"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Crear Carta en Mazo - OK",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/decks/1/cards",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"decks",
+										"1",
+										"cards"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Quitar Carta de Mazo - OK",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/decks/1/cards/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"decks",
+										"1",
+										"cards",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Listar Mazos - OK",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/decks",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"decks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Mazo - OK",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/decks/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"decks",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Mazo - OK",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Super Mazo\",\n    \"cardList\": [\n        {\n            \"id\": 1,\n            \"name\": \"Batman\",\n            \"strength\": null,\n            \"intelligence\": 100,\n            \"speed\": 27,\n            \"durability\": 35,\n            \"power\": 50,\n            \"combat\": 70\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Robin\",\n            \"strength\": null,\n            \"intelligence\": 7,\n            \"speed\": 33,\n            \"durability\": 25,\n            \"power\": 30,\n            \"combat\": 50\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/decks/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"decks",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Mazo - OK",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"name\": \"Mazo Ganador\",\n    \"cardList\": [\n        {\n            \"id\": 1,\n            \"name\": \"Batman\",\n            \"strength\": null,\n            \"intelligence\": 100,\n            \"speed\": 27,\n            \"durability\": 35,\n            \"power\": 50,\n            \"combat\": 70\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Robin\",\n            \"strength\": null,\n            \"intelligence\": 7,\n            \"speed\": 33,\n            \"durability\": 25,\n            \"power\": 30,\n            \"combat\": 50\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/decks",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"decks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Mazo - OK",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/decks/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"decks",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Partidas",
+			"item": [
+				{
+					"name": "Listar Partidas - OK",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/games",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"games"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Partida - OK",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/games/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"games",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Partida - OK",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"creator\": {\r\n        \"player\": {\r\n            \"id\": 1,\r\n            \"name\": \"A\",\r\n            \"accessToken\": null,\r\n            \"deckService\": null,\r\n            \"playerService\": null\r\n        },\r\n        \"mainCards\": [],\r\n        \"gainedCards\": [],\r\n        \"isMyTurn\": false,\r\n        \"nextCard\": null\r\n    },\r\n    \"challenged\": {\r\n        \"player\": {\r\n            \"id\": 2,\r\n            \"name\": \"A\",\r\n            \"accessToken\": null,\r\n            \"deckService\": null,\r\n            \"playerService\": null\r\n        },\r\n        \"mainCards\": [],\r\n        \"gainedCards\": [],\r\n        \"isMyTurn\": false,\r\n        \"nextCard\": null\r\n    },\r\n    \"deck\": {\r\n        \"name\": \"deck1\",\r\n        \"cardList\": []\r\n    },\r\n    \"dateOfCreation\": \"2021-04-19\",\r\n    \"duels\": [],\r\n    \"idFromCreator\": 1,\r\n    \"idFromChallenged\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/games",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"games"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recrear Partida - OK",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/games/1/replay",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"games",
+								"1",
+								"replay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Abandonar Partida - OK",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/games/1/dropout",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"games",
+								"1",
+								"dropout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mostrar cartas en partida - OK",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/games/1/stats",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"games",
+								"1",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Ver estadisticas generales - OK",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/gamesStats?from_date=11-02-1999&to_date=11-02-1999",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"gamesStats"
+							],
+							"query": [
+								{
+									"key": "from_date",
+									"value": "11-02-1999"
+								},
+								{
+									"key": "to_date",
+									"value": "11-02-1999"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver estadisticas usuario - OK",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/1/stats",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"1",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Scoreboard - OK",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/scoreboard",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"scoreboard"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cartas",
+			"item": [
+				{
+					"name": "Listar Cartas - OK",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/cards",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cards"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Carta - OK sin ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/cards/12",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cards",
+								"12"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
