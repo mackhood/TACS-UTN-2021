@@ -68,7 +68,7 @@ public class DeckController {
     @PutMapping("/decks/{id}")
     public ResponseEntity modifyDeck(@Valid @RequestBody DeckRequestDTO deckModified, @PathVariable Long id) throws DeckNotFoundException, CardNotFoundException {
         service.updateDeck(id,deckModified);
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.ok().build();
     }
 
 
