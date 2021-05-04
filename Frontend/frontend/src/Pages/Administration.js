@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Administration() {
     const [user] = useState(useAuth().user);
-    const [decks, setDecks] = React.useState(getDecks()[0].data);
+    const [decks, setDecks] = React.useState([]);
     const [heroes] = useState(getCards());
     const [left, setLeft] = React.useState(heroes);
     const [right, setRight] = React.useState([]);
@@ -55,11 +55,12 @@ export default function Administration() {
         setRight([]);
     }
     const updateDeck = async (deck) => {
-        let newDecks = _.map(decks, function (elem) {
-            return elem.id === currentDeck.id ? {...deck, cardList: deck} : elem;
-        });
-        await AdminService.modifyDeck(deck, user).then(res => {
-            console.log(res, 'res');
+        let newDeck = currentDeck;
+        newDeck.cardList = deck;
+        await AdminService.modifyDeck(newDeck, user).then(res => {
+            let newDecks = _.map(decks, function (elem) {
+                return elem.id === currentDeck.id ? {...deck, cardList: deck} : elem;
+            });
             setDecks(newDecks);
         }).catch(err => console.log(err));
 
@@ -67,13 +68,11 @@ export default function Administration() {
         setRight([]);
         setCurrentDeck({});
     }
-
     const deleteDeck = async (deckId) => {
         let newDecks = _.filter(decks, function (elem) {
             return elem.id !== deckId;
         });
         await AdminService.deleteDeck(deckId, user).then(res => {
-            console.log(res);
             setDecks(newDecks);
         }).catch(err=>console.log(err));
 

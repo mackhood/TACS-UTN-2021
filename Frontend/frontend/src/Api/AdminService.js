@@ -4,16 +4,20 @@ import {REACT_APP_DECK_REST_API_URL} from '../Common/Constants';
 
 class AdminService{
 
+    generateBody = (deck) =>{
+        const cardIdList = _.map(deck.cardList, (card) => parseInt(card.id));
+        return {name: deck.name, cardListId: cardIdList};
+    }
     createDeck(deck, token){
-        const cardIdList = _.map(deck, (card) => card.id);
-        return axios.post(REACT_APP_DECK_REST_API_URL , {name: deck.name, cardListId: cardIdList}, {
+
+        return axios.post(REACT_APP_DECK_REST_API_URL , this.generateBody(deck) , {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
             });
     }
 
     modifyDeck(deck, token){
-        return axios.put(REACT_APP_DECK_REST_API_URL + '/' + deck.id , deck, {
+        return axios.put(REACT_APP_DECK_REST_API_URL + '/' + deck.id , this.generateBody(deck), {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
         });
