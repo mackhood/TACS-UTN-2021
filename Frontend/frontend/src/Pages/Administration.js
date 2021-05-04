@@ -10,6 +10,10 @@ import DeckCardWithButtons from "../Components/DeckCardWithButtons";
 import CardList from "../Components/CardList";
 import {useAuth} from "../Auth/useAuth";
 import AdminService from "../Api/AdminService";
+import TextField from "@material-ui/core/TextField";
+import {number} from "prop-types";
+const { customAlphabet } = require('nanoid')
+const nanoid = customAlphabet('1234567890', 2)
 
 const useStyles = makeStyles((theme) => ({
     layout:{
@@ -32,6 +36,7 @@ export default function Administration() {
     const [left, setLeft] = React.useState(heroes);
     const [right, setRight] = React.useState([]);
     const [creating, setCreating] = useState(true);
+    const [deckName, setDeckName] = useState("");
 
     const [cards, setCards] = useState([]);
 
@@ -39,12 +44,13 @@ export default function Administration() {
 
     const classes = useStyles();
 
-    const createDeck = async (newDeck) => {
-        let newDecks = _.union(decks, [{id :-1, name:"saraza", cardList:newDeck}]);
-        await AdminService.createDeck(newDeck, user).then(res => {
-            console.log(res, 'res');
+    const createDeck = async (cardList) => {
+        await AdminService.createDeck(cardList, user).then(res => {
+            //TODO la api deberia retornar el nuevo deck con su id auto generado
+            let newDecks = _.union(decks, [{id: parseInt(nanoid()), name:deckName, cardList:cardList}]);
             setDecks(newDecks);
         }).catch(err => console.log(err, 'err'));
+        setDeckName("");
         setLeft(heroes);
         setRight([]);
     }
@@ -93,6 +99,11 @@ export default function Administration() {
         setCards(deck.cardList);
     }
 
+    function handleChange(e) {
+        const name = e.target.value;
+        setDeckName(name);
+    }
+
     return (
         <div className={classes.layout}>
             <Grid container alignItems={"center"} alignContent={"center"}>
@@ -112,7 +123,7 @@ export default function Administration() {
             </Grid>
             <Grid container spacing={4} alignItems={"center"} alignContent={"center"}>
                 <Grid item xs={12}>
-                    <Button variant="contained" color="primary" disabled={right.length === 0} onClick={() => {
+                    <Button variant="contained" color="primary" disabled={right.length === 0 || deckName.length === 0} onClick={() => {
                         creating ? createDeck(right) : updateDeck(right);
                         setCreating(true);
                     }}>
@@ -120,6 +131,12 @@ export default function Administration() {
                     </Button>
                 </Grid>
                 <Grid item xs={12}>
+                    <TextField
+                        name="deckName"
+                        label="Ingrese un nombre"
+                        variant="standard"
+                        onChange={handleChange}
+                    />
                     <TransferList
                         left={left}
                         setLeft={setLeft}
