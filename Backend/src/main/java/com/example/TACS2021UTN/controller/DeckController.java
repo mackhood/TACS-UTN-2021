@@ -31,7 +31,7 @@ public class DeckController {
     }
 
     @GetMapping("/decks")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<JSONWrapper>  getAllDecks()
 
     {
@@ -55,7 +55,7 @@ public class DeckController {
         }catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/decks/{id}")

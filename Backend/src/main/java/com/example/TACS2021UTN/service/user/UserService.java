@@ -4,6 +4,9 @@ import com.example.TACS2021UTN.DTO.RoleDTO;
 import com.example.TACS2021UTN.DTO.TokenDTO;
 import com.example.TACS2021UTN.DTO.UserDTO;
 import com.example.TACS2021UTN.DTO.request.LoginRequestDTO;
+import com.example.TACS2021UTN.DTO.request.UserRegisterRequestDTO;
+import com.example.TACS2021UTN.exceptions.UserAlreadyExistsException;
+import com.example.TACS2021UTN.models.user.Role;
 import com.example.TACS2021UTN.models.user.User;
 import com.example.TACS2021UTN.models.user.UserPrincipal;
 import com.example.TACS2021UTN.repositories.user.IUserRepository;
@@ -53,11 +56,24 @@ public class UserService implements IUserService, UserDetailsService {
         return user;
     }
 
-    public void save(User user) throws UsernameNotFoundException{
+    public void save(UserRegisterRequestDTO user) throws UserAlreadyExistsException {
+        if(userRepository.usernameExists(user.getUsername()))
+            throw new UserAlreadyExistsException(user.getUsername());
 
-        userRepository.save(user);
+        User newUser = createNewPlayer(user);
+        userRepository.save(newUser);
+    }
 
+    private User createNewPlayer(UserRegisterRequestDTO newUser){
+        List<Role> list = new ArrayList<>();
+        list.add(new Role("PLAYER"));
 
+        return new User(
+                newUser.getUsername(),
+                newUser.getPassword(),
+                newUser.getEmail(),
+                list
+        );
     }
 
 }

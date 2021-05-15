@@ -1,8 +1,10 @@
 package com.example.TACS2021UTN.DTO.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class LoginRequestDTO {
     private String username;
     private String password;
