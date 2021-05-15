@@ -31,9 +31,6 @@ public class AuthenticationController {
         this.authenticationManager = authenticationManager;
     }
 
-
-
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequest)
     {

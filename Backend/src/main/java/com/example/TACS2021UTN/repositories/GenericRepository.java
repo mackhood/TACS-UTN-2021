@@ -22,7 +22,7 @@ public abstract class GenericRepository<T extends PersistantEntity> {
         long maxId = 0;
         if(tMax != null)
             maxId = tMax.getId();
-        return maxId;
+        return maxId + 1;
     }
 
     //TODO for updating an existing object it will always create a new one

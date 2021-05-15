@@ -26,7 +26,7 @@ public class CardControllerTests {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.size()").value("2"));
+                .andExpect(jsonPath("$.data.size()").value("4"));
     }
 
 }
