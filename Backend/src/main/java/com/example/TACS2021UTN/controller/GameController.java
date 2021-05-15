@@ -42,7 +42,7 @@ public class GameController {
     }
 
 
-    @GetMapping("/games/{id}/replay")
+    @GetMapping("/games/{id}/replays")
     public ResponseEntity<JSONWrapper> getDuels(@PathVariable(value = "id") Long id) {
 
         User player1 = new User();
@@ -65,7 +65,7 @@ public class GameController {
         return ResponseEntity.ok(new JSONWrapper<>((List<Duel>) duels));
     }
 
-    @PostMapping("/games/{id}/dropout")
+    @PostMapping("/games/{id}/dropouts")
     public ResponseEntity endGame(@PathVariable(value = "id") Long id) {
         User player1 = new User();
         player1.setId((long) 1);

@@ -8,6 +8,7 @@ class AdminService{
         const cardIdList = _.map(deck.cardList, (card) => parseInt(card.id));
         return {name: deck.name, cardListId: cardIdList};
     }
+
     createDeck(deck, token){
 
         return axios.post(REACT_APP_DECK_REST_API_URL , this.generateBody(deck) , {
@@ -22,12 +23,14 @@ class AdminService{
             'Authorization': 'Bearer ' + token
         });
     }
+
     deleteDeck(deckId, token){
         return axios.delete(REACT_APP_DECK_REST_API_URL + '/' + parseInt(deckId) , {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
         });
     }
+    
 }
 
 export default new AdminService();
