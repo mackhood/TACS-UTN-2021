@@ -1,22 +1,22 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import TransferList from "../Components/TransferList";
 import getCards from "../Resources/getCards";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import getDecks from "../Resources/getDecks";
 import * as _ from 'lodash';
 import DeckCardWithButtons from "../Components/DeckCardWithButtons";
 import CardList from "../Components/CardList";
-import {useAuth} from "../Auth/useAuth";
+import { useAuth } from "../Auth/useAuth";
 import AdminService from "../Api/AdminService";
 import TextField from "@material-ui/core/TextField";
-import {number} from "prop-types";
+import { number } from "prop-types";
 const { customAlphabet } = require('nanoid')
 const nanoid = customAlphabet('1234567890', 2)
 
 const useStyles = makeStyles((theme) => ({
-    layout:{
+    layout: {
         width: 'auto',
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2),
@@ -47,7 +47,7 @@ export default function Administration() {
     const createDeck = async (cardList) => {
         await AdminService.createDeck(cardList, user).then(res => {
             //TODO la api deberia retornar el nuevo deck con su id auto generado
-            let newDecks = _.union(decks, [{id: parseInt(nanoid()), name:deckName, cardList:cardList}]);
+            let newDecks = _.union(decks, [{ id: parseInt(nanoid()), name: deckName, cardList: cardList }]);
             setDecks(newDecks);
         }).catch(err => console.log(err, 'err'));
         setDeckName("");
@@ -59,7 +59,7 @@ export default function Administration() {
         newDeck.cardList = deck;
         await AdminService.modifyDeck(newDeck, user).then(res => {
             let newDecks = _.map(decks, function (elem) {
-                return elem.id === currentDeck.id ? {...deck, cardList: deck} : elem;
+                return elem.id === currentDeck.id ? { ...deck, cardList: deck } : elem;
             });
             setDecks(newDecks);
         }).catch(err => console.log(err));
@@ -74,7 +74,7 @@ export default function Administration() {
                 return elem.id !== deckId;
             });
             setDecks(newDecks);
-        }).catch(err=>console.log(err));
+        }).catch(err => console.log(err));
 
     }
 
@@ -106,18 +106,18 @@ export default function Administration() {
     return (
         <div className={classes.layout}>
             <Grid container alignItems={"center"} alignContent={"center"}>
-                <div style={{width:"100%"}}>DECKS</div>
+                <div style={{ width: "100%" }}>DECKS</div>
 
-                    {decks.map((deck, index) => (
-                        <Grid item xs={12} sm={4} key={index}>
-                            <DeckCardWithButtons
-                                deck={deck}
-                                showDeck={showDeck}
-                                deleteDeck={deleteDeck}
-                                populateDeck={populateDeck}
-                            />
-                        </Grid>
-                    ))}
+                {decks.map((deck, index) => (
+                    <Grid item xs={12} sm={4} key={index}>
+                        <DeckCardWithButtons
+                            deck={deck}
+                            showDeck={showDeck}
+                            deleteDeck={deleteDeck}
+                            populateDeck={populateDeck}
+                        />
+                    </Grid>
+                ))}
 
             </Grid>
             <Grid container spacing={4} alignItems={"center"} alignContent={"center"}>
@@ -143,7 +143,7 @@ export default function Administration() {
                         setRight={setRight}
                     />
                 </Grid>
-                <CardList cards={cards}/>
+                <CardList cards={cards} />
             </Grid>
 
         </div>

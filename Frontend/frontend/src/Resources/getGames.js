@@ -41,6 +41,29 @@ export default function getGames() {
                 },
             ]
         },         
+        {
+            "id": "12",
+            "creatorId": "2",
+            "challengedId": "3",
+            "deckId": "4",
+            "gameStatus": "InProgress",
+            "duels":[
+                {
+                    "id": "102",
+                    "winnerId": "2",
+                    "winnerCardId": "4",
+                    "loserCardId": "5",
+                    "attributeId": "6"
+                },
+                {
+                    "id": "103",
+                    "winnerId": "3",
+                    "winnerCardId": "8",
+                    "loserCardId": "9",
+                    "attributeId": "2"
+                },
+            ]
+        },  
     ]
 }
 }
