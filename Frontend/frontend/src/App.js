@@ -4,12 +4,13 @@ import Login from "./Pages/Login";
 import Administration from "./Pages/Administration";
 import PersistentDrawerLeft from "./Components/AppBar";
 import {PrivateRoute} from "./Auth/PrivateRoute";
+import {PageNotFound} from "./Components/404";
 
 function App() {
   return (
     <div className="App">
-            <PersistentDrawerLeft/>
-            <Switch>
+        <PersistentDrawerLeft/>
+        <Switch>
             <Route exact path="/">
               <div>Home Page</div>
             </Route>
@@ -20,6 +21,10 @@ function App() {
             <PrivateRoute exact path="/admin">
               <Administration />
             </PrivateRoute>
+
+            <Route path="*">
+                <PageNotFound />
+            </Route>
         </Switch>
     </div>
   );

@@ -152,7 +152,7 @@ export default function PersistentDrawerLeft() {
                 </div>
                 <Divider />
                 <List>
-                    <Link to="/home">
+                    <Link to="/">
                         <ListItem button>
                             <ListItemIcon><InboxIcon /></ListItemIcon>
                             <ListItemText primary="Home" />
