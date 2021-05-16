@@ -35,23 +35,20 @@ export default function GameWithButtons(props) {
                     />
                 <CardContent>                    
                     <div>
-                        <Typography gutterBottom variant="h5" component="h5">
+                    <Typography gutterBottom>
                             { game.gameStatus }
                         </Typography>
                         <br></br>
-                        <Typography gutterBottom variant="subtitle2" component="subtitle2">
+                        <Typography gutterBottom>
                             Partida: { game.id }          
                         </Typography>
-                        <br></br>
-                        <Typography gutterBottom variant="subtitle2" component="subtitle2">
+                        <Typography gutterBottom>
                             Deck:  { decks.filter(x => x.id == game.deckId)[0].name }
                         </Typography>
-                        <br></br>
-                        <Typography gutterBottom variant="subtitle2" component="subtitle2">
+                        <Typography gutterBottom>
                             Jugador creador: { users.filter(x => x.id == game.creatorId)[0].name }
                         </Typography>
-                        <br></br>
-                        <Typography gutterBottom variant="subtitle2" component="subtitle2">
+                        <Typography gutterBottom>
                             Jugador desafiado: { users.filter(x => x.id == game.challengedId)[0].name }
                         </Typography>
                     </div>

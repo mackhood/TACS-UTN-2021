@@ -90,8 +90,8 @@ export default function getGames() {
         {
             "id": "14",
             "creatorId": "2",
-            "challengedId": "3",
-            "deckId": "4",
+            "challengedId": "1",
+            "deckId": "5",
             "gameStatus": "Finished",
             "duels":[
                 {

@@ -8,8 +8,9 @@ import getUsers from "../Resources/getUsers";
 import * as _ from 'lodash';
 import GameWithButtons from "../Components/GameWithButtons";
 import TablePage from "./TablePage";
-import {Link, useHistory} from "react-router-dom";
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import { useHistory} from "react-router-dom";
+import { useLocation } from "react-router-dom"
+import { useRadioGroup } from "@material-ui/core";
 
 
 const { customAlphabet } = require('nanoid')
@@ -30,11 +31,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Games() {
 
+
+    let history = useHistory();
+    let location = useLocation();
     const [games] = useState(getGames().data);
     const [decks] = useState(getDecks()[0].data);
     const [users] = useState(getUsers());
 
     const classes = useStyles();
+
+    const userId = 1;
 
     const createGame = async () => {
 
@@ -52,66 +58,39 @@ export default function Games() {
 
     }
 
-    const showStats = async () => {
-        <TablePage />
+    const showTable = async (title, tableHeaders, tableRows ) => {
+
+        const location = {
+            pathname: '/tablePage',
+            state: { 
+                title: title,
+                tableHeaders: tableHeaders,
+                tableRows: tableRows
+            }
+          }
+
+        history.push(location);
     }
 
-    /*
-    return (
-        <div className={classes.layout}>
+    function createData(id, deckName, creatorName , challengedName) {
+        return { id, deckName, creatorName, challengedName};
+    }
 
-            <Grid container alignItems={"center"} alignContent={"center"}>
-                <div style={{ width: "100%" }}>
-                    <Grid container spacing={4} alignItems={"center"} alignContent={"center"}>
-                        <Grid item xs={12} sm={4}>
-                            <h1>PARTIDAS</h1>
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <Grid container spacing={4} alignItems={"center"} alignContent={"center"}>
-                                <Grid item xs={12} sm={4}>
-                                    <Button variant="contained" color="primary" onClick={() => {
-                                        createGame();
-                                    }}>
-                                        Crear Partida
-                            
-                            </Button>
-                                </Grid>
-                                <Grid item xs={12} sm={4}>
-                                <Router>
-      
-      <Link 
-                                    to={{ pathname: "/tablePage", state: { title: "Estadisticas Partidas", tableHeaders: ["Partida", "id"], tableRows: [], previousPage:"/games" } }}>
-                                <Route path="/tablePage">
-        <TablePage />
-      </Route>
-                                    <Button variant="contained" color="primary" onClick={() => {
-                                        showStats();
-                                    }}>
-                                        Ver Estadisticas
-                                    </Button>
-                                </Link>
-    </Router>
-                               
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </div>
-                {games.map((game, index) => (
-                    <Grid item xs={12} sm={4} key={index}>
-                        <GameWithButtons
-                            game={game}
-                            users={users}
-                            decks={decks}
-                            dropGame={dropGame}
-                            showGame={showGame}
-                            continueGame={continueGame}
-                        />
-                    </Grid>
-                ))}
-            </Grid>
-        </div>
-    );*/
+    function createStatisticsData() {
+        let gamesCreated = games.filter(x => x.creatorId==userId); 
+        let participatedGames = games.filter(x => x.challengedId==userId); 
+        let data = [];
+        gamesCreated.forEach((x) => {
+            data.push(
+                createData(
+                    x.id, 
+                    decks.filter(y => y.id == x.deckId)[0].name, 
+                    users.filter(y => y.id == x.creatorId)[0].name,
+                    users.filter(y => y.id == x.challengedId)[0].name
+                ));
+        })
+        return data;
+    }
 
     return (
         <div className={classes.layout}>
@@ -133,13 +112,11 @@ export default function Games() {
                             </Button>
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
-                                <Link to="/tablePage">
                                     <Button variant="contained" color="primary" onClick={() => {
-                                        showStats();
+                                        showTable("ESTADISTICAS", ["Partida", "Mazo", "Creador", "Desafiado"], createStatisticsData());
                                     }}>
                                         Ver Estadisticas
-                                    </Button>
-                                </Link>                                   
+                                    </Button>                
                                 </Grid>
                             </Grid>
                         </Grid>
