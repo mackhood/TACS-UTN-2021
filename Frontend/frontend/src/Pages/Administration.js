@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useReducer, useState} from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import TransferList from "../Components/TransferList";
@@ -10,6 +10,7 @@ import CardList from "../Components/CardList";
 import {useAuth} from "../Auth/useAuth";
 import AdminService from "../Api/AdminService";
 import TextField from "@material-ui/core/TextField";
+import {reducer} from "../Api/Effects/Reducer";
 
 const { customAlphabet } = require('nanoid')
 const nanoid = customAlphabet('1234567890', 2)
@@ -28,12 +29,21 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const initialState = {decks:[], heores: getCards(), left: getCards(), right: []};
+
+
+
 export default function Administration() {
+
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    // const {decks, heroes, left, right} = state;
+
     const [user] = useState(useAuth().user);
-    const [decks, setDecks] = React.useState([]);
+    const [decks, setDecks] = useState([]);
     const [heroes] = useState(getCards());
-    const [left, setLeft] = React.useState(heroes);
-    const [right, setRight] = React.useState([]);
+    const [left, setLeft] = useState(heroes);
+    const [right, setRight] = useState([]);
     const [creating, setCreating] = useState(true);
     const [deckName, setDeckName] = useState("");
 
@@ -52,6 +62,9 @@ export default function Administration() {
         setDeckName("");
         setLeft(heroes);
         setRight([]);
+
+        // dispatch({type: "ADD_DECK", payload: () => {return {id: parseInt(nanoid()), name:deckName, cardList:cardList}}})
+
     }
     const updateDeck = async (deck) => {
         let newDeck = currentDeck;
