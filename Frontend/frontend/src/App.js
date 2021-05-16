@@ -3,6 +3,7 @@ import React from "react";
 import {Route, Switch} from "react-router-dom";
 import Login from "./Pages/Login";
 import Administration from "./Pages/Administration";
+import Games from "./Pages/Games";
 import PersistentDrawerLeft from "./Components/AppBar";
 import {PrivateRoute} from "./Auth/PrivateRoute";
 
@@ -21,6 +22,9 @@ function App() {
             <PrivateRoute exact path="/admin">
               <Administration />
             </PrivateRoute>
+            <Route exact path="/games">
+              <Games />
+            </Route>
         </Switch>
     </div>
   );
