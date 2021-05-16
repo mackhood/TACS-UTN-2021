@@ -6,6 +6,7 @@ import Administration from "./Pages/Administration";
 import Games from "./Pages/Games";
 import PersistentDrawerLeft from "./Components/AppBar";
 import {PrivateRoute} from "./Auth/PrivateRoute";
+import TablePage from "./Pages/TablePage";
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
             </PrivateRoute>
             <Route exact path="/games">
               <Games />
+            </Route>
+            <Route exact path="/tablePage">
+              <TablePage />
             </Route>
         </Switch>
     </div>

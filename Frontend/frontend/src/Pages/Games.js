@@ -7,6 +7,9 @@ import getDecks from "../Resources/getDecks";
 import getUsers from "../Resources/getUsers";
 import * as _ from 'lodash';
 import GameWithButtons from "../Components/GameWithButtons";
+import TablePage from "./TablePage";
+import {Link, useHistory} from "react-router-dom";
+
 const { customAlphabet } = require('nanoid')
 
 const useStyles = makeStyles((theme) => ({
@@ -32,15 +35,7 @@ export default function Games() {
     const classes = useStyles();
 
     const createGame = async () => {
-        console.log("createGame");
-        return (
-            <div class="modal">
-                <div class="modal_content">
-                    <span class="close">&times;</span>
-                    <p>I'm A Pop Up!!!</p>
-                </div>
-            </div>
-        )
+
     }
 
     const continueGame = async (game) => {
@@ -52,11 +47,11 @@ export default function Games() {
     }
 
     const showGame = async (game) => {
-        
+
     }
 
     const showStats = async () => {
-
+        <TablePage />
     }
 
     return (
@@ -75,14 +70,17 @@ export default function Games() {
                                         createGame();
                                     }}>
                                         Crear Partida
+                            
                             </Button>
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
+                                <Link to="/tablePage">
                                     <Button variant="contained" color="primary" onClick={() => {
                                         showStats();
                                     }}>
                                         Ver Estadisticas
-                            </Button>
+                                    </Button>
+                                </Link>
                                 </Grid>
                             </Grid>
                         </Grid>
