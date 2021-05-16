@@ -10,7 +10,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Grid from "@material-ui/core/Grid";
 import Games from "./Games";
-import {Link, useHistory} from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, useHistory} from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +35,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TablePage(props) {
 
-  const { title, tableHeaders, tableRows, previousPage } = props;
+  const location = useLocation();
+  const { title, tableHeaders, tableRows, previousPage } = props; //location.state;
 
   const classes = useStyles();
 

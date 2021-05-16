@@ -9,6 +9,8 @@ import * as _ from 'lodash';
 import GameWithButtons from "../Components/GameWithButtons";
 import TablePage from "./TablePage";
 import {Link, useHistory} from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom"
+
 
 const { customAlphabet } = require('nanoid')
 
@@ -54,6 +56,63 @@ export default function Games() {
         <TablePage />
     }
 
+    /*
+    return (
+        <div className={classes.layout}>
+
+            <Grid container alignItems={"center"} alignContent={"center"}>
+                <div style={{ width: "100%" }}>
+                    <Grid container spacing={4} alignItems={"center"} alignContent={"center"}>
+                        <Grid item xs={12} sm={4}>
+                            <h1>PARTIDAS</h1>
+                        </Grid>
+                        <Grid item xs={12} sm={4}>
+                            <Grid container spacing={4} alignItems={"center"} alignContent={"center"}>
+                                <Grid item xs={12} sm={4}>
+                                    <Button variant="contained" color="primary" onClick={() => {
+                                        createGame();
+                                    }}>
+                                        Crear Partida
+                            
+                            </Button>
+                                </Grid>
+                                <Grid item xs={12} sm={4}>
+                                <Router>
+      
+      <Link 
+                                    to={{ pathname: "/tablePage", state: { title: "Estadisticas Partidas", tableHeaders: ["Partida", "id"], tableRows: [], previousPage:"/games" } }}>
+                                <Route path="/tablePage">
+        <TablePage />
+      </Route>
+                                    <Button variant="contained" color="primary" onClick={() => {
+                                        showStats();
+                                    }}>
+                                        Ver Estadisticas
+                                    </Button>
+                                </Link>
+    </Router>
+                               
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </div>
+                {games.map((game, index) => (
+                    <Grid item xs={12} sm={4} key={index}>
+                        <GameWithButtons
+                            game={game}
+                            users={users}
+                            decks={decks}
+                            dropGame={dropGame}
+                            showGame={showGame}
+                            continueGame={continueGame}
+                        />
+                    </Grid>
+                ))}
+            </Grid>
+        </div>
+    );*/
+
     return (
         <div className={classes.layout}>
 
@@ -80,7 +139,7 @@ export default function Games() {
                                     }}>
                                         Ver Estadisticas
                                     </Button>
-                                </Link>
+                                </Link>                                   
                                 </Grid>
                             </Grid>
                         </Grid>
