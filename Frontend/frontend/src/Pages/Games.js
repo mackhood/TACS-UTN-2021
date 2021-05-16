@@ -32,18 +32,31 @@ export default function Games() {
     const classes = useStyles();
 
     const createGame = async () => {
+        console.log("createGame");
+        return (
+            <div class="modal">
+                <div class="modal_content">
+                    <span class="close">&times;</span>
+                    <p>I'm A Pop Up!!!</p>
+                </div>
+            </div>
+        )
     }
 
     const continueGame = async (game) => {
+
     }
 
     const dropGame = async (game) => {
+
     }
 
     const showGame = async (game) => {
+        
     }
 
-    const showStats = async (game) => {
+    const showStats = async () => {
+
     }
 
     return (
@@ -66,7 +79,7 @@ export default function Games() {
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
                                     <Button variant="contained" color="primary" onClick={() => {
-                                        createGame();
+                                        showStats();
                                     }}>
                                         Ver Estadisticas
                             </Button>
@@ -85,7 +98,6 @@ export default function Games() {
                             showGame={showGame}
                             continueGame={continueGame}
                         />
-
                     </Grid>
                 ))}
             </Grid>

@@ -6,7 +6,7 @@ export default function getGames() {
             "creatorId": "1",
             "challengedId": "2",
             "deckId": "0",
-            "gameStatus": "InProgress",
+            "gameStatus": "New",
             "duels":[
                 {
                     "id": "100",
@@ -47,6 +47,52 @@ export default function getGames() {
             "challengedId": "3",
             "deckId": "4",
             "gameStatus": "InProgress",
+            "duels":[
+                {
+                    "id": "102",
+                    "winnerId": "2",
+                    "winnerCardId": "4",
+                    "loserCardId": "5",
+                    "attributeId": "6"
+                },
+                {
+                    "id": "103",
+                    "winnerId": "3",
+                    "winnerCardId": "8",
+                    "loserCardId": "9",
+                    "attributeId": "2"
+                },
+            ]
+        },  
+        {
+            "id": "13",
+            "creatorId": "2",
+            "challengedId": "3",
+            "deckId": "4",
+            "gameStatus": "InProgress",
+            "duels":[
+                {
+                    "id": "102",
+                    "winnerId": "2",
+                    "winnerCardId": "4",
+                    "loserCardId": "5",
+                    "attributeId": "6"
+                },
+                {
+                    "id": "103",
+                    "winnerId": "3",
+                    "winnerCardId": "8",
+                    "loserCardId": "9",
+                    "attributeId": "2"
+                },
+            ]
+        },  
+        {
+            "id": "14",
+            "creatorId": "2",
+            "challengedId": "3",
+            "deckId": "4",
+            "gameStatus": "Finished",
             "duels":[
                 {
                     "id": "102",

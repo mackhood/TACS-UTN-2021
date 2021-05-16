@@ -118,7 +118,6 @@ export default function Administration() {
                         />
                     </Grid>
                 ))}
-
             </Grid>
             <Grid container spacing={4} alignItems={"center"} alignContent={"center"}>
                 <Grid item xs={12}>

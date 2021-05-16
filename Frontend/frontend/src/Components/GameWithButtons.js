@@ -27,12 +27,18 @@ export default function GameWithButtons(props) {
         <Card className={classes.root}>
             <CardActionArea>
                     <CardMedia
+                        component="img"
                         className={classes.media}
-                        image="./versus.png"
+                        image={"./" + game.gameStatus + ".png" }
                         title={game.name ? game.name : "Nombre" }
+                        objectFit= "cover"
                     />
                 <CardContent>                    
                     <div>
+                        <Typography gutterBottom variant="h5" component="h5">
+                            { game.gameStatus }
+                        </Typography>
+                        <br></br>
                         <Typography gutterBottom variant="subtitle2" component="subtitle2">
                             Partida: { game.id }          
                         </Typography>
@@ -40,15 +46,24 @@ export default function GameWithButtons(props) {
                         <Typography gutterBottom variant="subtitle2" component="subtitle2">
                             Deck:  { decks.filter(x => x.id == game.deckId)[0].name }
                         </Typography>
-                        <Typography gutterBottom variant="subtitle2" component="h2">
+                        <br></br>
+                        <Typography gutterBottom variant="subtitle2" component="subtitle2">
                             Jugador creador: { users.filter(x => x.id == game.creatorId)[0].name }
                         </Typography>
-                        <Typography gutterBottom variant="subtitle2" component="h2">
+                        <br></br>
+                        <Typography gutterBottom variant="subtitle2" component="subtitle2">
                             Jugador desafiado: { users.filter(x => x.id == game.challengedId)[0].name }
                         </Typography>
                     </div>
                 </CardContent>
             </CardActionArea>
+            {(game.gameStatus == "New") &&   
+            <CardActions>
+                <Button size="small" color="primary" onClick={() => {continueGame(game)}}>
+                    Continuar
+                </Button>
+            </CardActions>}
+            {(game.gameStatus == "InProgress") &&   
             <CardActions>
                 <Button size="small" color="primary" onClick={() => {showGame(game)}}>
                     Ver
@@ -58,8 +73,14 @@ export default function GameWithButtons(props) {
                 </Button>
                 <Button size="small" color="primary" onClick={() => {dropGame(game)}}>
                     Abandonar
-                </Button>
-            </CardActions>
+                </Button>            
+            </CardActions>}
+            {(game.gameStatus == "Finished") &&   
+            <CardActions>
+                <Button size="small" color="primary" onClick={() => {showGame(game)}}>
+                    Ver
+                </Button>            
+            </CardActions>}
         </Card>
     );
 
