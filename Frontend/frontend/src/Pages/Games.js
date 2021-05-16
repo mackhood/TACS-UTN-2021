@@ -42,6 +42,42 @@ export default function Games() {
 
     const userId = 1;
 
+    function createStatisticsData(id, deckName, creatorName , challengedName) {
+        return { id, deckName, creatorName, challengedName};
+    }
+
+    function createStatistics() {
+        let gamesCreated = games.filter(x => x.creatorId==userId); 
+        let participatedGames = games.filter(x => x.challengedId==userId); 
+        let data = [];
+        gamesCreated.forEach((x) => {
+            data.push(
+                createStatisticsData(
+                    x.id, 
+                    decks.filter(y => y.id == x.deckId)[0].name, 
+                    users.filter(y => y.id == x.creatorId)[0].name,
+                    users.filter(y => y.id == x.challengedId)[0].name
+                ));
+        })
+        return data;
+    }
+
+    function createGameResultData(duel, winnerName) {
+        return { duel, winnerName };
+    }
+
+    function createGameResults(game) {
+        let data = [];
+        game.duels.forEach((x) => {
+            data.push(
+                createGameResultData(
+                    x.id, 
+                    users.filter(y => y.id == x.winnerId)[0].name
+                ));
+        })
+        return data;
+    }
+
     const createGame = async () => {
 
     }
@@ -54,12 +90,15 @@ export default function Games() {
 
     }
 
-    const showGame = async (game) => {
+    const showStats = () => {
+        showTable("ESTADISTICAS", ["Partida", "Mazo", "Creador", "Desafiado"], createStatistics());
+    }
 
+    const showGame = (game) => {
+        showTable("PARTIDA " + game.id, ["Duelo", "Ganador"], createGameResults(game))
     }
 
     const showTable = async (title, tableHeaders, tableRows ) => {
-
         const location = {
             pathname: '/tablePage',
             state: { 
@@ -70,26 +109,6 @@ export default function Games() {
           }
 
         history.push(location);
-    }
-
-    function createData(id, deckName, creatorName , challengedName) {
-        return { id, deckName, creatorName, challengedName};
-    }
-
-    function createStatisticsData() {
-        let gamesCreated = games.filter(x => x.creatorId==userId); 
-        let participatedGames = games.filter(x => x.challengedId==userId); 
-        let data = [];
-        gamesCreated.forEach((x) => {
-            data.push(
-                createData(
-                    x.id, 
-                    decks.filter(y => y.id == x.deckId)[0].name, 
-                    users.filter(y => y.id == x.creatorId)[0].name,
-                    users.filter(y => y.id == x.challengedId)[0].name
-                ));
-        })
-        return data;
     }
 
     return (
@@ -108,12 +127,11 @@ export default function Games() {
                                         createGame();
                                     }}>
                                         Crear Partida
-                            
                             </Button>
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
                                     <Button variant="contained" color="primary" onClick={() => {
-                                        showTable("ESTADISTICAS", ["Partida", "Mazo", "Creador", "Desafiado"], createStatisticsData());
+                                        showStats();
                                     }}>
                                         Ver Estadisticas
                                     </Button>                
