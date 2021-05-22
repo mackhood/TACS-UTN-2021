@@ -14,6 +14,7 @@ import com.example.TACS2021UTN.utils.JwtTokenProvider;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,11 +25,13 @@ public class UserService implements IUserService, UserDetailsService {
 
     private JwtTokenProvider jwtTokenProvider;
     private IUserRepository userRepository;
+    private BCryptPasswordEncoder cryptPasswordEncoder;
 
-    public UserService(JwtTokenProvider jwtTokenProvider, IUserRepository userRepository)
+    public UserService(JwtTokenProvider jwtTokenProvider, IUserRepository userRepository, BCryptPasswordEncoder cryptPasswordEncoder)
     {
         this.jwtTokenProvider = jwtTokenProvider;
         this.userRepository = userRepository;
+        this.cryptPasswordEncoder = cryptPasswordEncoder;
     }
 
     @Override
@@ -70,7 +73,7 @@ public class UserService implements IUserService, UserDetailsService {
 
         return new User(
                 newUser.getUsername(),
-                newUser.getPassword(),
+                cryptPasswordEncoder.encode(newUser.getPassword()),
                 newUser.getEmail(),
                 list
         );
