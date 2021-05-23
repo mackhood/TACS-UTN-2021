@@ -26,7 +26,7 @@ public class GameController {
 
 
     @PostMapping("/games")
-    public ResponseEntity<GameDTO> createNewGame(@RequestBody GameDTO gameDTO){
+    public ResponseEntity<GameDTO> createNewGame(@RequestBody NewGameDTO gameDTO){
         service.createNewGame(gameDTO);
         return ResponseEntity.status(204).build();
     }
@@ -38,7 +38,7 @@ public class GameController {
 
     @GetMapping("/games")
     public ResponseEntity<JSONWrapper> getAllGames(){
-        return ResponseEntity.ok(new JSONWrapper<>((List<GameDTO>) service.getAllGames()));
+        return ResponseEntity.ok(new JSONWrapper<>(service.getAllGames()));
     }
 
 

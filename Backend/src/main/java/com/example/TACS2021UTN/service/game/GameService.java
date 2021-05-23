@@ -1,9 +1,9 @@
 package com.example.TACS2021UTN.service.game;
 
-import com.example.TACS2021UTN.DTO.GameDTO;
-import com.example.TACS2021UTN.DTO.GamesStatisticsDTO;
+import com.example.TACS2021UTN.DTO.*;
 import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.models.Game;
+import com.example.TACS2021UTN.models.user.PlayerGame;
 import com.example.TACS2021UTN.models.user.User;
 import com.example.TACS2021UTN.repositories.deck.IDeckRepository;
 import com.example.TACS2021UTN.repositories.game.IGameRepository;
@@ -39,10 +39,10 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public GameDTO createNewGame(GameDTO gameDTO) {
-        Optional<User> aCreator = userRepository.findById(gameDTO.getCreatorId());
-        Optional<User> aChallenged = userRepository.findById(gameDTO.getChallengedId());
-        Optional<Deck> aDeck = deckRepository.findById(gameDTO.getDeckId());
+    public GameDTO createNewGame(NewGameDTO gameDTO) {
+        Optional<User> aCreator = userRepository.findByUserName(gameDTO.getCreatorUsername());
+        Optional<User> aChallenged = userRepository.findByUserName(gameDTO.getChallengedUsername());
+        Optional<Deck> aDeck = deckRepository.findByName(gameDTO.getDeckName());
 
         if(true){
             // TODO validateAllParameters(aCreator, aChallenged, aDeck)
@@ -77,10 +77,12 @@ public class GameService implements IGameService {
     }
 
     GameDTO fromGameToDTO(Game game){
+        PlayerGame creator = game.getCreator();
+        PlayerGame challenged = game.getChallenged();
         return new GameDTO(
-                game.getIdFromCreator(),
-                game.getIdFromChallenged(),
-                game.getDeck().getId()
+                new PlayerGameDTO(game.getUsernameFromCreator(),creator.getMainCards().size(),creator.getGainedCards().size(),creator.getIsMyTurn().toString()),
+                new PlayerGameDTO(game.getUsernameFromChallenged(),challenged.getMainCards().size(),challenged.getGainedCards().size(),challenged.getIsMyTurn().toString()),
+                game.getDeck().getName(),game.getDeck().getCardList().size()
         );
     }
 

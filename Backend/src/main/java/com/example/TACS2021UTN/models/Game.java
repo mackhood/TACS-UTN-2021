@@ -50,8 +50,10 @@ public class Game extends PersistantEntity {
     public Long getIdFromCreator(){
         return getCreator().getPlayer().getId();
     }
-
-    public Long getIdFromChallenged(){
-        return getChallenged().getPlayer().getId();
+    public String getUsernameFromCreator(){
+        return getCreator().getPlayer().getUsername();
     }
+
+    public Long getIdFromChallenged(){ return getChallenged().getPlayer().getId(); }
+    public String getUsernameFromChallenged(){return getChallenged().getPlayer().getUsername(); }
 }

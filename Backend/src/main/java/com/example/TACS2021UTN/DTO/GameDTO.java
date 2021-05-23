@@ -8,7 +8,9 @@ import lombok.Data;
 @AllArgsConstructor
 public class GameDTO {
 
-    public long creatorId;
-    public long challengedId;
-    public long deckId;
+    public PlayerGameDTO creatorUsername;
+    public PlayerGameDTO challengedUsername;
+    public String deckName;
+    public Integer actualNumberCards;
+
 }

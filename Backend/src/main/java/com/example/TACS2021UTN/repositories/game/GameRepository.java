@@ -2,7 +2,11 @@ package com.example.TACS2021UTN.repositories.game;
 
 import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.models.Game;
+import com.example.TACS2021UTN.models.user.Role;
 import com.example.TACS2021UTN.models.user.User;
+import com.example.TACS2021UTN.repositories.deck.DeckRepository;
+import com.example.TACS2021UTN.repositories.user.UserRepository;
+import com.example.TACS2021UTN.service.user.UserService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +27,7 @@ public class GameRepository implements IGameRepository {
     private List<Game> database;
 
     public GameRepository() {
-        //this.database = load(); spirng does gives error
+        this.database = load();
         //TODO i think the only game required should be load up in the memory
     }
 
@@ -94,7 +98,7 @@ public class GameRepository implements IGameRepository {
 
     private List<Game> load(){
 
-        File file = null;
+/*        File file = null;
 
         try{
 
@@ -114,7 +118,16 @@ public class GameRepository implements IGameRepository {
         } catch (IOException exception){
             exception.printStackTrace();
         }
-        return listCards;
+        return listCards;*/
+        List<Game> games = new ArrayList<>();
 
+        UserRepository userRepository = new UserRepository();
+        Optional<User> user = userRepository.findByUserName("admin");
+        Optional<User> user2 = userRepository.findByUserName("player");
+        DeckRepository deckRepository = new DeckRepository();
+        List<Deck> decks = deckRepository.findAll();
+        Game game = new Game(user.get(),user2.get(),decks.get(0));
+        games.add(game);
+        return games;
     }
 }
