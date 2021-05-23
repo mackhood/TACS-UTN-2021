@@ -11,7 +11,7 @@ import com.example.TACS2021UTN.models.user.User;
 
 public interface IUserService {
     TokenDTO authenticate(LoginRequestDTO loginRequestDTO);
-    User findByUserName(String username);
+    UserDTO findByUserName(String username);
     void save(UserRegisterRequestDTO user) throws UserAlreadyExistsException;
 
 }

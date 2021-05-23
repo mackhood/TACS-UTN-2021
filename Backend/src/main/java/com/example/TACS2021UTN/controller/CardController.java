@@ -1,12 +1,14 @@
 package com.example.TACS2021UTN.controller;
 
 
+import com.example.TACS2021UTN.DTO.CardApiDTO;
 import com.example.TACS2021UTN.DTO.CardDTO;
 import com.example.TACS2021UTN.functions.JSONWrapper;
 import com.example.TACS2021UTN.service.card.ICardService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;

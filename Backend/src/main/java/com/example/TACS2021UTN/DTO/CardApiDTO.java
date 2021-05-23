@@ -10,13 +10,16 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PowerStatDTO {
+public class CardApiDTO {
+
+    private String id;
+    private String name;
+    private PowerStatDTO powerstats;
+    private AppearenceStatDTO appearance;
+    private ImageDTO image;
 
 
-    private String intelligence;
-    private String strength;
-    private String speed;
-    private String power;
-    private String combat;
 
 }
+
+

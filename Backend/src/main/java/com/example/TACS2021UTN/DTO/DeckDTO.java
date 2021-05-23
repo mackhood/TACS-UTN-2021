@@ -1,8 +1,5 @@
 package com.example.TACS2021UTN.DTO;
 
-import com.example.TACS2021UTN.models.Card;
-import com.example.TACS2021UTN.models.Deck;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -11,6 +11,7 @@ import com.example.TACS2021UTN.models.user.User;
 import com.example.TACS2021UTN.models.user.UserPrincipal;
 import com.example.TACS2021UTN.repositories.user.IUserRepository;
 import com.example.TACS2021UTN.utils.JwtTokenProvider;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,20 +27,23 @@ public class UserService implements IUserService, UserDetailsService {
     private JwtTokenProvider jwtTokenProvider;
     private IUserRepository userRepository;
     private BCryptPasswordEncoder cryptPasswordEncoder;
+    private ModelMapper modelMapper;
 
-    public UserService(JwtTokenProvider jwtTokenProvider, IUserRepository userRepository, BCryptPasswordEncoder cryptPasswordEncoder)
+    public UserService(JwtTokenProvider jwtTokenProvider, IUserRepository userRepository, BCryptPasswordEncoder cryptPasswordEncoder, ModelMapper modelMapper)
     {
         this.jwtTokenProvider = jwtTokenProvider;
         this.userRepository = userRepository;
         this.cryptPasswordEncoder = cryptPasswordEncoder;
+        this.modelMapper = modelMapper;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = this.findByUserName(username);
+        User user = this.userRepository.findByUserName(username).orElseThrow(
+                () -> new UsernameNotFoundException("User not found: " + username));
+
         return UserPrincipal.create(user);
     }
-
 
 
     @Override
@@ -51,12 +55,12 @@ public class UserService implements IUserService, UserDetailsService {
 
     }
 
-    public User findByUserName(String username) throws UsernameNotFoundException{
+    public UserDTO findByUserName(String username) throws UsernameNotFoundException{
         User user = this.userRepository.findByUserName(username).orElseThrow(
                 () -> new UsernameNotFoundException("User not found: " + username)
         );
 
-        return user;
+        return modelMapper.map(user, UserDTO.class);
     }
 
     public void save(UserRegisterRequestDTO user) throws UserAlreadyExistsException {
@@ -77,6 +81,21 @@ public class UserService implements IUserService, UserDetailsService {
                 newUser.getEmail(),
                 list
         );
+    }
+
+    private UserDTO userToDTO(User user){
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername(user.getUsername());
+        userDTO.setEmail(user.getEmail());
+        List<RoleDTO> roleDTOList = new ArrayList<>();
+        user.getRoles().forEach(role -> {
+            RoleDTO roleDTO1 = new RoleDTO();
+            roleDTO1.setName(role.getName());
+            roleDTOList.add(roleDTO1);
+        });
+        userDTO.setRoles(roleDTOList);
+        return userDTO;
     }
 
 }

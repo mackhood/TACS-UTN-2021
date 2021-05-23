@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -91,7 +90,7 @@ public class DeckService implements IDeckService {
     public List<CardDTO> getDeckCards(Long id) {
         Deck deck = deckRepository.findById(id).orElseThrow(() -> new NotFoundException("Deck not found with id: " + id));
         List<Card> deckCards = deck.getCardList();
-        return deckCards.stream().map(card -> CardService.cardToDTO(card)).collect(Collectors.toList());
+        return deckCards.stream().map(card -> modelMapper.map(card, CardDTO.class)).collect(Collectors.toList());
     }
 
     //////////////////////////////////////////////////PRIVATE//////////////////////////////////////////////////////////
@@ -100,7 +99,7 @@ public class DeckService implements IDeckService {
         List<CardDTO> deckDTOList = new ArrayList<>();
 
         for(Card card : deck.getCardList()){
-            CardDTO cardDTO = CardService.cardToDTO(card);
+            CardDTO cardDTO = modelMapper.map(card, CardDTO.class);
             deckDTOList.add(cardDTO);
         }
 

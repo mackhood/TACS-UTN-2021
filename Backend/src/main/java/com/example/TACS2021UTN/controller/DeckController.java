@@ -1,15 +1,14 @@
 package com.example.TACS2021UTN.controller;
 
+import com.example.TACS2021UTN.DTO.CardApiDTO;
 import com.example.TACS2021UTN.DTO.CardDTO;
 import com.example.TACS2021UTN.DTO.DeckDTO;
 import com.example.TACS2021UTN.DTO.request.DeckRequestDTO;
 import com.example.TACS2021UTN.exceptions.CardNotFoundException;
 import com.example.TACS2021UTN.functions.JSONWrapper;
 import com.example.TACS2021UTN.models.Deck;
-import com.example.TACS2021UTN.exceptions.DeckNotFoundException;
 import com.example.TACS2021UTN.service.deck.IDeckService;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
 
