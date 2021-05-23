@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,15 +27,20 @@ public class Card extends PersistantEntity{
     private Integer combat;
 
 
-    /**
-     * @return validates if the card is correct to be added to the deck
-     */
-    //TODO make entity attribute and refactor
-    public Boolean correctCard(){
+    public Boolean correctCard() {
 
-        return this.name != null && this.strength != null && this.intelligence != null
-                && this.speed != null && this.durability != null && this.power != null
-                && this.combat != null;
+        try{
+            for (Field f : getClass().getDeclaredFields()) {
+                if (f.get(this) == null)
+                    return false;
+            }
+        }
+        
+        catch (Exception e){
+            return false;
+        }
+
+        return true;
     }
 
 
