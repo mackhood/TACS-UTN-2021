@@ -17,7 +17,7 @@ public interface IDeckService {
 
     void deleteDeckbyId(Long id);
 
-    void updateDeck(Long deckId, DeckRequestDTO deck) throws  DeckNotFoundException, CardNotFoundException;
+    void updateDeck(Long deckId, DeckRequestDTO deck);
 
     List<DeckDTO> getAllDecks();
 
