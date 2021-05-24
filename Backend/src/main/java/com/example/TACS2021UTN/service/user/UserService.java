@@ -5,6 +5,7 @@ import com.example.TACS2021UTN.DTO.TokenDTO;
 import com.example.TACS2021UTN.DTO.UserDTO;
 import com.example.TACS2021UTN.DTO.request.LoginRequestDTO;
 import com.example.TACS2021UTN.DTO.request.UserRegisterRequestDTO;
+import com.example.TACS2021UTN.exceptions.NotFoundException;
 import com.example.TACS2021UTN.exceptions.UserAlreadyExistsException;
 import com.example.TACS2021UTN.models.user.Role;
 import com.example.TACS2021UTN.models.user.User;
@@ -37,6 +38,7 @@ public class UserService implements IUserService, UserDetailsService {
         this.modelMapper = modelMapper;
     }
 
+    //METODO QUE USA LA AUTENTICACION PARA OBTENER LOS USER DETAILS
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = this.userRepository.findByUserName(username).orElseThrow(
@@ -45,19 +47,18 @@ public class UserService implements IUserService, UserDetailsService {
         return UserPrincipal.create(user);
     }
 
-
+    //METODO QUE USA EL LOGIN, SI ENTRA ES POR QUE EL USUARIO EXISTE
     @Override
     public TokenDTO authenticate(LoginRequestDTO loginRequestDTO)
     {
         User user = this.userRepository.findByUserName(loginRequestDTO.getUsername()).get();
         String token = jwtTokenProvider.doGenerateToken(user);
         return new TokenDTO(token);
-
     }
 
-    public UserDTO findByUserName(String username) throws UsernameNotFoundException{
+    public UserDTO findByUserName(String username){
         User user = this.userRepository.findByUserName(username).orElseThrow(
-                () -> new UsernameNotFoundException("User not found: " + username)
+                () -> new NotFoundException("User not found: " + username)
         );
 
         return modelMapper.map(user, UserDTO.class);
@@ -81,21 +82,6 @@ public class UserService implements IUserService, UserDetailsService {
                 newUser.getEmail(),
                 list
         );
-    }
-
-    private UserDTO userToDTO(User user){
-
-        UserDTO userDTO = new UserDTO();
-        userDTO.setUsername(user.getUsername());
-        userDTO.setEmail(user.getEmail());
-        List<RoleDTO> roleDTOList = new ArrayList<>();
-        user.getRoles().forEach(role -> {
-            RoleDTO roleDTO1 = new RoleDTO();
-            roleDTO1.setName(role.getName());
-            roleDTOList.add(roleDTO1);
-        });
-        userDTO.setRoles(roleDTOList);
-        return userDTO;
     }
 
 }
