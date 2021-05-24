@@ -18,6 +18,13 @@ public class InProgress extends State {
 
     @Override
     public void play(Game game) {
+        if(game.isReadyToPlayDuel()){
+
+            game.addDuel();
+        }
+        if(game.validateGameHasFinished()){
+            game.setState(new Finished(game.getFinalWinner().getPlayer()));
+        }
 
     }
 

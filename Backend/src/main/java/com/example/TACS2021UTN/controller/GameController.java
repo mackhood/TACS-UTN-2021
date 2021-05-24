@@ -5,6 +5,7 @@ import com.example.TACS2021UTN.exceptions.BadDatesInserted;
 import com.example.TACS2021UTN.functions.DateAnalizer;
 import com.example.TACS2021UTN.functions.JSONWrapper;
 import com.example.TACS2021UTN.models.Duel;
+import com.example.TACS2021UTN.models.user.PlayerGame;
 import com.example.TACS2021UTN.models.user.User;
 import com.example.TACS2021UTN.service.game.IGameService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -44,25 +45,26 @@ public class GameController {
 
     @GetMapping("/games/{id}/replay")
     public ResponseEntity<JSONWrapper> getDuels(@PathVariable(value = "id") Long id) {
-
+    
         User player1 = new User();
         player1.setId((long) 1);
         player1.setUsername("A");
+        PlayerGame playerGame1 = new PlayerGame(player1,null);
 
         List<Duel> duels = new ArrayList<>();
 
         Duel duel1 = new Duel();
         duel1.setId((long) 1);
-        duel1.setGanador(player1);
+        duel1.setWinner(playerGame1);
 
         Duel duel2 = new Duel();
         duel2.setId((long) 2);
-        duel2.setGanador(player1);
+        duel2.setWinner(playerGame1);
 
         duels.add(duel1);
         duels.add(duel2);
 
-        return ResponseEntity.ok(new JSONWrapper<>((List<Duel>) duels));
+      return ResponseEntity.ok(new JSONWrapper<>((List<Duel>) duels));
     }
 
     @PostMapping("/games/{id}/dropout")
@@ -70,16 +72,16 @@ public class GameController {
         User player1 = new User();
         player1.setId((long) 1);
         player1.setUsername("A");
-
+        PlayerGame playerGame1 = new PlayerGame(player1,null);
         List<Duel> duels = new ArrayList<>();
 
         Duel duel1 = new Duel();
         duel1.setId((long) 1);
-        duel1.setGanador(player1);
+        duel1.setWinner(playerGame1);
 
         Duel duel2 = new Duel();
         duel2.setId((long) 2);
-        duel2.setGanador(player1);
+        duel2.setWinner(playerGame1);
 
         duels.add(duel1);
         duels.add(duel2);

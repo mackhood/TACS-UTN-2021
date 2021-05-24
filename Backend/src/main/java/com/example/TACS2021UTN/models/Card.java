@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.example.TACS2021UTN.models.attribute.Attribute;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,6 +42,10 @@ public class Card extends PersistantEntity{
         }
 
         return true;
+    }
+    public Integer getValueOfAttribute(Attribute attribute){
+        //TODO refactor attributes to make more extensible
+        return 1;
     }
 
 

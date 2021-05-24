@@ -1,6 +1,7 @@
 package com.example.TACS2021UTN.models;
 
 
+import com.example.TACS2021UTN.models.attribute.Attribute;
 import com.example.TACS2021UTN.models.state.Created;
 import com.example.TACS2021UTN.models.state.State;
 import com.example.TACS2021UTN.models.user.PlayerGame;
@@ -27,6 +28,8 @@ public class Game extends PersistantEntity {
     private List<Duel> duels = new ArrayList<>();
 
     private State state;
+
+    private Attribute lastAtrribute = null;
 
 
     public Game(User creator, User challenged, Deck deck) {
@@ -56,4 +59,37 @@ public class Game extends PersistantEntity {
 
     public Long getIdFromChallenged(){ return getChallenged().getPlayer().getId(); }
     public String getUsernameFromChallenged(){return getChallenged().getPlayer().getUsername(); }
+
+    public Boolean isReadyToPlayDuel() {
+        return attributeHasBeenSelected() && cardsHasBeenChosen();
+    }
+
+    private Boolean cardsHasBeenChosen() {
+        return (this.getCreator().getLastCardSelected() != null) && (this.getChallenged().getLastCardSelected() != null);
+    }
+
+    private Boolean attributeHasBeenSelected() {
+        return this.getLastAtrribute() != null;
+    }
+
+    public void addDuel() {
+        Duel newDuel = new Duel();
+        newDuel.setAttribute(this.getLastAtrribute());
+        newDuel.setCreatorCard(this.getCreator().getNextCard());
+        newDuel.setChallengedCard(this.getCreator().getNextCard());
+        newDuel.setWinner(this.getWinner(newDuel));
+
+    }
+
+    private PlayerGame getWinner(Duel newDuel) {
+        return (newDuel.getCreatorCard().getValueOfAttribute(newDuel.getAttribute()) - newDuel.getChallengedCard().getValueOfAttribute(newDuel.getAttribute())) >0 ? this.getCreator() : this.getChallenged();
+    }
+
+    public boolean validateGameHasFinished() {
+        return this.getCreator().getMainCards().size() == 0 || this.getChallenged().getMainCards().size() == 0;
+    }
+
+    public PlayerGame getFinalWinner() {
+        return (this.getCreator().getGainedCards().size() - this.getCreator().getGainedCards().size()) > 0 ? this.getCreator() : this.getChallenged();
+    }
 }

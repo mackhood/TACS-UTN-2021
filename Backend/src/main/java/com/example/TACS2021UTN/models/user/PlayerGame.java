@@ -22,6 +22,8 @@ public class PlayerGame {
     @JsonIdentityReference(alwaysAsId = true)
     private List<Card> gainedCards = new ArrayList<>();
 
+    private Card lastCardSelected = null;
+
     private Boolean isMyTurn = false;
 
     public PlayerGame(User player, Game game)
@@ -31,11 +33,17 @@ public class PlayerGame {
     }
 
     public Card getNextCard(){
-        return this.getMainCards().stream().findFirst().orElse(null);
+        this.setLastCardSelected(this.getMainCards().stream().findFirst().orElse(null));
+        return this.getLastCardSelected();
     }
 
     public void setPlayerWithTurn() {
         this.isMyTurn = true;
+    }
+
+
+    public void chooseCardFromMainCards(){
+        this.mainCards.remove(0);
     }
 
 }
