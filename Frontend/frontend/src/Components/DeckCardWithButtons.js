@@ -20,14 +20,14 @@ const useStyles = makeStyles({
 export default function DeckCardWithButtons(props) {
     const classes = useStyles();
 
-    const {deck, deleteDeck, showDeck, populateDeck} = props;
+    const {deck, navigateToUpdate} = props;
 
     return (
         <Card className={classes.root}>
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
-                    image="./cartascromy.webp"
+                    image="/cartascromy.webp"
                     title={deck.name ? deck.name : "Nombre" }
                 />
                 <CardContent>
@@ -37,13 +37,13 @@ export default function DeckCardWithButtons(props) {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary" onClick={() => {showDeck(deck)}}>
+                <Button size="small" color="primary" onClick={() => navigateToUpdate(deck.id)}>
                     Ver
                 </Button>
-                <Button size="small" color="primary" onClick={() => populateDeck(deck)}>
+                <Button size="small" color="primary" onClick={() => {}}>
                     Modificar
                 </Button>
-                <Button size="small" color="primary" onClick={() => deleteDeck(deck.id)}>
+                <Button size="small" color="primary" onClick={() => {}}>
                     Eliminar
                 </Button>
             </CardActions>

@@ -16,7 +16,7 @@ class AdminService{
             });
     }
 
-    modifyDeck(deck, token){
+    updateDeck(deck, token){
         return axios.put(REACT_APP_DECK_REST_API_URL + '/' + parseInt(deck.id) , this.generateBody(deck), {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token

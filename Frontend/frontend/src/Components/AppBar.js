@@ -158,12 +158,22 @@ export default function PersistentDrawerLeft() {
                             <ListItemText primary="Home" />
                         </ListItem>
                     </Link>
-                    {auth.user && (<Link to="/admin">
-                        <ListItem button>
-                            <ListItemIcon><MailIcon/></ListItemIcon>
-                            <ListItemText primary="Gestionar Mazos"/>
-                        </ListItem>
-                    </Link>)}
+                    {auth.user && (
+                        <>
+                            <Link to="/admin/decks">
+                                <ListItem button>
+                                    <ListItemIcon><MailIcon/></ListItemIcon>
+                                    <ListItemText primary="Mazos"/>
+                                </ListItem>
+                            </Link>
+                            <Link to="/admin/decks/create">
+                                <ListItem button>
+                                    <ListItemIcon><MailIcon/></ListItemIcon>
+                                    <ListItemText primary="Crear Mazo"/>
+                                </ListItem>
+                            </Link>
+                        </>
+                    )}
                 </List>
             </Drawer>
         </div>
