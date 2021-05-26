@@ -25,9 +25,11 @@ function useProvideAuth() {
     };
 
     const signout = async cb => {
-        setTimeout(() => {}, 400);
-        setUser(null);
-        return cb();
+        setTimeout(() => {
+            setUser(null);
+            return cb();
+        }, 400);
+
     };
 
     return {
