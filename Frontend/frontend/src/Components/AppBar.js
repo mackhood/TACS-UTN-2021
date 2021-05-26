@@ -15,7 +15,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import {Link, useHistory} from "react-router-dom";
 import {useAuth} from "../Auth/useAuth";
@@ -116,15 +115,15 @@ export default function PersistentDrawerLeft() {
                 })}
             >
                 <Toolbar>
-                    <IconButton
+                    {auth.user && (<IconButton
                         color="inherit"
                         aria-label="open drawer"
                         onClick={handleDrawerOpen}
                         edge="start"
                         className={clsx(classes.menuButton, open && classes.hide)}
                     >
-                        <MenuIcon />
-                    </IconButton>
+                        <MenuIcon/>
+                    </IconButton>)}
                     <Typography variant="h6" noWrap>
                         Cartas Cromy
                     </Typography>
@@ -152,12 +151,6 @@ export default function PersistentDrawerLeft() {
                 </div>
                 <Divider />
                 <List>
-                    <Link to="/">
-                        <ListItem button>
-                            <ListItemIcon><InboxIcon /></ListItemIcon>
-                            <ListItemText primary="Home" />
-                        </ListItem>
-                    </Link>
                     {auth.user && (
                         <>
                             <Link to="/admin/decks">

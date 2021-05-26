@@ -8,7 +8,8 @@ import {useHistory} from 'react-router-dom';
 const NoDecksMessage = () => {return (
     <h1>Aun no hay ningún mazo</h1>
 );}
-export const DisplayDecks = () => {
+export const DisplayDecks = (props) => {
+    const {setNotify} = props;
     const {state} = useContext(AppContext);
     let history = useHistory();
     const navigateToUpdate = (id) => {
@@ -24,10 +25,7 @@ export const DisplayDecks = () => {
                     <DeckCardWithButtons
                         deck={deck}
                         navigateToUpdate={navigateToUpdate}
-                        // deleteDeck={deleteDeck}
-                        deleteDeck={() => {}}
-                        // populateDeck={populateDeck}
-                        populateDeck={() => {}}
+                        setNotify={setNotify}
                     />
                 </Grid>
             ))
