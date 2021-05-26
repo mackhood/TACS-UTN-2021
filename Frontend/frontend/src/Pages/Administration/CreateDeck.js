@@ -18,6 +18,7 @@ export const CreateDeck = (props) => {
     function resetForm() {
         setDeckName("");
         setNewDeckCardList([]);
+        setHeroeList(state.heroes);
     }
     function newDeckIsValid() {
         return deckName.length > 0 && newDeckCardList.length > 0
