@@ -33,7 +33,7 @@ public class DeckControllerTests {
     void setUp() throws Exception {
         MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.post("/login")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(new LoginRequestDTO("player", "player"))))
+                .content(asJsonString(new LoginRequestDTO("admin", "admin"))))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();

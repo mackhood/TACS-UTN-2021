@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,7 +52,8 @@ public class DeckService implements IDeckService {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void deleteDeckbyId(Long id) {
-        deckRepository.deleteById(id);
+        if(!deckRepository.deleteById(id))
+            throw new NotFoundException("Deck not found with id: " + id);
     }
 
     public Deck getDeckBy(Long deckId) throws DeckNotFoundException {
@@ -64,25 +64,8 @@ public class DeckService implements IDeckService {
 
     @Override
     public void save(DeckRequestDTO deckRequest) throws CardNotFoundException {
-        List<Card> cardList = new ArrayList<>();
-
-        for(Long cardId : deckRequest.getCardListId()){
-            Card card = cardRepository.findById(cardId).orElseThrow(() -> new NotFoundException("Card not found with id: " + cardId));
-            if(card.correctCard()) {
-                cardList.add(card); //validation of the card if it has all the attributes
-            }else{
-//                System.out.println("Card does not have all the attributes");//TODO Message for response
-                //card not available message showned
-                throw new CardNotFoundException("card does not have all the attributes needed");
-
-            }
-
-        }
-
-        Deck deck = new Deck(deckRequest.getName(), cardList);
-
+        Deck deck = new Deck(deckRequest.getName(), getCorrectCards(deckRequest));
         deckRepository.save(deck);
-
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -93,62 +76,45 @@ public class DeckService implements IDeckService {
     }
 
     @Override
-    public void updateDeck(Long deckId, DeckRequestDTO deckRequest) throws DeckNotFoundException, CardNotFoundException {
-
+    public void updateDeck(Long deckId, DeckRequestDTO deckRequest){
         Deck deck = deckRepository.findById(deckId)
                 .orElseThrow(() -> new NotFoundException(
                         "Deck not found with id: " + deckId.toString())
                 );
-
-        List<Card> cardList = new ArrayList<>();
-
-        for(Long cardId : deckRequest.getCardListId()){
-            Card card = cardRepository.findById(cardId).orElseThrow(() -> new NotFoundException("Card not found with id: " + cardId));
-            if(card.correctCard()) {
-                cardList.add(card); //validation of the card if it has all the attributes
-            }else{
-                throw new CardNotFoundException("card does not have all the attributes needed");
-            }
-
-        }
-
-        deck.setCardList(cardList);
+        deck.setCardList(getCorrectCards(deckRequest));
         deck.setName(deckRequest.getName());
         deckRepository.update(deck);
-
     }
 
     @Override
     public List<CardDTO> getDeckCards(Long id) {
-        Optional<Deck> deck = deckRepository.findById(id);
-
-        if(!deck.isPresent()){
-            //TODO: arriba tirar orElseThrow...
-        }
-
-        List<Card> deckCards = deck.get().getCardList();
-
-        return deckCards.stream().map(card ->CardService.cardToDTO(card)).collect(Collectors.toList());
-
+        Deck deck = deckRepository.findById(id).orElseThrow(() -> new NotFoundException("Deck not found with id: " + id));
+        List<Card> deckCards = deck.getCardList();
+        return deckCards.stream().map(card -> modelMapper.map(card, CardDTO.class)).collect(Collectors.toList());
     }
 
-
-
-
-
+    //////////////////////////////////////////////////PRIVATE//////////////////////////////////////////////////////////
     private DeckDTO deckToDTO(Deck deck){
 
         List<CardDTO> deckDTOList = new ArrayList<>();
 
         for(Card card : deck.getCardList()){
-            CardDTO cardDTO = CardService.cardToDTO(card);
+            CardDTO cardDTO = modelMapper.map(card, CardDTO.class);
             deckDTOList.add(cardDTO);
         }
 
         return new DeckDTO(deck.getName(), deckDTOList);
     }
 
-    //TODO: falta implementar
-
+    private List<Card> getCorrectCards(DeckRequestDTO deckRequest){
+        return deckRequest
+                .getCardListId()
+                .stream()
+                .map(id -> cardRepository.findById(id).orElseThrow(
+                        () -> new NotFoundException("Card not found with id: " + id))
+                )
+                .filter(Card::correctCard)
+                .collect(Collectors.toList());
+    }
 
 }

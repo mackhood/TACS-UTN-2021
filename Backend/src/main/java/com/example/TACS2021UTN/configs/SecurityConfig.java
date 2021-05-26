@@ -4,6 +4,8 @@ import com.example.TACS2021UTN.utils.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -13,7 +15,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -46,20 +51,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 .csrf()
                     .disable()
-                .addFilterAfter(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class) //jwt validations
                 .authorizeRequests()
-                    .antMatchers("/login")
-
+                    .antMatchers(HttpMethod.POST, "/users", "/login")// only routes without authentication
                         .permitAll()
-                        .antMatchers("/decks/*")
-                        .permitAll()
-                        .antMatchers("/*")
-                        .permitAll()
-                    .anyRequest()
+                    .antMatchers(HttpMethod.POST, "/decks")// Admin matchers
+                        .hasRole("ADMIN")
+                    .antMatchers(HttpMethod.PUT,"/decks/{\\d+}")
+                        .hasRole("ADMIN")
+                    .antMatchers(HttpMethod.PATCH,"/decks/{\\d+}")
+                        .hasRole("ADMIN")
+                    .antMatchers(HttpMethod.DELETE,"/decks/{\\d+}")
+                        .hasRole("ADMIN")
+                    .anyRequest()//all other requests
                         .authenticated()
                     .and()
                 .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //in order to not save status
+                    .and()
+                .exceptionHandling()
+                    .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)); //default is 403, changed to 401
     }
 
     @Bean

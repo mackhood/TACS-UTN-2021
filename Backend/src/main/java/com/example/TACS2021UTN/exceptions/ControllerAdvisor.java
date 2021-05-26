@@ -19,4 +19,12 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(statusCode,HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(CardNotFoundException.class)
+    public ResponseEntity<StatusCodeDTO> handleException(CardNotFoundException errorException)
+    {
+        StatusCodeDTO statusCode = new StatusCodeDTO();
+        statusCode.setCode(HttpStatus.NOT_FOUND.value());
+        statusCode.setMessage(errorException.getMessage());
+        return new ResponseEntity<>(statusCode,HttpStatus.NOT_FOUND);
+    }
 }
