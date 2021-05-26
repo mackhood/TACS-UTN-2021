@@ -13,10 +13,10 @@ export const DisplayDecks = (props) => {
     const {state} = useContext(AppContext);
     let history = useHistory();
     const navigateToUpdate = (id) => {
-        //setCards(deck.cardList);
-        //TODO navigate to admin/decks/:id
-        console.log(id, 'id1');
         history.push('/admin/decks/' + id + '/update');
+    }
+    const navigateToDeckView = (id) => {
+        history.push('/admin/decks/' + id + '/display');
     }
     return (
         state.decks.length > 0 ? (
@@ -25,6 +25,7 @@ export const DisplayDecks = (props) => {
                     <DeckCardWithButtons
                         deck={deck}
                         navigateToUpdate={navigateToUpdate}
+                        navigateToDeckView={navigateToDeckView}
                         setNotify={setNotify}
                     />
                 </Grid>

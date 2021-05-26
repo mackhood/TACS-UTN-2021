@@ -8,6 +8,8 @@ import {CreateDeck} from "./CreateDeck";
 import {DisplayDecks} from "./DisplayDecks";
 import Notification from "../../Components/Notification";
 import {UpdateDeck} from "./UpdateDeck";
+import {DeckView} from "./DeckView";
+import {DisplayDeck} from "./DisplayDeck";
 
 const useStyles = makeStyles((theme) => ({
     layout:{
@@ -28,7 +30,7 @@ export default function Administration() {
     const classes = useStyles();
     const [notify, setNotify] = useState({isOpen: false, message: '', type: ''});
     let { path } = useRouteMatch();
-    
+
     return (
         <AppContextProvider>
             <div className={classes.layout}>
@@ -49,6 +51,9 @@ export default function Administration() {
                             <UpdateDeck
                                 setNotify={setNotify}
                             />
+                        </Route>
+                        <Route exact path={`${path}/:id/display`}>
+                            <DisplayDeck/>
                         </Route>
                     </Switch>
                 </Grid>

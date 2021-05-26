@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import {AppContext} from "../../Common/AppContext";
 import TransferList from "../../Components/TransferList";
 import {CreateDeckButton} from "../../Api/Effects/CreateDeckButton";
-import {DisplayDeck} from "./DisplayDeck";
+import {DeckView} from "./DeckView";
 
 export const CreateDeck = (props) => {
 
@@ -57,7 +57,7 @@ export const CreateDeck = (props) => {
                 />
             </Grid>
             <Grid item xs={12}>
-                <DisplayDeck
+                <DeckView
                     name={deckName}
                     cardList={newDeckCardList}
                 />

@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 export default function DeckCardWithButtons(props) {
     const classes = useStyles();
 
-    const {deck, navigateToUpdate, setNotify} = props;
+    const {deck, navigateToUpdate, navigateToDeckView, setNotify} = props;
 
     return (
         <Card className={classes.root}>
@@ -39,7 +39,7 @@ export default function DeckCardWithButtons(props) {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary" onClick={() => {}}>
+                <Button size="small" color="primary" onClick={() => navigateToDeckView(deck.id)}>
                     Ver
                 </Button>
                 <Button size="small" color="primary" onClick={() => navigateToUpdate(deck.id)}>
