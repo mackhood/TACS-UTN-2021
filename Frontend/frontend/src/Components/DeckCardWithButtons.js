@@ -7,6 +7,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import {DeleteDeckButton} from "../Api/Effects/DeleteDeckButton";
+import {ConfirmProvider} from "material-ui-confirm";
 
 const useStyles = makeStyles({
     root: {
@@ -20,14 +22,14 @@ const useStyles = makeStyles({
 export default function DeckCardWithButtons(props) {
     const classes = useStyles();
 
-    const {deck, deleteDeck, showDeck, populateDeck} = props;
+    const {deck, navigateToUpdate, navigateToDeckView, setNotify} = props;
 
     return (
         <Card className={classes.root}>
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
-                    image="./cartascromy.webp"
+                    image="/cartascromy.webp"
                     title={deck.name ? deck.name : "Nombre" }
                 />
                 <CardContent>
@@ -37,15 +39,20 @@ export default function DeckCardWithButtons(props) {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary" onClick={() => {showDeck(deck)}}>
+                <Button size="small" color="primary" onClick={() => navigateToDeckView(deck.id)}>
                     Ver
                 </Button>
-                <Button size="small" color="primary" onClick={() => populateDeck(deck)}>
+                <Button size="small" color="primary" onClick={() => navigateToUpdate(deck.id)}>
                     Modificar
                 </Button>
-                <Button size="small" color="primary" onClick={() => deleteDeck(deck.id)}>
-                    Eliminar
-                </Button>
+                <ConfirmProvider>
+                    <DeleteDeckButton
+                        deckId={deck.id}
+                        setNotify={setNotify}
+                    />
+                </ConfirmProvider>
+
+
             </CardActions>
         </Card>
     );

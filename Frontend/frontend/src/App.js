@@ -1,9 +1,8 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
 import Login from "./Pages/Login";
-import Administration from "./Pages/Administration";
+import Administration from "./Pages/Administration/Administration";
 import PersistentDrawerLeft from "./Components/AppBar";
-import {PrivateRoute} from "./Auth/PrivateRoute";
 import {PageNotFound} from "./Components/404";
 
 function App() {
@@ -17,11 +16,9 @@ function App() {
             <Route exact path="/login">
               <Login />
             </Route>
-
-            <PrivateRoute exact path="/admin">
+            <Route path="/admin/decks">
               <Administration />
-            </PrivateRoute>
-
+            </Route>
             <Route path="*">
                 <PageNotFound />
             </Route>

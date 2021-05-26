@@ -39,7 +39,7 @@ function intersection(a, b) {
 export default function TransferList(props) {
     const classes = useStyles();
 
-    const {decks, left, setLeft, right, setRight} = props;
+    const {left, setLeft, right, setRight} = props;
     const [checked, setChecked] = React.useState([]);
 
 

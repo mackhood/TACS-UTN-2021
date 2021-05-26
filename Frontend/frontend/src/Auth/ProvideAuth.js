@@ -14,12 +14,12 @@ export function ProvideAuth({ children }) {
 function useProvideAuth() {
     const [user, setUser] = useState(null);
 
+    //TODO get username & password from login form
     const signin = async cb => {
-
         await LoginService
             .login({username: "admin", password: "admin"})
             .then(res => {
-                setUser(res);
+                setUser({username: "admin", token: res.data.token});
             });
         return cb();
     };
