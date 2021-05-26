@@ -57,7 +57,7 @@ export default function Login() {
     let login = (e) => {
         e.preventDefault();
         auth.signin(() => {
-            history.push('/admin');
+            history.push('/admin/decks');
         });
     };
 
