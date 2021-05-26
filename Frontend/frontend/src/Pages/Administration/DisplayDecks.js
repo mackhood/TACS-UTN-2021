@@ -15,7 +15,7 @@ export const DisplayDecks = () => {
         //setCards(deck.cardList);
         //TODO navigate to admin/decks/:id
         console.log(id, 'id1');
-        history.push('/admin/decks/' + id);
+        history.push('/admin/decks/' + id + '/update');
     }
     return (
         state.decks.length > 0 ? (

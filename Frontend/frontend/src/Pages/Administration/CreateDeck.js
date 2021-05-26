@@ -10,7 +10,7 @@ export const CreateDeck = (props) => {
 
     const [deckName, setDeckName] = useState("");
     const {state} = useContext(AppContext);
-    const [heroeList, setHeroeList] = useState(state.heores);
+    const [heroeList, setHeroeList] = useState(state.heroes);
     const [newDeckCardList, setNewDeckCardList] = useState([]);
     const {setNotify} = props;
     const [formIsValid, setFormIsValid] = useState(false);

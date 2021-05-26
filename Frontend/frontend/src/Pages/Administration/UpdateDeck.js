@@ -12,35 +12,37 @@ export const UpdateDeck = (props) => {
 
     const [deckName, setDeckName] = useState("");
     const {state} = useContext(AppContext);
-    const [heroeList, setHeroeList] = useState(state.heores);
+    const [heroeList, setHeroeList] = useState([]);
     const [newDeckCardList, setNewDeckCardList] = useState([]);
     const {setNotify} = props;
     const [formIsValid, setFormIsValid] = useState(false);
     let history = useHistory();
-
     const [loading, setLoading] = useState(true);
-
     const {id} = useParams();
-    console.log(id, 'id');
-    console.log(useParams(), 'params');
-    console.log(state.decks);
+
     useEffect(() => {
+        //TODO refactor: guardar el deck en el state del componente?
         //Busco el deck entre los del state --> Qué tan importante es tener la data más actualizada
         // preguntar a los profes
         let someDeck = _.find(state.decks, function(elem) {
-            console.log(elem, 'elem');
             return elem.id === parseInt(id);
         });
-        console.log(someDeck, 'deck');
         if (someDeck === undefined) {
             history.push('/admin/decks');
         }else{
+            let deckIds = someDeck.cardList.map(function (obj) {
+                return obj.id
+            }).sort();
+            let remainingCards = _.filter(state.heroes, function (card) {
+                return _.indexOf(deckIds, card.id) === -1;
+            });
             setDeckName(someDeck.name);
             setNewDeckCardList(someDeck.cardList);
+            setHeroeList(remainingCards);
         }
+
         setLoading(false);
     }, [])
-
 
     function resetForm() {
         setDeckName("");
@@ -65,7 +67,7 @@ export const UpdateDeck = (props) => {
             <>
                 <UpdateDeckButton
                     disabled={formIsValid}
-                    deck={{name: deckName, cardList: newDeckCardList}}
+                    deck={{id: parseInt(id), name: deckName, cardList: newDeckCardList}}
                     resetForm={resetForm}
                     setNotify={setNotify}
                 />

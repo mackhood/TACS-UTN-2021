@@ -35,7 +35,6 @@ export default function Administration() {
                 <Notification notify={notify} setNotify={setNotify}/>
                 <Grid container alignItems={"center"} alignContent={"center"}>
                     <Switch>
-
                         <Route exact path={`${path}`}>
                             <DisplayDecks/>
                         </Route>
@@ -44,29 +43,13 @@ export default function Administration() {
                                 setNotify={setNotify}
                             />
                         </Route>
-                        <Route exact path={`${path}/update`}>
-
-                        </Route>
-                        <Route exact path={`${path}/:id`}>
+                        <Route exact path={`${path}/:id/update`}>
                             <UpdateDeck
                                 setNotify={setNotify}
                             />
                         </Route>
                     </Switch>
-
                 </Grid>
-                {/*<Grid container spacing={4} alignItems={"center"} alignContent={"center"}>*/}
-                    {/*<Grid item xs={12}>*/}
-                    {/*    <Button variant="contained" color="primary" disabled={right.length === 0 || deckName.length === 0} onClick={() => {*/}
-                    {/*        creating ? createDeck(right) : updateDeck(right);*/}
-                    {/*        setCreating(true);*/}
-                    {/*    }}>*/}
-                    {/*        {creating ? 'Crear Mazo' : 'Actualizar Mazo'}*/}
-                    {/*    </Button>*/}
-                    {/*</Grid>*/}
-
-                {/*</Grid>*/}
-
             </div>
         </AppContextProvider>
     );

@@ -37,10 +37,10 @@ export default function DeckCardWithButtons(props) {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary" onClick={() => navigateToUpdate(deck.id)}>
+                <Button size="small" color="primary" onClick={() => {}}>
                     Ver
                 </Button>
-                <Button size="small" color="primary" onClick={() => {}}>
+                <Button size="small" color="primary" onClick={() => navigateToUpdate(deck.id)}>
                     Modificar
                 </Button>
                 <Button size="small" color="primary" onClick={() => {}}>
