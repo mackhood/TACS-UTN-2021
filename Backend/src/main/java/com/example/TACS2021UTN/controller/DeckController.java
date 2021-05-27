@@ -45,8 +45,8 @@ public class DeckController {
     @PostMapping("/decks")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity createNewDeck(@Valid @RequestBody DeckRequestDTO newDeck) throws CardNotFoundException {
-        service.save(newDeck);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        DeckDTO deck = service.save(newDeck);
+        return ResponseEntity.status(HttpStatus.CREATED).body(deck);
     }
 
     @DeleteMapping("/decks/{id}")
