@@ -3,14 +3,12 @@ import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {useHistory} from 'react-router-dom';
-import {LoginUserButton} from "../Auth/LoginUserButton";
+import {RegisterUserButton} from "../Auth/RegisterUserButton";
 
 function Copyright() {
     return (
@@ -39,15 +37,16 @@ const useStyles = makeStyles((theme) => ({
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
-    }
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
 }));
 
-export default function Login() {
+export default function RegisterForm() {
     const classes = useStyles();
 
-    const [user, setUser] = useState({username: "", password:""});
-    let history = useHistory();
-
+    const [user, setUser] = useState({username: "", password:"", email:""});
     const handleInputChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -56,10 +55,6 @@ export default function Login() {
             ...user,
             [name]:value
         });
-    }
-
-    function navigateToRegister() {
-        history.push('/register');
     }
 
     return (
@@ -87,27 +82,26 @@ export default function Login() {
                         margin="normal"
                         required
                         fullWidth
+                        label="Email"
+                        name="email"
+                        onChange={handleInputChange}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
                         name="password"
                         label="Contraseña"
                         type="password"
                         onChange={handleInputChange}
                     />
-                    <LoginUserButton
+                    <RegisterUserButton
                         user={user}
                     />
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Olvidaste tu contraseña?
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link variant="body2" onClick={navigateToRegister}>
-                                {"No tenes cuenta todavía? Registrate"}
-                            </Link>
-                        </Grid>
-                    </Grid>
+
                 </form>
+                <pre>{JSON.stringify(user, null, 2)}</pre>
             </div>
             <Box mt={8}>
                 <Copyright />

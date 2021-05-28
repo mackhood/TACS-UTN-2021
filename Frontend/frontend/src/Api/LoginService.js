@@ -5,22 +5,18 @@ import {REACT_APP_LOGIN_REST_API_URL} from "../Common/Constants";
 // const LOGIN_REST_API_URL = 'http://localhost:8080';
 
 
-class LoginService {
+class AuthenticationService {
 
 
     login(user){
         return axios.post(REACT_APP_LOGIN_REST_API_URL + '/login' ,user);
     }
 
-    logOut(user){
-        return axios.post(REACT_APP_LOGIN_REST_API_URL + '/logOut' ,user);
-    }
-
-    signIn(newUser){
-        return axios.post(REACT_APP_LOGIN_REST_API_URL + '/signIn' , newUser);
+    register(user){
+        return axios.post(REACT_APP_LOGIN_REST_API_URL + '/users' , user);
     }
 
 
 }
 
-export default new LoginService();
+export default new AuthenticationService();
