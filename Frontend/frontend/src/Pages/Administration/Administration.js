@@ -9,6 +9,7 @@ import {DisplayDecks} from "./DisplayDecks";
 import Notification from "../../Components/Notification";
 import {UpdateDeck} from "./UpdateDeck";
 import {DisplayDeck} from "./DisplayDeck";
+import {PrivateRoute} from "../../Auth/PrivateRoute";
 
 const useStyles = makeStyles((theme) => ({
     layout:{
@@ -36,24 +37,24 @@ export default function Administration() {
                 <Notification notify={notify} setNotify={setNotify}/>
                 <Grid container alignItems={"center"} alignContent={"center"}>
                     <Switch>
-                        <Route exact path={`${path}`}>
+                        <PrivateRoute exact path={`${path}`}>
                             <DisplayDecks
                                 setNotify={setNotify}
                             />
-                        </Route>
-                        <Route exact path={`${path}/create`}>
+                        </PrivateRoute>
+                        <PrivateRoute exact path={`${path}/create`}>
                             <CreateDeck
                                 setNotify={setNotify}
                             />
-                        </Route>
-                        <Route exact path={`${path}/:id/update`}>
+                        </PrivateRoute>
+                        <PrivateRoute exact path={`${path}/:id/update`}>
                             <UpdateDeck
                                 setNotify={setNotify}
                             />
-                        </Route>
-                        <Route exact path={`${path}/:id/display`}>
+                        </PrivateRoute>
+                        <PrivateRoute exact path={`${path}/:id/display`}>
                             <DisplayDeck/>
-                        </Route>
+                        </PrivateRoute>
                     </Switch>
                 </Grid>
             </div>
