@@ -17,7 +17,7 @@ export const CreateDeckButton = (props) => {
             dispatch({
                 type:"ADD_DECK",
                 payload:{
-                    id: parseInt(nanoid()), name: deck.name, cardList: deck.cardList
+                    id: parseInt(r.data.id), name: deck.name, cardList: deck.cardList
                 }
             });
             setNotify({isOpen:true, message:'Nuevo mazo creado', type:'success'})
