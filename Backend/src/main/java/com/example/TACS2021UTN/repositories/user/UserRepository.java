@@ -13,8 +13,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@AllArgsConstructor
 public class UserRepository extends GenericRepository<User> implements IUserRepository{
+
+    public UserRepository()
+    {
+        super();
+    }
 
     @Override
     protected List<User> load() {
@@ -43,5 +47,10 @@ public class UserRepository extends GenericRepository<User> implements IUserRepo
     @Override
     public Optional<User> findByUserName(String username) {
         return this.database.stream().filter(u -> u.getUsername().equals(username)).findFirst();
+    }
+
+    @Override
+    public Boolean usernameExists(String username){
+        return this.database.stream().anyMatch(user -> user.getUsername().equals(username));
     }
 }

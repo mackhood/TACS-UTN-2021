@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
@@ -39,8 +39,8 @@ function intersection(a, b) {
 export default function TransferList(props) {
     const classes = useStyles();
 
-    const {decks, left, setLeft, right, setRight} = props;
-    const [checked, setChecked] = React.useState([]);
+    const {left, setLeft, right, setRight} = props;
+    const [checked, setChecked] = useState([]);
 
 
     const leftChecked = intersection(checked, left);

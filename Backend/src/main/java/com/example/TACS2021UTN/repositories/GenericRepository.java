@@ -2,6 +2,7 @@ package com.example.TACS2021UTN.repositories;
 
 import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.models.PersistantEntity;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.Comparator;
 import java.util.List;
@@ -22,7 +23,7 @@ public abstract class GenericRepository<T extends PersistantEntity> {
         long maxId = 0;
         if(tMax != null)
             maxId = tMax.getId();
-        return maxId;
+        return maxId + 1;
     }
 
     //TODO for updating an existing object it will always create a new one
@@ -41,13 +42,12 @@ public abstract class GenericRepository<T extends PersistantEntity> {
         return database.stream().filter(t -> t.getId().equals(id)).findFirst();
     }
 
-    public void deleteById(Long id) {
-        this.database.removeIf(t -> t.getId().equals(id));
+    public Boolean deleteById(Long id) {
+        return this.database.removeIf(t -> t.getId().equals(id));
     }
 
     public List<T> findAll() {
         return database;
     }
-
 
 }
