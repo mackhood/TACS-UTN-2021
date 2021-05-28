@@ -24,4 +24,4 @@ class CommonService{
     }
 }
 
-export default new AdminService();
+export default CommonService;
