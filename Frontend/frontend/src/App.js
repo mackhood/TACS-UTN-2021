@@ -4,6 +4,7 @@ import Login from "./Pages/Login";
 import Administration from "./Pages/Administration/Administration";
 import PersistentDrawerLeft from "./Components/AppBar";
 import {PageNotFound} from "./Components/404";
+import Register from "./Pages/Register";
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
             </Route>
             <Route exact path="/login">
               <Login />
+            </Route>
+            <Route exact path="/register">
+                <Register />
             </Route>
             <Route path="/admin/decks">
               <Administration />

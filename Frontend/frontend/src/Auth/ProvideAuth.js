@@ -15,13 +15,14 @@ function useProvideAuth() {
     const [user, setUser] = useState(null);
 
     //TODO get username & password from login form
-    const signin = async cb => {
+    const login = async data => {
         await LoginService
-            .login({username: "admin", password: "admin"})
+            .login(data.user)
             .then(res => {
-                setUser({username: "admin", token: res.data.token});
+                setUser({username: data.user.username, token: res.data.token});
+                return data.callback();
             });
-        return cb();
+
     };
 
     const signout = async cb => {
@@ -31,10 +32,18 @@ function useProvideAuth() {
         }, 400);
 
     };
+    const register = async data => {
+        await LoginService.register(data.user)
+            .then(() => {
+                return data.callback();
+            })
+            .catch(err => console.log(err, 'err'));
+    }
 
     return {
         user,
-        signin,
-        signout
+        login,
+        signout,
+        register
     };
 }

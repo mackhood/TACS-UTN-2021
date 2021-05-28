@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef} from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -10,7 +10,7 @@ const useStyles= makeStyles(theme => ({
 }))
 export default function Notification({notify, setNotify}) {
     const classes = useStyles();
-    const nodeRef = React.useRef(null);
+    const nodeRef = useRef(null);
     const handleClose = (e, reason) => {
         if (reason === 'clickaway') return;
 
