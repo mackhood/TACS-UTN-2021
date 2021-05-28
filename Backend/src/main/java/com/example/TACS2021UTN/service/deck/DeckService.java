@@ -63,9 +63,12 @@ public class DeckService implements IDeckService {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public void save(DeckRequestDTO deckRequest) throws CardNotFoundException {
+    public DeckDTO save(DeckRequestDTO deckRequest) throws CardNotFoundException {
         Deck deck = new Deck(deckRequest.getName(), getCorrectCards(deckRequest));
         deckRepository.save(deck);
+        DeckDTO deckDTO = new DeckDTO();
+        deckDTO.setId(deck.getId());
+        return deckDTO; //para no devolver to-do el deck, simplemente el id. Ver si se puede con model mapper (creo que se le declaran los tipos)
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

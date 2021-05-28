@@ -14,7 +14,7 @@ public interface IDeckService {
 
     Deck getDeckByName(String name) throws  DeckNotFoundException;
 
-    void save(DeckRequestDTO deck) throws CardNotFoundException;
+    DeckDTO save(DeckRequestDTO deck) throws CardNotFoundException;
 
     void deleteDeckbyId(Long id);
 
