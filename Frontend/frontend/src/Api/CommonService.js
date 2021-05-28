@@ -24,4 +24,4 @@ class CommonService{
     }
 }
 
-export default CommonService;
+export default new CommonService;
