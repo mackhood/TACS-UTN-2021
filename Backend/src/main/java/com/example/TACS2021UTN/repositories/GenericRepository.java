@@ -7,9 +7,11 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public abstract class GenericRepository<T extends PersistantEntity> {
 
+    private final Integer maxSize = 3;
     protected List<T> database;
 
     public GenericRepository(){
@@ -47,5 +49,4 @@ public abstract class GenericRepository<T extends PersistantEntity> {
     public List<T> findAll() {
         return database;
     }
-
 }
