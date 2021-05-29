@@ -7,6 +7,7 @@ import Games from "./Pages/Games";
 import PersistentDrawerLeft from "./Components/AppBar";
 import { PrivateRoute } from "./Auth/PrivateRoute";
 import TablePage from "./Pages/TablePage";
+import GameCreator from "./Pages/GameCreator";
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
         </Route>
         <Route exact path="/tablePage">
           <TablePage />
+        </Route>
+        <Route exact path="/gameCreator">
+          <GameCreator />
         </Route>
       </Switch>
     </div>
