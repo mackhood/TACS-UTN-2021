@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {REACT_APP_CARD_REST_API_URL, REACT_APP_DECK_REST_API_URL} from '../Common/Constants';
+import {REACT_APP_CARD_REST_API_URL} from '../Common/Constants';
 
 class CommonService{
 
@@ -24,4 +24,4 @@ class CommonService{
     }
 }
 
-export default new AdminService();
+export default new CommonService;

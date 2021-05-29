@@ -14,25 +14,36 @@ export function ProvideAuth({ children }) {
 function useProvideAuth() {
     const [user, setUser] = useState(null);
 
-    const signin = async cb => {
-
+    //TODO get username & password from login form
+    const login = async data => {
         await LoginService
-            .login({username: "admin", password: "admin"})
+            .login(data.user)
             .then(res => {
-                setUser(res);
+                setUser({username: data.user.username, token: res.data.token});
+                return data.callback();
             });
-        return cb();
+
     };
 
     const signout = async cb => {
-        setTimeout(() => {}, 400);
-        setUser(null);
-        return cb();
+        setTimeout(() => {
+            setUser(null);
+            return cb();
+        }, 400);
+
     };
+    const register = async data => {
+        await LoginService.register(data.user)
+            .then(() => {
+                return data.callback();
+            })
+            .catch(err => console.log(err, 'err'));
+    }
 
     return {
         user,
-        signin,
-        signout
+        login,
+        signout,
+        register
     };
 }

@@ -1,25 +1,31 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
 import Login from "./Pages/Login";
-import Administration from "./Pages/Administration";
+import Administration from "./Pages/Administration/Administration";
 import PersistentDrawerLeft from "./Components/AppBar";
-import {PrivateRoute} from "./Auth/PrivateRoute";
+import {PageNotFound} from "./Components/404";
+import Register from "./Pages/Register";
 
 function App() {
   return (
     <div className="App">
-            <PersistentDrawerLeft/>
-            <Switch>
+        <PersistentDrawerLeft/>
+        <Switch>
             <Route exact path="/">
               <div>Home Page</div>
             </Route>
             <Route exact path="/login">
               <Login />
             </Route>
-
-            <PrivateRoute exact path="/admin">
+            <Route exact path="/register">
+                <Register />
+            </Route>
+            <Route path="/admin/decks">
               <Administration />
-            </PrivateRoute>
+            </Route>
+            <Route path="*">
+                <PageNotFound />
+            </Route>
         </Switch>
     </div>
   );
