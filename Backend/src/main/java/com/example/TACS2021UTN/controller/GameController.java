@@ -29,7 +29,8 @@ public class GameController {
     @PostMapping("/games")
     public ResponseEntity<GameDTO> createNewGame(@RequestBody NewGameDTO gameDTO){
         service.createNewGame(gameDTO);
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(201).build();
+        //TODO devolver ID de la partida
     }
 
     @GetMapping("/games/{id}")
@@ -40,6 +41,7 @@ public class GameController {
     @GetMapping("/games")
     public ResponseEntity<JSONWrapper> getAllGames(){
         return ResponseEntity.ok(new JSONWrapper<>(service.getAllGames()));
+        //TODO devuelve el game suelto, sin id
     }
 
 

@@ -6,7 +6,9 @@ import com.example.TACS2021UTN.models.state.Created;
 import com.example.TACS2021UTN.models.state.State;
 import com.example.TACS2021UTN.models.user.PlayerGame;
 import com.example.TACS2021UTN.models.user.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -15,20 +17,16 @@ import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Game extends PersistantEntity {
 
     private PlayerGame creator;
-
     private PlayerGame challenged;
-
     private Deck deck;
-
     private LocalDate dateOfCreation;
-
     private List<Duel> duels = new ArrayList<>();
-
     private State state;
-
     private Attribute lastAtrribute = null;
 
 

@@ -8,5 +8,5 @@ import lombok.Data;
 public class NewGameDTO {
     public String creatorUsername;
     public String challengedUsername;
-    public String deckName;
+    public Long deckID;
 }

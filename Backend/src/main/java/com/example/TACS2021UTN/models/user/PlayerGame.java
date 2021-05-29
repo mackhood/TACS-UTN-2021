@@ -4,7 +4,9 @@ import com.example.TACS2021UTN.models.Card;
 import com.example.TACS2021UTN.models.Game;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -12,14 +14,12 @@ import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class PlayerGame {
-    @JsonIdentityReference(alwaysAsId = true)
     private User player;
-    @JsonIgnore
     private Game game;
-    @JsonIdentityReference(alwaysAsId = true)
     private List<Card> mainCards = new ArrayList<>();
-    @JsonIdentityReference(alwaysAsId = true)
     private List<Card> gainedCards = new ArrayList<>();
 
     private Card lastCardSelected = null;

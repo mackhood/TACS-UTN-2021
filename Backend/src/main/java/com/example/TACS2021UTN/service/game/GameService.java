@@ -1,6 +1,7 @@
 package com.example.TACS2021UTN.service.game;
 
 import com.example.TACS2021UTN.DTO.*;
+import com.example.TACS2021UTN.exceptions.NotFoundException;
 import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.models.Game;
 import com.example.TACS2021UTN.models.user.PlayerGame;
@@ -20,7 +21,6 @@ import java.util.stream.Collectors;
 public class GameService implements IGameService {
 
     private ModelMapper modelMapper;
-
     private IGameRepository gameRepository;
     private IUserRepository userRepository;
     private IDeckRepository deckRepository;
@@ -34,22 +34,20 @@ public class GameService implements IGameService {
 
     @Override
     public List<GameDTO> getAllGames() {
-        List<Game> games = gameRepository.getAllGames();
+        List<Game> games = gameRepository.findAll();
         return games.stream().map(game -> fromGameToDTO(game)).collect(Collectors.toList());
     }
 
     @Override
     public GameDTO createNewGame(NewGameDTO gameDTO) {
-        Optional<User> aCreator = userRepository.findByUserName(gameDTO.getCreatorUsername());
-        Optional<User> aChallenged = userRepository.findByUserName(gameDTO.getChallengedUsername());
-        Optional<Deck> aDeck = deckRepository.findByName(gameDTO.getDeckName());
+        User creator = userRepository.findByUserName(gameDTO.getCreatorUsername()).orElseThrow(() -> new NotFoundException("User not found: " + gameDTO.getCreatorUsername()));
+        User challenged = userRepository.findByUserName(gameDTO.getChallengedUsername()).orElseThrow(() -> new NotFoundException("User not found" + gameDTO.getChallengedUsername()));
+        Deck deck = deckRepository.findById(gameDTO.getDeckID()).orElseThrow(() -> new NotFoundException("Deck not found with ID: " + gameDTO.getDeckID()));
 
-        if(true){
-            // TODO validateAllParameters(aCreator, aChallenged, aDeck)
-        }
-
-        Game gameResponse = gameRepository.createNewGame(aCreator.get(), aChallenged.get(), aDeck.get());
-        return fromGameToDTO(gameResponse);
+        Game newGame = new Game(creator, challenged, deck);
+        gameRepository.save(newGame);
+        //return fromGameToDTO(newGame);
+        return new GameDTO();
 
     }
 

@@ -1,10 +1,8 @@
 package com.example.TACS2021UTN;
 
-import com.example.TACS2021UTN.DTO.AppearenceStatDTO;
-import com.example.TACS2021UTN.DTO.ImageDTO;
-import com.example.TACS2021UTN.DTO.PowerStatDTO;
-import com.example.TACS2021UTN.DTO.UserDTO;
+import com.example.TACS2021UTN.DTO.*;
 import com.example.TACS2021UTN.models.Card;
+import com.example.TACS2021UTN.models.Game;
 import com.example.TACS2021UTN.models.user.Role;
 import com.example.TACS2021UTN.models.user.User;
 import org.modelmapper.ModelMapper;
@@ -21,20 +19,13 @@ public class main {
 
         ModelMapper modelMapper = new ModelMapper();
 
-        List<Role> list = new ArrayList<>();
-        Role role = new Role("name");
-        list.add(role);
+        PlayerGameDTO creator = new PlayerGameDTO("ndeah", 1,1, "true");
+        PlayerGameDTO challenged = new PlayerGameDTO("ndeah challenged", 1,1, "false");
+        GameDTO gameDTO = new GameDTO(creator, challenged, "deckardium", 40);
 
-        User unUser = new User("username", "password", "mail@gmail.com", list);
+        Game game = modelMapper.map(gameDTO, Game.class);
 
-        UserDTO userDTO = modelMapper.map(unUser, UserDTO.class);
-
-        System.out.println(userDTO.toString());
-
-        /////////////////////////////
-        Card uselessCard = new Card("", 1,2,3,4,5,6);
-
-        System.out.println(uselessCard.correctCard());
+        System.out.println(game.getChallenged());
 
 
 
