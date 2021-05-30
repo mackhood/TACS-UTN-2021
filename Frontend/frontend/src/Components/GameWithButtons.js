@@ -12,9 +12,12 @@ import Grid from "@material-ui/core/Grid";
 const useStyles = makeStyles({
     root: {
         maxWidth: 345,
+        borderStyle: 'solid',
+        borderColor: 'black',
+        borderWidth: 1
     },
     media: {
-        height: 200,
+        height: 300,
     },
 });
 
@@ -35,7 +38,7 @@ export default function GameWithButtons(props) {
                     />
                 <CardContent>                    
                     <div>
-                    <Typography gutterBottom>
+                    <Typography gutterBottom variant="h5" component="h2">
                             { game.gameStatus }
                         </Typography>
                         <br></br>
@@ -46,10 +49,10 @@ export default function GameWithButtons(props) {
                             Deck:  { decks.filter(x => x.id == game.deckId)[0].name }
                         </Typography>
                         <Typography gutterBottom>
-                            Jugador creador: { users.filter(x => x.id == game.creatorId)[0].name }
+                            Creador: { users.filter(x => x.id == game.creatorId)[0].name }
                         </Typography>
                         <Typography gutterBottom>
-                            Jugador desafiado: { users.filter(x => x.id == game.challengedId)[0].name }
+                            Desafiado: { users.filter(x => x.id == game.challengedId)[0].name }
                         </Typography>
                     </div>
                 </CardContent>

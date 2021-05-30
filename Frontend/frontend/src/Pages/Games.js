@@ -40,11 +40,11 @@ const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
         flexWrap: 'wrap',
-      },
-      formControl: {
+    },
+    formControl: {
         margin: theme.spacing(1),
         minWidth: 120,
-      },
+    },
 }));
 
 export default function Games() {
@@ -100,13 +100,17 @@ export default function Games() {
 
     const createGame = async () => {
         const location = {
-            pathname: '/gameCreator'
+            pathname: '/game'
         }
         history.push(location);
     }
 
     const continueGame = async (game) => {
-
+        const location = {
+            pathname: '/game'
+        }
+        history.push(location);
+    
     }
 
     const dropGame = async (game) => {
@@ -114,16 +118,16 @@ export default function Games() {
     }
 
     const showStats = () => {
-        showTable("ESTADISTICAS", ["Partida", "Mazo", "Creador", "Desafiado"], createStatistics());
+        showTable("/stats", "ESTADISTICAS", ["Partida", "Mazo", "Creador", "Desafiado"], createStatistics());
     }
 
     const showGame = (game) => {
-        showTable("PARTIDA " + game.id, ["Duelo", "Ganador"], createGameResults(game))
+        showTable("/duels", "PARTIDA " + game.id, ["Duelo", "Ganador"], createGameResults(game))
     }
 
-    const showTable = async (title, tableHeaders, tableRows) => {
+    const showTable = async (url, title, tableHeaders, tableRows) => {
         const location = {
-            pathname: '/tablePage',
+            pathname: url,
             state: {
                 title: title,
                 tableHeaders: tableHeaders,
@@ -157,7 +161,7 @@ export default function Games() {
                             >
                                 {decks.map((deck, index) => (
                                     <MenuItem value={10}>{deck.name}</MenuItem>
-                                ))} 
+                                ))}
                             </Select>
                         </FormControl>
                         <FormControl className={classes.formControl}>
@@ -178,7 +182,7 @@ export default function Games() {
                     <Button onClick={handleClose} color="primary">
                         Cancel
           </Button>
-                    <Button onClick={handleClose} color="primary">
+                    <Button onClick={createGame} color="primary">
                         Ok
           </Button>
                 </DialogActions>
@@ -193,7 +197,7 @@ export default function Games() {
                             <Grid container spacing={4} alignItems={"center"} alignContent={"center"}>
                                 <Grid item xs={12} sm={4}>
                                     <Button variant="contained" color="primary" onClick={() => {
-                                        
+
                                         handleClickOpen();
                                     }}>
                                         Crear Partida
@@ -210,18 +214,20 @@ export default function Games() {
                         </Grid>
                     </Grid>
                 </div>
-                {games.map((game, index) => (
-                    <Grid item xs={12} sm={4} key={index}>
-                        <GameWithButtons
-                            game={game}
-                            users={users}
-                            decks={decks}
-                            dropGame={dropGame}
-                            showGame={showGame}
-                            continueGame={continueGame}
-                        />
-                    </Grid>
-                ))}
+                <Grid container alignItems={"center"} alignContent={"center"}>
+                    {games.map((game, index) => (
+                        <Grid item xs={12} sm={4} key={index}>
+                            <GameWithButtons
+                                game={game}
+                                users={users}
+                                decks={decks}
+                                dropGame={dropGame}
+                                showGame={showGame}
+                                continueGame={continueGame}
+                            />
+                        </Grid>
+                    ))}
+                </Grid>
             </Grid>
         </div>
     );
