@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import Grid from "@material-ui/core/Grid";
 import {makeStyles} from "@material-ui/core/styles";
-import {Route, Switch} from "react-router-dom";
+import {Switch} from "react-router-dom";
 import {useRouteMatch} from "react-router";
 import {AppContextProvider} from "../../Common/AppContext";
 import {CreateDeck} from "./CreateDeck";

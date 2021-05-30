@@ -68,6 +68,11 @@ export default function getDecks() {
                     "id": 5,
                     "name": "Mazo campeon",
                     "cardList": getCards()
+                },
+                {
+                    "id": 6,
+                    "name": "Mazo campeon 2",
+                    "cardList": getCards()
                 }
             ],
         }

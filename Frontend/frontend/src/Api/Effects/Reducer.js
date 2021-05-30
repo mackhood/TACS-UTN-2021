@@ -16,4 +16,6 @@ export const reducer = (state, action) => {
         let newDecks = _.filter(state.decks, function (elem) {return elem.id !== action.payload.id;});
         return {...state, decks:newDecks}
     }
+
+    // if (action.type === "")
 }

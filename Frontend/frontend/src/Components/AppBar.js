@@ -154,7 +154,7 @@ export default function PersistentDrawerLeft() {
                 <List>
                     {auth.user && (
                         <>
-                            <Link to="/main">
+                            <Link to="/games">
                                 <ListItem button>
                                     <ListItemIcon><GamesIcon/></ListItemIcon>
                                     <ListItemText primary="Mis partidas"/>
