@@ -38,12 +38,12 @@ public class Game extends PersistantEntity {
         this.state = new Created();
     }
 
-    /*
+
     public boolean startGame()
     {
         return this.state.startGame(this);
     }
-
+    /*
     public void play(){
         this.state.play(this);
     }
@@ -70,9 +70,9 @@ public class Game extends PersistantEntity {
         return this.getLastAtrribute() != null;
     }
 
-    public void addDuel() {
+    public void addDuel(Attribute attribute) {
         Duel newDuel = new Duel();
-        newDuel.setAttribute(this.getLastAtrribute());
+        newDuel.setAttribute(attribute);
         newDuel.setCreatorCard(this.getCreator().getNextCard());
         newDuel.setChallengedCard(this.getCreator().getNextCard());
         newDuel.setWinner(this.getWinner(newDuel));
@@ -88,6 +88,11 @@ public class Game extends PersistantEntity {
     }
 
     public PlayerGame getFinalWinner() {
-        return (this.getCreator().getGainedCards().size() - this.getCreator().getGainedCards().size()) > 0 ? this.getCreator() : this.getChallenged();
+        return ((this.getCreator().getGainedCards().size() - this.getChallenged().getGainedCards().size()) > 0 ? this.getCreator() : this.getChallenged());
+    }
+
+    public void play(User user, Attribute attribute)
+    {
+        this.addDuel(attribute);
     }
 }

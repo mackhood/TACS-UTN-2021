@@ -12,6 +12,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.security.core.Authentication;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,14 @@ public class GameController {
         //TODO devolver ID de la partida
     }
 
+    @PostMapping("/games/{id}/duels")
+    public ResponseEntity<?> generateDuel(@RequestBody DuelRequestDTO duelRequestDTO, @PathVariable Long id, Authentication user){
+        service.generateDuel(id, user.getName(), duelRequestDTO);
+        return ResponseEntity.status(201).build();
+        //TODO volver al path de /games/{id} ?
+    }
+
+
     @GetMapping("/games/{id}")
     public ResponseEntity<GameDTO> getGame(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
@@ -46,27 +56,9 @@ public class GameController {
 
 
     @GetMapping("/games/{id}/replay")
-    public ResponseEntity<JSONWrapper> getDuels(@PathVariable(value = "id") Long id) {
-    
-        User player1 = new User();
-        player1.setId((long) 1);
-        player1.setUsername("A");
-        PlayerGame playerGame1 = new PlayerGame(player1,null);
+    public ResponseEntity<JSONWrapper> getDuels(@PathVariable Long id) {
 
-        List<Duel> duels = new ArrayList<>();
-
-        Duel duel1 = new Duel();
-        duel1.setId((long) 1);
-        duel1.setWinner(playerGame1);
-
-        Duel duel2 = new Duel();
-        duel2.setId((long) 2);
-        duel2.setWinner(playerGame1);
-
-        duels.add(duel1);
-        duels.add(duel2);
-
-      return ResponseEntity.ok(new JSONWrapper<>((List<Duel>) duels));
+      return ResponseEntity.ok(new JSONWrapper<>(service.getAllDuels(id)));
     }
 
     @PostMapping("/games/{id}/dropout")

@@ -1,8 +1,6 @@
 package com.example.TACS2021UTN.service.game;
 
-import com.example.TACS2021UTN.DTO.GameDTO;
-import com.example.TACS2021UTN.DTO.GamesStatisticsDTO;
-import com.example.TACS2021UTN.DTO.NewGameDTO;
+import com.example.TACS2021UTN.DTO.*;
 import com.example.TACS2021UTN.models.user.User;
 
 import java.time.LocalDate;
@@ -15,4 +13,7 @@ public interface IGameService {
     void leaveGame(Long id, User player);
     GamesStatisticsDTO showGamesByFilters(LocalDate from, LocalDate to);
     List<GameDTO> getAllGames();
+    DuelRequestDTO generateDuel(Long gameId, String playerUsername, DuelRequestDTO duelRequestDTO);
+    List<DuelDTO> getAllDuels(Long id);
+
 }

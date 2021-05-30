@@ -41,9 +41,11 @@ public class PlayerGame {
         this.isMyTurn = true;
     }
 
-
     public void chooseCardFromMainCards(){
         this.mainCards.remove(0);
     }
 
+    public void addGainedCard(Card card){
+        this.gainedCards.add(card);
+    }
 }

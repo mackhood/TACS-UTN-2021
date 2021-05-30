@@ -4,8 +4,10 @@ import com.example.TACS2021UTN.DTO.*;
 import com.example.TACS2021UTN.exceptions.NotFoundException;
 import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.models.Game;
+import com.example.TACS2021UTN.models.attribute.Attribute;
 import com.example.TACS2021UTN.models.user.PlayerGame;
 import com.example.TACS2021UTN.models.user.User;
+import com.example.TACS2021UTN.repositories.attributes.IAttributeRepository;
 import com.example.TACS2021UTN.repositories.deck.IDeckRepository;
 import com.example.TACS2021UTN.repositories.game.IGameRepository;
 import com.example.TACS2021UTN.repositories.user.IUserRepository;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,12 +25,15 @@ public class GameService implements IGameService {
     private IGameRepository gameRepository;
     private IUserRepository userRepository;
     private IDeckRepository deckRepository;
+    private IAttributeRepository attributeRepository;
 
-    public GameService(IGameRepository gameRepository, IUserRepository userRepository, IDeckRepository deckRepository, ModelMapper modelMapper){
+    public GameService(IGameRepository gameRepository, IUserRepository userRepository, IDeckRepository deckRepository,
+                       ModelMapper modelMapper, IAttributeRepository attributeRepository){
         this.deckRepository = deckRepository;
         this.gameRepository = gameRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.attributeRepository = attributeRepository;
     }
 
     @Override
@@ -46,10 +50,32 @@ public class GameService implements IGameService {
 
         Game newGame = new Game(creator, challenged, deck);
         gameRepository.save(newGame);
+        newGame.startGame();
         //return fromGameToDTO(newGame);
         return new GameDTO();
 
     }
+
+    @Override
+    public DuelRequestDTO generateDuel(Long gameId, String playerUsername , DuelRequestDTO duelRequestDTO){
+
+        Game game = gameRepository.findById(gameId).orElseThrow(() -> new NotFoundException("Game not found with ID" + gameId));
+        Attribute attribute = attributeRepository.findByName(duelRequestDTO.attribute)
+                .orElseThrow(()-> new NotFoundException("Attribute not found: " + duelRequestDTO.attribute));
+        User user = userRepository.findByUserName(playerUsername).get();
+        game.play(user, attribute);
+        //gameRepository.update(game);
+
+        return null;
+    }
+
+    @Override
+    public List<DuelDTO> getAllDuels(Long gameId) {
+        Game game = gameRepository.findById(gameId).orElseThrow(() -> new NotFoundException("Game not found with ID" + gameId));
+        //return game.getDuels();
+        return null;
+    }
+
 
     @Override
     public void leaveGame(Long id, User player) {
@@ -86,12 +112,8 @@ public class GameService implements IGameService {
 
     public GameDTO findById(Long id)
     {
-        Optional<Game> game = gameRepository.findById(id);
-        if(!game.isPresent()){
-          //TODO excepcion ?
-        }
-
-        return fromGameToDTO(game.get());
+        Game game = gameRepository.findById(id).orElseThrow(() -> new NotFoundException("Game not found with ID" + id));
+        return fromGameToDTO(game);
     }
 
 

@@ -20,7 +20,7 @@ public class InProgress extends State {
     public void play(Game game) {
         if(game.isReadyToPlayDuel()){
 
-            game.addDuel();
+            //game.addDuel();
         }
         if(game.validateGameHasFinished()){
             game.setState(new Finished(game.getFinalWinner().getPlayer()));

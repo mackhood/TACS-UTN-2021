@@ -14,6 +14,4 @@ public class Duel extends PersistantEntity{
     private Card creatorCard;
     private Card challengedCard;
     private Attribute attribute;
-
-
 }
