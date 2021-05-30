@@ -4,6 +4,7 @@ import getGames from "../Resources/getGames";
 import { makeStyles } from "@material-ui/core/styles";
 import getDecks from "../Resources/getDecks";
 import getUsers from "../Resources/getUsers";
+import getCards from "../Resources/getCards";
 import * as _ from 'lodash';
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom"
@@ -13,6 +14,9 @@ import Divider from "@material-ui/core/Divider";
 import { AppBar } from "@material-ui/core";
 import { Drawer } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
+import Button from "@material-ui/core/Button";
+import HeroeCard from "../Components/HeroeCard";
 
 const { customAlphabet } = require('nanoid')
 
@@ -73,6 +77,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
+
 export default function Game() {
 
 
@@ -81,66 +87,267 @@ export default function Game() {
     const [games] = useState(getGames().data);
     const [decks] = useState(getDecks()[0].data);
     const [users] = useState(getUsers());
-
+    const [cards] = useState(getCards());
+    const [heroes] = useState(getCards());
     const classes = useStyles();
-
     const userId = 1;
+    const [showCards, setShowCards] = useState(false);
+    const [showAttributes, setShowAttributes] = useState(true);
+    const [atributoEnJuego, setAtributoEnJuego] = useState("Elegir atributo");
+
+    let jugadorTurno = users[0].name;
+    let attributes = [];
+    let currentGame = games[0];    
+
+    for (var propertyName in cards[0].powerstats) {
+        attributes.push(propertyName)
+    }
+
+    let wonCards = [];
+    cards.map((card)=>{
+        wonCards.push( { "name": card.name } );
+    })
+
+
+    const executeDuel = async () => {
+        if(showCards){
+            setShowCards(false);
+        }else{
+            setShowCards(true);
+        }
+        
+    }
+
+    function getCard (){
+
+    }
+
+    function setAttribute  (attr)  {
+        if(showAttributes){
+            setShowAttributes(false);
+            setAtributoEnJuego(attr);
+        }else{
+            setShowAttributes(true);
+            setAtributoEnJuego("Elegir atributo");
+        }
+    }
+
+    function createGameResultData(duel, winnerName) {
+        return { duel, winnerName };
+    }
+
+    function createGameResults(game) {
+        let data = [];
+        game.duels.forEach((x) => {
+            data.push(
+                createGameResultData(
+                    x.id,
+                    users.filter(y => y.id == x.winnerId)[0].name
+                ));
+        })
+        return data;
+    }
+
+    const showGame = () => {
+        showTable("/duels", "PARTIDA " + currentGame.id, ["Duelo", "Ganador"], createGameResults(currentGame))
+    }
+
+    const showTable = async (url, title, tableHeaders, tableRows) => {
+        const location = {
+            pathname: url,
+            state: {
+                title: title,
+                tableHeaders: tableHeaders,
+                tableRows: tableRows
+            }
+        }
+
+        history.push(location);
+    }
 
     return (
-        <div  style={{ width: '100%' }}>
-            <Box component="div" display="inline" p={1} m={1}  bgcolor="background.paper">
-                <Box component="span" display="block">
-                    <Typography gutterBottom variant="h5" component="h2">
-                        TURNO
-                                </Typography>
-                </Box>
-                <br></br>
-                <br></br>
-                <Box component="span" display="block">
-                    <Typography gutterBottom variant="h5" component="h2">
-                        ATRIBUTOS
-                                </Typography>
-                </Box>
-            </Box>
+        <div>
+            <Grid container alignItems={"top"} alignContent={"center"}>
+                <Grid item xs={12} sm={4}>
+                    <Container>
 
-            <Box component="div" display="inline" p={1} m={1}  bgcolor="background.paper">
-                <Box component="span" display="block">
-                    <Typography gutterBottom variant="h5" component="h2">
-                        MAZO
+                        <Box component="span" display="block" bgcolor="green">
+                            <Typography gutterBottom variant="h4" component="h2">
+                                TURNO DE JUGADOR
                                 </Typography>
-                </Box>
-                <br></br>
-                <br></br>
-                <Box component="span" display="block">
-                    <Typography gutterBottom variant="h5" component="h2">
-                        CARTAS
+                            <Typography gutterBottom variant="h5" component="h2">
+                                {jugadorTurno}
+                            </Typography>
+                        </Box>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <Box component="span" display="block" bgcolor="orange">
+                            <Typography gutterBottom variant="h4" component="h2">
+                                ATRIBUTOS
                                 </Typography>
-                </Box>
-                <br></br>
-                <br></br>
-                <Box component="span" display="block">
-                    <Typography gutterBottom variant="h5" component="h2">
-                        JUGAR!
-                                </Typography>
-                </Box>
-            </Box>
+                            <Grid container alignItems={"center"} alignContent={"center"} justify="center" >
+                                <Box component="span" display="block" bgcolor="orange" width="75%">
+                                    {attributes.map((attr, index) => {
 
-            <Box component="div" display="inline" p={1} m={1}  bgcolor="background.paper"   >
-                <Box component="span" display="block">
-                    <Typography gutterBottom variant="h5" component="h2">
-                        DUELOS
+                                        return (
+                                            <Grid item xs={12}>
+                                                <Button variant="contained" onClick={() => setAttribute(attr)} disabled={!showAttributes} color="primary" size="large" fullWidth="true">
+                                                    {attr}
+                                                </Button>
+                                                <br></br>
+                                                <br></br>
+                                            </Grid>
+                                        )
+                                    })}
+                                </Box>
+                            </Grid>
+                        </Box>
+                        <br></br>
+                        <br></br>
+                        <Box component="span" display="block" bgcolor="green">
+                            <Typography gutterBottom variant="h4" component="h2">
+                                Atributo:
                                 </Typography>
-                </Box>
-                <br></br>
-                <br></br>
-                <Box component="span" display="block">
-                    <Typography gutterBottom variant="h5" component="h2">
-                        CARTAS GANADAS
+                            <Typography gutterBottom variant="h5" component="h2">
+                                {atributoEnJuego}
+                            </Typography>
+                        </Box>
+                        <br></br>
+                        <br></br>
+                    </Container>
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                    <Container>
+                        <Box component="span" display="block" bgcolor="green" height="500">
+                            <Typography gutterBottom variant="h4" component="h2">
+                                MAZO
                                 </Typography>
-                </Box>
-            </Box>
+                            <Grid container alignItems={"center"} alignContent={"center"} justify="center" >
+                                <Box component="span" display="block" bgcolor="orange" width="75%">
+                                    <Grid item xs={12}>
 
-        </div>
+                                        <Button variant="contained" onClick={getCard} color="primary" size="large" fullWidth="true">
+                                            Repartir cartas
+                                                </Button>
+                                        
+                                    </Grid>
+                                </Box>
+                                <br></br>
+                                        <br></br>
+                                        <br></br>
+                            </Grid>
+                        </Box>
+                        <br></br>
+                        <br></br>
+                        <Box component="span" display="block" bgcolor="orange">
+                            <Typography gutterBottom variant="h4" component="h2">
+                                CARTAS
+                                </Typography>
+                            <Grid container alignItems={"center"} alignContent={"center"} justify="center" spacing={4}>
+                                <Grid item xs={12} sm={5}>
+                                    <Box component="span" display="block" bgcolor="orange">
+                                        <Typography gutterBottom variant="h4" component="h2">
+                                            Tu carta
+                                </Typography>
+                                {showCards ? (
+                                            <HeroeCard
+                                                name={heroes[0].name}
+                                                powerstats={heroes[0].powerstats}
+                                                image={heroes[0].image} />
+                                        ) :
+                                            (
+                                                <HeroeCard
+                                                    name="Carta"
+                                                    powerstats={{ "intelligence": "???", "strength": "???", "speed": "???", "durability": "???", "power": "???", "combat": "???" }}
+                                                    image = {{"url": "./unknown.png"}} />
+                                            )
+                                        }
+
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={12} sm={5}>
+                                    <Box component="span" display="block" bgcolor="orange">
+                                        <Typography gutterBottom variant="h4" component="h2">
+                                            Contrincante
+                                </Typography>
+                                        {showCards ? (
+                                            <HeroeCard
+                                                name={heroes[1].name}
+                                                powerstats={heroes[1].powerstats}
+                                                image={heroes[1].image} />
+                                        ) :
+                                            (
+                                                <HeroeCard
+                                                    name="Carta"
+                                                    powerstats={{ "intelligence": "???", "strength": "???", "speed": "???", "durability": "???", "power": "???", "combat": "???" }}
+                                                    image = {{"url": "./unknown.png"}} />
+                                            )
+                                        }
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                        <br></br>
+                        <br></br>
+                        <Box component="span" display="block" bgcolor="blue">
+
+                            <Button variant="contained" onClick={executeDuel} color="primary" size="large" fullWidth="true" style={{ height: "100%" }}>
+                                <Typography gutterBottom variant="h4" component="h2">
+                                    ¡JUGAR!
+                                </Typography>
+                            </Button>
+                        </Box>
+                    </Container>
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                    <Container>
+                    <Box component="span" display="block" bgcolor="green" height="500">
+                            <Typography gutterBottom variant="h4" component="h2">
+                                DUELOS
+                                </Typography>
+                            <Grid container alignItems={"center"} alignContent={"center"} justify="center" >
+                                <Box component="span" display="block" bgcolor="orange" width="75%">
+                                    <Grid item xs={12}>
+
+                                        <Button variant="contained" onClick={setAttribute} color="primary" size="large" fullWidth="true">
+                                            Ver duelos
+                                                </Button>
+                                        
+                                    </Grid>
+                                </Box>
+                                <br></br>
+                                        <br></br>
+                                        <br></br>
+                            </Grid>
+                        </Box>
+                        <br></br>
+                        <br></br>
+                        <Box component="span" display="block" bgcolor="orange">
+                            <Typography gutterBottom variant="h4" component="h2">
+                                CARTAS GANADAS
+                                </Typography>
+                                <Grid container alignItems={"center"} alignContent={"center"} justify="center" >
+                                <Box component="span" display="block" bgcolor="orange" width="75%">
+                                    {wonCards.map((wonCard, index) => {
+
+                                        return (
+                                            <Grid item xs={12}>
+                                                <Button variant="contained" onClick={setAttribute} color="primary" size="large" fullWidth="true">
+                                                    { wonCard.name }
+                                                </Button>
+                                                <br></br>
+                                                <br></br>
+                                            </Grid>
+                                        )
+                                    })}
+                                </Box>
+                            </Grid>
+                        </Box>
+                    </Container>
+                </Grid>
+            </Grid>
+        </div >
     );
 
 }

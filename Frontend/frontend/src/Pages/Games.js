@@ -11,7 +11,6 @@ import TablePage from "./TablePage";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom"
 import { useRadioGroup } from "@material-ui/core";
-
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -21,7 +20,6 @@ import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
 
 const { customAlphabet } = require('nanoid')
 
