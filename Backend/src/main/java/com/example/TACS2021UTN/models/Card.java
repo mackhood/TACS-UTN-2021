@@ -46,7 +46,6 @@ public class Card extends PersistantEntity{
         return true;
     }
     public Integer getValueOfAttribute(Attribute attribute){
-        //TODO refactor attributes to make more extensible
         try{
             Field field = Card.class.getDeclaredField(attribute.getName());
             return (Integer) field.get(this);
@@ -56,9 +55,4 @@ public class Card extends PersistantEntity{
             throw new InvalidAttributeException("Invalid attribute " + attribute.getName());
         }
     }
-
-
-
-
-
 }

@@ -1,6 +1,8 @@
 package com.example.TACS2021UTN.models;
 
 
+import com.example.TACS2021UTN.exceptions.NonPlayebleGameStateException;
+import com.example.TACS2021UTN.exceptions.UserWithoutTurnException;
 import com.example.TACS2021UTN.models.attribute.Attribute;
 import com.example.TACS2021UTN.models.state.Created;
 import com.example.TACS2021UTN.models.state.State;
@@ -13,6 +15,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -27,15 +30,13 @@ public class Game extends PersistantEntity {
     private LocalDate dateOfCreation;
     private List<Duel> duels = new ArrayList<>();
     private State state;
-    private Attribute lastAtrribute = null;
-
 
     public Game(User creator, User challenged, Deck deck) {
         this.creator =  new PlayerGame(creator, this);
         this.challenged =  new PlayerGame(challenged, this);
         this.deck = deck;
         this.dateOfCreation = LocalDate.now();
-        this.state = new Created();
+        this.state = new Created(this);
     }
 
 
@@ -43,11 +44,11 @@ public class Game extends PersistantEntity {
     {
         return this.state.startGame(this);
     }
-    /*
-    public void play(){
-        this.state.play(this);
+
+    public Duel play(User user, Attribute attribute) throws NonPlayebleGameStateException, UserWithoutTurnException {
+        return this.state.play(user, attribute);
     }
-*/
+
     public Long getIdFromCreator(){
         return getCreator().getPlayer().getId();
     }
@@ -58,41 +59,54 @@ public class Game extends PersistantEntity {
     public Long getIdFromChallenged(){ return getChallenged().getPlayer().getId(); }
     public String getUsernameFromChallenged(){return getChallenged().getPlayer().getUsername(); }
 
-    public Boolean isReadyToPlayDuel() {
-        return attributeHasBeenSelected() && cardsHasBeenChosen();
-    }
-
-    private Boolean cardsHasBeenChosen() {
-        return (this.getCreator().getLastCardSelected() != null) && (this.getChallenged().getLastCardSelected() != null);
-    }
-
-    private Boolean attributeHasBeenSelected() {
-        return this.getLastAtrribute() != null;
-    }
-
-    public void addDuel(Attribute attribute) {
+    public Duel addDuel(Attribute attribute) {
         Duel newDuel = new Duel();
+        newDuel.setGame(this);
         newDuel.setAttribute(attribute);
         newDuel.setCreatorCard(this.getCreator().getNextCard());
-        newDuel.setChallengedCard(this.getCreator().getNextCard());
-        newDuel.setWinner(this.getWinner(newDuel));
-
-    }
-
-    private PlayerGame getWinner(Duel newDuel) {
-        return (newDuel.getCreatorCard().getValueOfAttribute(newDuel.getAttribute()) - newDuel.getChallengedCard().getValueOfAttribute(newDuel.getAttribute())) >0 ? this.getCreator() : this.getChallenged();
+        newDuel.setChallengedCard(this.getChallenged().getNextCard());
+        newDuel.getWinner();
+        this.duels.add(newDuel);
+        return newDuel;
     }
 
     public boolean validateGameHasFinished() {
-        return this.getCreator().getMainCards().size() == 0 || this.getChallenged().getMainCards().size() == 0;
+        return !this.getCreator().areTurnsLeft() || !this.getChallenged().areTurnsLeft();
     }
 
     public PlayerGame getFinalWinner() {
         return ((this.getCreator().getGainedCards().size() - this.getChallenged().getGainedCards().size()) > 0 ? this.getCreator() : this.getChallenged());
     }
 
-    public void play(User user, Attribute attribute)
+    public void addCardsToUser(User user, Card ... cards){
+        PlayerGame hand = getPlayerGameByUser(user);
+        hand.addGainedCards(cards);
+    }
+
+    public PlayerGame getPlayerGameByUser(User user){
+        if(creator.getPlayer().equals(user))
+            return creator;
+        else if (challenged.getPlayer().equals(user))
+            return challenged;
+
+        return null;
+    }
+
+    public void changeTurn(){
+        creator.playTurn();
+        challenged.playTurn();
+    }
+
+    public Integer cardsLeft()
     {
-        this.addDuel(attribute);
+        return creator.cardsLeft();
+    }
+
+    public Boolean userIsInGame(User user){
+        return creator.getPlayer().equals(user) || challenged.getPlayer().equals(user);
+    }
+
+    public Boolean isUserTurn(User user){
+        return getPlayerGameByUser(user).getIsMyTurn();
     }
 }

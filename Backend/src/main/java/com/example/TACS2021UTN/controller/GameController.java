@@ -2,6 +2,8 @@ package com.example.TACS2021UTN.controller;
 
 import com.example.TACS2021UTN.DTO.*;
 import com.example.TACS2021UTN.exceptions.BadDatesInserted;
+import com.example.TACS2021UTN.exceptions.NonPlayebleGameStateException;
+import com.example.TACS2021UTN.exceptions.UserWithoutTurnException;
 import com.example.TACS2021UTN.functions.DateAnalizer;
 import com.example.TACS2021UTN.functions.JSONWrapper;
 import com.example.TACS2021UTN.models.Duel;
@@ -36,10 +38,9 @@ public class GameController {
     }
 
     @PostMapping("/games/{id}/duels")
-    public ResponseEntity<?> generateDuel(@RequestBody DuelRequestDTO duelRequestDTO, @PathVariable Long id, Authentication user){
-        service.generateDuel(id, user.getName(), duelRequestDTO);
-        return ResponseEntity.status(201).build();
-        //TODO volver al path de /games/{id} ?
+    public ResponseEntity<?> generateDuel(@RequestBody DuelRequestDTO duelRequestDTO, @PathVariable Long id, Authentication user) throws NonPlayebleGameStateException, UserWithoutTurnException {
+
+        return ResponseEntity.status(201).body(service.generateDuel(id, user.getName(), duelRequestDTO));
     }
 
 
@@ -71,11 +72,9 @@ public class GameController {
 
         Duel duel1 = new Duel();
         duel1.setId((long) 1);
-        duel1.setWinner(playerGame1);
 
         Duel duel2 = new Duel();
         duel2.setId((long) 2);
-        duel2.setWinner(playerGame1);
 
         duels.add(duel1);
         duels.add(duel2);

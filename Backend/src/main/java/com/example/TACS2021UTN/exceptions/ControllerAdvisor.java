@@ -27,4 +27,22 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         statusCode.setMessage(errorException.getMessage());
         return new ResponseEntity<>(statusCode,HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(UserWithoutTurnException.class)
+    public ResponseEntity<StatusCodeDTO> handleException(UserWithoutTurnException errorException)
+    {
+        StatusCodeDTO statusCode = new StatusCodeDTO();
+        statusCode.setCode(HttpStatus.FORBIDDEN.value());
+        statusCode.setMessage(errorException.getMessage());
+        return new ResponseEntity<>(statusCode,HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(NonPlayebleGameStateException.class)
+    public ResponseEntity<StatusCodeDTO> handleException(NonPlayebleGameStateException errorException)
+    {
+        StatusCodeDTO statusCode = new StatusCodeDTO();
+        statusCode.setCode(HttpStatus.FORBIDDEN.value());
+        statusCode.setMessage(errorException.getMessage());
+        return new ResponseEntity<>(statusCode,HttpStatus.FORBIDDEN);
+    }
 }

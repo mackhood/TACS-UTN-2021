@@ -1,6 +1,7 @@
 package com.example.TACS2021UTN.models.user;
 
 import com.example.TACS2021UTN.models.Card;
+import com.example.TACS2021UTN.models.Duel;
 import com.example.TACS2021UTN.models.Game;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -21,20 +23,18 @@ public class PlayerGame {
     private Game game;
     private List<Card> mainCards = new ArrayList<>();
     private List<Card> gainedCards = new ArrayList<>();
-
-    private Card lastCardSelected = null;
-
+    private Integer turn;
     private Boolean isMyTurn = false;
 
     public PlayerGame(User player, Game game)
     {
         this.player = player;
         this.game = game;
+        this.turn = 0;
     }
 
     public Card getNextCard(){
-        this.setLastCardSelected(this.getMainCards().stream().findFirst().orElse(null));
-        return this.getLastCardSelected();
+        return this.mainCards.get(turn);
     }
 
     public void setPlayerWithTurn() {
@@ -47,5 +47,25 @@ public class PlayerGame {
 
     public void addGainedCard(Card card){
         this.gainedCards.add(card);
+    }
+    public void addGainedCards(Card ... cards){
+        Arrays.stream(cards).forEach(c -> this.addGainedCard(c));
+    }
+
+    public void playTurn(){
+        turn++;
+        if(areTurnsLeft())
+            setIsMyTurn(!isMyTurn);
+        else
+            setIsMyTurn(false);
+
+    }
+
+    public Boolean areTurnsLeft(){
+        return cardsLeft() > 0;
+    }
+
+    public Integer cardsLeft(){
+        return Math.max(mainCards.size() - turn, 0);
     }
 }

@@ -35,7 +35,6 @@ public class AuthenticationController {
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequest)
     {
         this.authenticate(loginRequest);
-        //TODO authenticate user, check password and username, then generate token (in service)
         TokenDTO tokenResponse = userService.authenticate(loginRequest);
         return ResponseEntity.ok(tokenResponse);
     }

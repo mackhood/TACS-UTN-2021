@@ -1,8 +1,11 @@
 package com.example.TACS2021UTN.service.game;
 
 import com.example.TACS2021UTN.DTO.*;
+import com.example.TACS2021UTN.exceptions.NonPlayebleGameStateException;
 import com.example.TACS2021UTN.exceptions.NotFoundException;
+import com.example.TACS2021UTN.exceptions.UserWithoutTurnException;
 import com.example.TACS2021UTN.models.Deck;
+import com.example.TACS2021UTN.models.Duel;
 import com.example.TACS2021UTN.models.Game;
 import com.example.TACS2021UTN.models.attribute.Attribute;
 import com.example.TACS2021UTN.models.user.PlayerGame;
@@ -57,16 +60,20 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public DuelRequestDTO generateDuel(Long gameId, String playerUsername , DuelRequestDTO duelRequestDTO){
+    public DuelDTO generateDuel(Long gameId, String playerUsername , DuelRequestDTO duelRequestDTO) throws NonPlayebleGameStateException, UserWithoutTurnException {
 
         Game game = gameRepository.findById(gameId).orElseThrow(() -> new NotFoundException("Game not found with ID" + gameId));
         Attribute attribute = attributeRepository.findByName(duelRequestDTO.attribute)
                 .orElseThrow(()-> new NotFoundException("Attribute not found: " + duelRequestDTO.attribute));
         User user = userRepository.findByUserName(playerUsername).get();
-        game.play(user, attribute);
+
+        if(!game.userIsInGame(user))
+            throw new NotFoundException("Game not found with ID: " + gameId);
+
+        Duel duel = game.play(user, attribute);
         //gameRepository.update(game);
 
-        return null;
+        return modelMapper.map(duel, DuelDTO.class);
     }
 
     @Override
@@ -115,8 +122,5 @@ public class GameService implements IGameService {
         Game game = gameRepository.findById(id).orElseThrow(() -> new NotFoundException("Game not found with ID" + id));
         return fromGameToDTO(game);
     }
-
-
-
 
 }
