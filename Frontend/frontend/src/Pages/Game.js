@@ -1,27 +1,18 @@
 import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import getGames from "../Resources/getGames";
 import { makeStyles } from "@material-ui/core/styles";
 import getDecks from "../Resources/getDecks";
 import getUsers from "../Resources/getUsers";
 import * as _ from 'lodash';
-import GameWithButtons from "../Components/GameWithButtons";
-import TablePage from "./TablePage";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom"
-import { useRadioGroup } from "@material-ui/core";
-
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Divider from "@material-ui/core/Divider";
+import { AppBar } from "@material-ui/core";
+import { Drawer } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 
 const { customAlphabet } = require('nanoid')
 
@@ -45,6 +36,41 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1),
         minWidth: 120,
     },
+    turnPaper: {
+        width: 400,
+        height: 300,
+        overflow: 'auto',
+    },
+    attsPaper: {
+        width: 400,
+        height: 600,
+        overflow: 'auto',
+    },
+    deckPaper: {
+        width: 800,
+        height: 400,
+        overflow: 'auto',
+    },
+    cardsPaper: {
+        width: 800,
+        height: 400,
+        overflow: 'auto',
+    },
+    playButtonPaper: {
+        width: 800,
+        height: 100,
+        overflow: 'auto',
+    },
+    duelsPaper: {
+        width: 400,
+        height: 600,
+        overflow: 'auto',
+    },
+    wonCartsPaper: {
+        width: 400,
+        height: 300,
+        overflow: 'auto',
+    },
 }));
 
 export default function Game() {
@@ -61,7 +87,60 @@ export default function Game() {
     const userId = 1;
 
     return (
-        <div></div>
+        <div  style={{ width: '100%' }}>
+            <Box component="div" display="inline" p={1} m={1}  bgcolor="background.paper">
+                <Box component="span" display="block">
+                    <Typography gutterBottom variant="h5" component="h2">
+                        TURNO
+                                </Typography>
+                </Box>
+                <br></br>
+                <br></br>
+                <Box component="span" display="block">
+                    <Typography gutterBottom variant="h5" component="h2">
+                        ATRIBUTOS
+                                </Typography>
+                </Box>
+            </Box>
+
+            <Box component="div" display="inline" p={1} m={1}  bgcolor="background.paper">
+                <Box component="span" display="block">
+                    <Typography gutterBottom variant="h5" component="h2">
+                        MAZO
+                                </Typography>
+                </Box>
+                <br></br>
+                <br></br>
+                <Box component="span" display="block">
+                    <Typography gutterBottom variant="h5" component="h2">
+                        CARTAS
+                                </Typography>
+                </Box>
+                <br></br>
+                <br></br>
+                <Box component="span" display="block">
+                    <Typography gutterBottom variant="h5" component="h2">
+                        JUGAR!
+                                </Typography>
+                </Box>
+            </Box>
+
+            <Box component="div" display="inline" p={1} m={1}  bgcolor="background.paper"   >
+                <Box component="span" display="block">
+                    <Typography gutterBottom variant="h5" component="h2">
+                        DUELOS
+                                </Typography>
+                </Box>
+                <br></br>
+                <br></br>
+                <Box component="span" display="block">
+                    <Typography gutterBottom variant="h5" component="h2">
+                        CARTAS GANADAS
+                                </Typography>
+                </Box>
+            </Box>
+
+        </div>
     );
 
 }
