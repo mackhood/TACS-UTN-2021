@@ -18,7 +18,8 @@ export default function HeroeCard(props) {
     const classes = useStyles();
 
     const {name, powerstats, image} = props;
-
+    
+    
     return (
         <Card className={classes.root}>
             <CardActionArea>

@@ -8,6 +8,7 @@ class AdminService{
         const cardIdList = _.map(deck.cardList, (card) => parseInt(card.id));
         return {name: deck.name, cardListId: cardIdList};
     }
+
     createDeck(deck, token){
 
         return axios.post(REACT_APP_DECK_REST_API_URL , this.generateBody(deck) , {
@@ -28,6 +29,7 @@ class AdminService{
         }
         );
     }
+
     deleteDeck(deckId, token){
         return axios.delete(REACT_APP_DECK_REST_API_URL + '/' + parseInt(deckId) , {
             'headers':
@@ -37,6 +39,7 @@ class AdminService{
                 }
         });
     }
+    
 }
 
 export default new AdminService();

@@ -22,6 +22,7 @@ class CommonService{
             'Authorization': 'Bearer ' + token
         });
     }
+
 }
 
-export default new CommonService;
+export default new CommonService();
