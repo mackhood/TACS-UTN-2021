@@ -3,6 +3,7 @@ package com.example.TACS2021UTN.service.user;
 import com.example.TACS2021UTN.DTO.RoleDTO;
 import com.example.TACS2021UTN.DTO.TokenDTO;
 import com.example.TACS2021UTN.DTO.UserDTO;
+import com.example.TACS2021UTN.DTO.UserSearchDTO;
 import com.example.TACS2021UTN.DTO.request.LoginRequestDTO;
 import com.example.TACS2021UTN.DTO.request.UserRegisterRequestDTO;
 import com.example.TACS2021UTN.exceptions.NotFoundException;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements IUserService, UserDetailsService {
@@ -70,6 +72,12 @@ public class UserService implements IUserService, UserDetailsService {
 
         User newUser = createNewPlayer(user);
         userRepository.save(newUser);
+    }
+
+    @Override
+    public List<UserSearchDTO> findAllMatchingUsername(String username, Integer page) {
+        List<User> users = userRepository.findAllMatchingUsername(username, page);
+        return users.stream().map(u -> modelMapper.map(u, UserSearchDTO.class)).collect(Collectors.toList());
     }
 
     private User createNewPlayer(UserRegisterRequestDTO newUser){

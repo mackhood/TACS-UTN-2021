@@ -2,7 +2,12 @@ package com.example.TACS2021UTN.repositories.game;
 
 import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.models.Game;
+import com.example.TACS2021UTN.models.user.Role;
 import com.example.TACS2021UTN.models.user.User;
+import com.example.TACS2021UTN.repositories.GenericRepository;
+import com.example.TACS2021UTN.repositories.deck.DeckRepository;
+import com.example.TACS2021UTN.repositories.user.UserRepository;
+import com.example.TACS2021UTN.service.user.UserService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,30 +23,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class GameRepository implements IGameRepository {
+public class GameRepository extends GenericRepository<Game> implements IGameRepository {
 
-    private List<Game> database;
-
-    public GameRepository() {
-        //this.database = load(); spirng does gives error
-        //TODO i think the only game required should be load up in the memory
-    }
-
-    @Override
-    public List<Game> getAllGames() {
-        return database;
-    }
-
-    @Override
-    public Optional<Game> findById(Long id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Game createNewGame(User creator, User challenged, Deck deck) {
-        Game newGame = new Game(creator, challenged, deck);
-        database.add(newGame);
-        return newGame;
+    protected List<Game> load(){
+        return new ArrayList<Game>();
     }
 
     @Override
@@ -90,31 +75,5 @@ public class GameRepository implements IGameRepository {
                 game.getDateOfCreation().equals(from)) &&
                 ((game.getDateOfCreation().isAfter(to)) ||
                         game.getDateOfCreation().equals(to));
-    }
-
-    private List<Game> load(){
-
-        File file = null;
-
-        try{
-
-            file = ResourceUtils.getFile("classpath:games.json");
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        TypeReference<List<Game>> typeReference = new TypeReference<List<Game>>() { };
-        List<Game> listCards = null;
-
-        try {
-            listCards = objectMapper.readValue(file,typeReference);
-
-        } catch (IOException exception){
-            exception.printStackTrace();
-        }
-        return listCards;
-
     }
 }

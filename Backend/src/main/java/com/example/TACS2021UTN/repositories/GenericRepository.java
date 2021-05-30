@@ -7,9 +7,11 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public abstract class GenericRepository<T extends PersistantEntity> {
 
+    private final Integer maxSize = 3;
     protected List<T> database;
 
     public GenericRepository(){
@@ -26,16 +28,14 @@ public abstract class GenericRepository<T extends PersistantEntity> {
         return maxId + 1;
     }
 
-    //TODO for updating an existing object it will always create a new one
-    public void save(T deckToSave) {
-        deckToSave.setId(nextId());
-        database.add(deckToSave);
+    public void save(T entity) {
+        entity.setId(nextId());
+        database.add(entity);
     }
 
-//TODO I would use jpa to avoid this problems implementation
-    public void update(T deckToUpdate){
-        deleteById(deckToUpdate.getId());
-        database.add(deckToUpdate);
+    public void update(T entity){
+        deleteById(entity.getId());
+        database.add(entity);
     }
 
     public Optional<T> findById(Long id){
@@ -49,5 +49,4 @@ public abstract class GenericRepository<T extends PersistantEntity> {
     public List<T> findAll() {
         return database;
     }
-
 }
