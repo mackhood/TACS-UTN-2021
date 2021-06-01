@@ -10,9 +10,9 @@ import java.util.Optional;
 
 public interface IGameRepository {
 
-    List<Game> getAllGames();
+    List<Game> findAll();
     Optional<Game> findById(Long id);
-    Game createNewGame(User creator, User challenged, Deck deck);
+    void save(Game newGame);
     Game leaveGame(Long id, User player);
     List<Game> showGamesByFilters(LocalDate from, LocalDate to);
 

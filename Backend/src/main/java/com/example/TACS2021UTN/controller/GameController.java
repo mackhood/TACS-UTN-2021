@@ -2,14 +2,19 @@ package com.example.TACS2021UTN.controller;
 
 import com.example.TACS2021UTN.DTO.*;
 import com.example.TACS2021UTN.exceptions.BadDatesInserted;
+import com.example.TACS2021UTN.exceptions.NonPlayebleGameStateException;
+import com.example.TACS2021UTN.exceptions.UserWithoutTurnException;
 import com.example.TACS2021UTN.functions.DateAnalizer;
 import com.example.TACS2021UTN.functions.JSONWrapper;
 import com.example.TACS2021UTN.models.Duel;
+import com.example.TACS2021UTN.models.user.PlayerGame;
 import com.example.TACS2021UTN.models.user.User;
 import com.example.TACS2021UTN.service.game.IGameService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.security.core.Authentication;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,10 +32,18 @@ public class GameController {
 
 
     @PostMapping("/games")
-    public ResponseEntity<GameDTO> createNewGame(@RequestBody GameDTO gameDTO){
+    public ResponseEntity<GameDTO> createNewGame(@RequestBody NewGameDTO gameDTO){
         service.createNewGame(gameDTO);
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(201).build();
+        //TODO devolver ID de la partida
     }
+
+    @PostMapping("/games/{id}/duels")
+    public ResponseEntity<?> generateDuel(@RequestBody DuelRequestDTO duelRequestDTO, @PathVariable Long id, Authentication user) throws NonPlayebleGameStateException, UserWithoutTurnException {
+
+        return ResponseEntity.status(201).body(service.generateDuel(id, user.getName(), duelRequestDTO));
+    }
+
 
     @GetMapping("/games/{id}")
     public ResponseEntity<GameDTO> getGame(@PathVariable Long id) {
@@ -39,31 +52,16 @@ public class GameController {
 
     @GetMapping("/games")
     public ResponseEntity<JSONWrapper> getAllGames(){
-        return ResponseEntity.ok(new JSONWrapper<>((List<GameDTO>) service.getAllGames()));
+        return ResponseEntity.ok(new JSONWrapper<>(service.getAllGames()));
+        //TODO devuelve el game suelto, sin id
     }
 
 
-    @GetMapping("/games/{id}/replays")
-    public ResponseEntity<JSONWrapper> getDuels(@PathVariable(value = "id") Long id) {
+    @GetMapping("/games/{id}/replay")
+    public ResponseEntity<JSONWrapper> getDuels(@PathVariable Long id) {
 
-        User player1 = new User();
-        player1.setId((long) 1);
-        player1.setUsername("A");
 
-        List<Duel> duels = new ArrayList<>();
-
-        Duel duel1 = new Duel();
-        duel1.setId((long) 1);
-        duel1.setGanador(player1);
-
-        Duel duel2 = new Duel();
-        duel2.setId((long) 2);
-        duel2.setGanador(player1);
-
-        duels.add(duel1);
-        duels.add(duel2);
-
-        return ResponseEntity.ok(new JSONWrapper<>((List<Duel>) duels));
+      return ResponseEntity.ok(new JSONWrapper<>(service.getAllDuels(id)));
     }
 
     @PostMapping("/games/{id}/dropouts")
@@ -71,16 +69,14 @@ public class GameController {
         User player1 = new User();
         player1.setId((long) 1);
         player1.setUsername("A");
-
+        PlayerGame playerGame1 = new PlayerGame(player1,null);
         List<Duel> duels = new ArrayList<>();
 
         Duel duel1 = new Duel();
         duel1.setId((long) 1);
-        duel1.setGanador(player1);
 
         Duel duel2 = new Duel();
         duel2.setId((long) 2);
-        duel2.setGanador(player1);
 
         duels.add(duel1);
         duels.add(duel2);
