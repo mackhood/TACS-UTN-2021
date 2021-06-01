@@ -54,9 +54,7 @@ public class GameService implements IGameService {
         Game newGame = new Game(creator, challenged, deck);
         gameRepository.save(newGame);
         newGame.startGame();
-        //return fromGameToDTO(newGame);
-        return new GameDTO();
-
+        return fromGameToDTO(newGame);
     }
 
     @Override
@@ -111,6 +109,7 @@ public class GameService implements IGameService {
         PlayerGame creator = game.getCreator();
         PlayerGame challenged = game.getChallenged();
         return new GameDTO(
+                game.getId(),
                 new PlayerGameDTO(game.getUsernameFromCreator(),creator.getMainCards().size(),creator.getGainedCards().size(),creator.getIsMyTurn().toString()),
                 new PlayerGameDTO(game.getUsernameFromChallenged(),challenged.getMainCards().size(),challenged.getGainedCards().size(),challenged.getIsMyTurn().toString()),
                 game.getDeck().getName(),game.getDeck().getCardList().size()

@@ -33,9 +33,7 @@ public class GameController {
 
     @PostMapping("/games")
     public ResponseEntity<GameDTO> createNewGame(@RequestBody NewGameDTO gameDTO){
-        service.createNewGame(gameDTO);
-        return ResponseEntity.status(201).build();
-        //TODO devolver ID de la partida
+        return ResponseEntity.status(201).body(service.createNewGame(gameDTO));
     }
 
     @PostMapping("/games/{id}/duels")

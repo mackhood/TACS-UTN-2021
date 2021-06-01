@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GameDTO {
 
+    public Long id;
     public PlayerGameDTO creatorUsername;
     public PlayerGameDTO challengedUsername;
     public String deckName;
