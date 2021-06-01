@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 public class GameDTO {
 
     public Long id;
-    public PlayerGameDTO creatorUsername;
-    public PlayerGameDTO challengedUsername;
+    public PlayerGameDTO creator;
+    public PlayerGameDTO challenged;
     public String deckName;
     public Integer actualNumberCards;
 

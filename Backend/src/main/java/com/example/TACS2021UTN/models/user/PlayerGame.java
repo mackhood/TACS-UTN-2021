@@ -66,6 +66,14 @@ public class PlayerGame {
     }
 
     public Integer cardsLeft(){
-        return Math.max(mainCards.size() - turn, 0);
+        return Math.max(getNumberGainedCards() - turn, 0);
+    }
+
+    public Integer getNumberGainedCards(){
+        return gainedCards.size();
+    }
+
+    public Integer getNumberMainCards(){
+        return mainCards.size();
     }
 }
