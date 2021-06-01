@@ -42,7 +42,7 @@ public class GameService implements IGameService {
     @Override
     public List<GameDTO> getAllGames() {
         List<Game> games = gameRepository.findAll();
-        return games.stream().map(game -> fromGameToDTO(game)).collect(Collectors.toList());
+        return games.stream().map(game -> modelMapper.map(game, GameDTO.class)).collect(Collectors.toList());
     }
 
     @Override
@@ -54,9 +54,9 @@ public class GameService implements IGameService {
         Game newGame = new Game(creator, challenged, deck);
         gameRepository.save(newGame);
         newGame.startGame();
-        //return fromGameToDTO(newGame);
-        return new GameDTO();
 
+        GameDTO game = modelMapper.map(newGame, GameDTO.class);
+        return game;
     }
 
     @Override
@@ -107,20 +107,10 @@ public class GameService implements IGameService {
         return statistics;
     }
 
-    GameDTO fromGameToDTO(Game game){
-        PlayerGame creator = game.getCreator();
-        PlayerGame challenged = game.getChallenged();
-        return new GameDTO(
-                new PlayerGameDTO(game.getUsernameFromCreator(),creator.getMainCards().size(),creator.getGainedCards().size(),creator.getIsMyTurn().toString()),
-                new PlayerGameDTO(game.getUsernameFromChallenged(),challenged.getMainCards().size(),challenged.getGainedCards().size(),challenged.getIsMyTurn().toString()),
-                game.getDeck().getName(),game.getDeck().getCardList().size()
-        );
-    }
-
     public GameDTO findById(Long id)
     {
         Game game = gameRepository.findById(id).orElseThrow(() -> new NotFoundException("Game not found with ID" + id));
-        return fromGameToDTO(game);
+        return modelMapper.map(game, GameDTO.class);
     }
 
 }
