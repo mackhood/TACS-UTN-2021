@@ -15,5 +15,6 @@ public class GameDTO {
     public PlayerGameDTO challenged;
     public String deckName;
     public Integer actualNumberCards;
+    public String state;
 
 }

@@ -36,6 +36,11 @@ public class Finished extends State{
     }
 
     @Override
+    public String getName() {
+        return this.toString();
+    }
+
+    @Override
     public String toString(){
         return "FINISHED";
     }

@@ -42,4 +42,14 @@ public class InProgress extends State {
     public User winner() {
         return null;
     }
+
+    @Override
+    public String getName() {
+        return toString();
+    }
+
+    @Override
+    public String toString(){
+        return "IN PROGRESS";
+    }
 }
