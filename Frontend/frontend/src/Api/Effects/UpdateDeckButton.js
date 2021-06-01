@@ -23,7 +23,6 @@ export const UpdateDeckButton = (props) => {
             setNotify({isOpen:true, message:'Mazo actualizado', type:'success'})
         })
         .catch((err) => {
-            console.log(err, 'new deck');
             setNotify({isOpen:true, message:'El mazo no pudo ser actualizado', type:'error'})
         });
     }

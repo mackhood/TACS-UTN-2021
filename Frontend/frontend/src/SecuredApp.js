@@ -25,12 +25,9 @@ export const SecuredApp = () => {
                 dispatch({type: "LOAD_CARDS", payload: validHeroes});
                 const userResponse = await AdminService.getUsers(user.token);
                 dispatch({type: "LOAD_USERS", payload: userResponse.data.data});
-
                 const deckResponse = await AdminService.getDecks(user.token);
                 dispatch({type: "LOAD_DECKS", payload: deckResponse.data.data});
-
                 const gamesResponse = await CommonService.getGames(user.token);
-                console.log(gamesResponse.data.data, 'games');
                 dispatch({type: "LOAD_GAMES", payload: gamesResponse.data.data});
             }catch (e) {
                 console.log(e, 'err cards');
@@ -43,7 +40,7 @@ export const SecuredApp = () => {
     return (
 
         <Switch>
-            <Route exact path="/games">
+            <Route path="/games">
                 <UserGames/>
             </Route>
             <Route path="/admin/decks">

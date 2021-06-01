@@ -9,89 +9,51 @@ import HeroeCard from "../../Components/HeroeCard";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {AppContext} from "../../Common/AppContext";
-import * as _ from "lodash";
 import {useRouteMatch} from "react-router";
 import {useAuth} from "../../Auth/useAuth";
 import {DropGameButton} from "../../Api/Effects/DropGameButton";
 import {PlayDuelButton} from "../../Api/Effects/PlayDuelButton";
+import CommonService from "../../Api/CommonService";
 
 export default function Game() {
     let history = useHistory();
     const {user} = useAuth();
     const [game, setGame] = useState(null);
-    //User seeing the game
     const [sessionUser, setSessionUser] = useState({});
-
     const [enableGame, setEnableGame] = useState(false);
-
-    // {
-    //     "id": -1,
-    //     "cardsLeft": null,
-    //     "creatorCard": {
-    //     "id": 10,
-    //         "name": "Agent Bob",
-    //         "strength": 10,
-    //         "intelligence": 10,
-    //         "speed": 10,
-    //         "durability": 10,
-    //         "power": 10,
-    //         "combat": 10
-    // },
-    //     "challengedCard": {
-    //     "id": 2,
-    //         "name": "Abe Sapien",
-    //         "strength": 20,
-    //         "intelligence": 20,
-    //         "speed": 20,
-    //         "durability": 20,
-    //         "power": 20,
-    //         "combat": 20
-    // },
-    //     "attribute": "strength",
-    //     "result": {
-    //     "winner": "player3",
-    //         "result": "VICTORY"
-    // }}
-    const [currentDuel, setCurrenDuel] = useState({
-        "id": -1,
-        "cardsLeft": null,
-        "creatorCard": null,
-        "challengedCard": null,
-        "attribute": "",
-        "result": null
-    });
-
+    const [currentDuel, setCurrenDuel] = useState(null);
     const [showCards, setShowCards] = useState(false);
     const [showAttributes, setShowAttributes] = useState(false);
     const [atributoEnJuego, setAtributoEnJuego] = useState("Elegir atributo");
     const [openResult, setOpenResult] = useState(false);
+    const [jugadorTurno, setJugadorTurno] = useState(null);
     const {state} = useContext(AppContext);
     let {id} = useRouteMatch();
 
+    const getNextPlayerUsername= (game) => {
+        if (game.creator.isMyTurn) return game.creator.username;
+        if (game.challenged.isMyTurn) return game.challenged.username;
+        return "Partido finalizado";
+    }
     useEffect(() => {
-
-        let someGame = _.find(state.games, function(elem) {
-            return elem.id === parseInt(id);
-        });
-        if (someGame === undefined) {
-            history.push('/games');
-        }else{
-
-            setGame(someGame);
-            setEnableGame(someGame.nextPlayerUsername === user.username);
-            let currentDuel = someGame.duels[someGame.duels.length -1];
-            if (currentDuel.result !== null){
-                setCurrenDuel(currentDuel);
-            }
-            if (someGame.creator.username === user.username){
-                setSessionUser(someGame.creator);
+        async function fetchData(){
+            const responseDuels = await CommonService.getGameDuels({id: id}, user.token);
+            const responseGame = await CommonService.getSingleGame({id: id}, user.token);
+            setGame({
+                ...game,
+                game: responseGame.data.data,
+                duels: responseDuels.data
+            });
+            if (user.username ===responseGame.data.data.creator.username){
+                setSessionUser(responseGame.data.data.creator);
             }else{
-                setSessionUser(someGame.challenged);
+                setSessionUser(responseGame.data.data.challenged);
             }
+            setJugadorTurno(getNextPlayerUsername(responseGame.data.data));
         }
+        fetchData();
     }, []);
 
-    const jugadorTurno = game.nextPlayerUsername;
 
     //TODO get from API
     let attributes = ["intelligence", "strength", "speed", "durability", "power", "combat"];
@@ -151,7 +113,7 @@ export default function Game() {
     }
 
     return (
-        game === null ? <h3>Loading...</h3> :
+        game === null || sessionUser === null ? <h3>Loading...</h3> :
         (
             <div>
                 <Dialog disableBackdropClick disableEscapeKeyDown open={openResult} onClose={handleClose}>
@@ -304,11 +266,9 @@ export default function Game() {
                                 <Grid container alignItems={"center"} alignContent={"center"} justify="center" >
                                     <Box component="span" display="block" bgcolor="orange" width="75%">
                                         <Grid item xs={12}>
-
                                             <Button variant="contained" onClick={showDuels} color="primary" size="large" fullWidth="true">
                                                 Ver duelos
-                                                    </Button>
-
+                                            </Button>
                                         </Grid>
                                     </Box>
                                     <br></br>
@@ -325,7 +285,6 @@ export default function Game() {
                                 <Grid container alignItems={"center"} alignContent={"center"} justify="center" >
                                     <Box component="span" display="block" bgcolor="orange" width="75%">
                                         {sessionUser.gainedCards.map((card, index) => {
-
                                             return (
                                                 <Grid item xs={12} key={index}>
                                                     <Button variant="contained" color="primary" size="large" fullWidth="true">

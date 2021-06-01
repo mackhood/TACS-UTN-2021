@@ -12,16 +12,12 @@ import {AppContext} from "../../Common/AppContext";
 
 
 export default function Games(props) {
-
-
     const {setNotify} = props;
     let history = useHistory();
     const [games] = useState(getGames().data);
     const [decks] = useState(getDecks()[0].data);
     const [users] = useState(getUsers());
-
     const {state} = useContext(AppContext);
-    console.log(state.games, 'games');
 
     const classes = commonStyles();
 
@@ -64,16 +60,13 @@ export default function Games(props) {
         return data;
     }
 
-    const continueGame = async (game) => {
+    const continueGame = async (gameId) => {
         const location = {
-            pathname: '/games/' + game.id
+            pathname: '/games/' + gameId
         }
         history.push(location);
     }
 
-    const dropGame = async (game) => {
-
-    }
 
     const showStats = () => {
         showTable("/stats", "ESTADISTICAS", ["Partida", "Mazo", "Creador", "Desafiado"], createStatistics());
@@ -148,7 +141,6 @@ export default function Games(props) {
                                 game={game}
                                 users={state.users}
                                 decks={state.decks}
-                                dropGame={dropGame}
                                 showGame={showGame}
                                 continueGame={continueGame}
                             />

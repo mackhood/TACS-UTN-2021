@@ -43,6 +43,15 @@ class CommonService{
                 }
         });
     }
+    getGameDuels(data, token){
+        return axios.get(REACT_APP_GAME_REST_API_URL + '/' + (data.id) + '/replay', {
+            'headers':
+                {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                }
+        })
+    }
 
     getSingleGame(data, token){
         return axios.get(REACT_APP_GAME_REST_API_URL + '/' + data.id, {

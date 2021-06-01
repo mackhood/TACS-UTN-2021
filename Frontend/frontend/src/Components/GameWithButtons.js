@@ -23,8 +23,8 @@ const useStyles = makeStyles({
 export default function GameWithButtons(props) {
     const classes = useStyles();
 
-    const {game, users, decks, dropGame, showGame, continueGame} = props;
-    
+    const {game, showGame, continueGame} = props;
+
     return (
         <Card className={classes.root}>
             <CardActionArea>
@@ -45,7 +45,7 @@ export default function GameWithButtons(props) {
                             Partida: { game.id }          
                         </Typography>
                         <Typography gutterBottom>
-                            Deck:  { decks.filter(x => x.id == game.deckId)[0].name }
+                            Deck:  { game.deckName }
                         </Typography>
                         <Typography gutterBottom>
                             Creador: {game.creator.username}
@@ -56,30 +56,28 @@ export default function GameWithButtons(props) {
                     </div>
                 </CardContent>
             </CardActionArea>
-            {(game.gameStatus === "New") &&
             <CardActions>
-                <Button size="small" color="primary" onClick={() => {continueGame(game.id)}}>
-                    Continuar
-                </Button>
-            </CardActions>}
-            {(game.gameStatus === "InProgress") &&
-            <CardActions>
-                <Button size="small" color="primary" onClick={() => {showGame(game)}}>
-                    Ver
-                </Button>
-                <Button size="small" color="primary" onClick={() => {continueGame(game.id)}}>
-                    Continuar
-                </Button>
-                <Button size="small" color="primary" onClick={() => {dropGame(game.id)}}>
-                    Abandonar
-                </Button>            
-            </CardActions>}
-            {(game.gameStatus === "Finished") &&
-            <CardActions>
-                <Button size="small" color="primary" onClick={() => {showGame(game)}}>
-                    Ver
-                </Button>            
-            </CardActions>}
+                {
+                    (game.state === "IN PROGRESS" || game.state === "CREATED") &&
+                        (
+                            <>
+                                <Button size="small" color="primary" onClick={() => {continueGame(game.id)}}>
+                                    Continuar
+                                </Button>
+                                <Button size="small" color="primary" onClick={() => {}}>
+                                    Abandonar
+                                </Button>
+                            </>
+                    )
+                }
+                {
+                    (game.gameStatus === "FINISHED") && (
+                        <Button size="small" color="primary" onClick={() => {showGame(game)}}>
+                            Ver
+                        </Button>
+                    )
+                }
+            </CardActions>
         </Card>
     );
 
