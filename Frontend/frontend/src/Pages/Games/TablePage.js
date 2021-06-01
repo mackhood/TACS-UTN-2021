@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TablePage(props) {
+export default function TablePage() {
 
   const classes = useStyles();
   let history = useHistory();
@@ -58,7 +58,7 @@ export default function TablePage(props) {
         <Grid item xs={12} sm={4}>
           <Button variant="contained" color="primary" onClick={() => { history.goBack(); }}>
             Volver
-            </Button>
+          </Button>
         </Grid>
         <Grid item xs={12} sm={4}>
           <h1>{title}</h1>

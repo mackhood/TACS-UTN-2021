@@ -80,14 +80,10 @@ export default function Game() {
 
 
     let history = useHistory();
-    let location = useLocation();
     const [games] = useState(getGames().data);
-    const [decks] = useState(getDecks()[0].data);
     const [users] = useState(getUsers());
     const [cards] = useState(getCards());
     const [heroes] = useState(getCards());
-    const classes = useStyles();
-    const userId = 1;
     const [showCards, setShowCards] = useState(false);
     const [showAttributes, setShowAttributes] = useState(false);
     const [atributoEnJuego, setAtributoEnJuego] = useState("Elegir atributo");
@@ -95,7 +91,6 @@ export default function Game() {
     const [cardsHandedOut, setCardsHandedOut] = useState(false);
     const [executeGame, setExecuteGame] = useState(false);
     const [openResult, setOpenResult] = useState(false);
-
 
     let jugadorTurno = users[0].name;
     let attributes = [];
@@ -254,11 +249,9 @@ export default function Game() {
                             <Grid container alignItems={"center"} alignContent={"center"} justify="center" >
                                 <Box component="span" display="block" bgcolor="orange" width="75%">
                                     <Grid item xs={12}>
-
                                         <Button variant="contained" disabled={!cardsHandOut} onClick={getCard} color="primary" size="large" fullWidth="true">
                                             Repartir cartas
-                                                </Button>
-
+                                        </Button>
                                     </Grid>
                                 </Box>
                                 <br></br>
@@ -274,26 +267,22 @@ export default function Game() {
                                     CARTAS
                                 </Typography>
                                 <Grid container alignItems={"center"} alignContent={"center"} justify="center" spacing={4}>
-
                                     <Grid item xs={12} sm={5}>
                                         <Box component="span" display="block" bgcolor="orange">
                                             <Typography gutterBottom variant="h4" component="h2">
                                                 Tu carta
-                                </Typography>
-
+                                            </Typography>
                                             <HeroeCard
                                                 name={heroes[0].name}
                                                 powerstats={heroes[0].powerstats}
                                                 image={heroes[0].image} />
-
-
                                         </Box>
                                     </Grid>
                                     <Grid item xs={12} sm={5}>
                                         <Box component="span" display="block" bgcolor="orange">
                                             <Typography gutterBottom variant="h4" component="h2">
                                                 Contrincante
-                                </Typography>
+                                            </Typography>
                                             {showCards ? (
                                                 <HeroeCard
                                                     name={heroes[1].name}

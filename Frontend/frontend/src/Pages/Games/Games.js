@@ -45,7 +45,6 @@ export default function Games() {
 
 
     let history = useHistory();
-    let location = useLocation();
     const [games] = useState(getGames().data);
     const [decks] = useState(getDecks()[0].data);
     const [users] = useState(getUsers());
