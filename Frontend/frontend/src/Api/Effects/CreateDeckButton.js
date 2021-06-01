@@ -4,9 +4,6 @@ import {useAuth} from "../../Auth/useAuth";
 import AdminService from "../AdminService";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import {customAlphabet} from "nanoid";
-
-const nanoid = customAlphabet('1234567890', 2)
 
 export const CreateDeckButton = (props) => {
     const {dispatch} = useContext(AppContext);

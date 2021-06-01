@@ -1,8 +1,9 @@
 import React, {createContext, useReducer} from "react";
 import {reducer} from "../Api/Effects/Reducer";
 import getCards from "../Resources/getCards";
+import getUsers from "../Resources/getUsers";
 
-const initialState = {decks:[], heroes: getCards(), left: getCards(), right: []};
+const initialState = {decks:[], heroes: getCards(), left: getCards(), right: [], users: getUsers(), games: []};
 
 //Context de la app, guarda el state de manera global
 export const AppContext = createContext({});
