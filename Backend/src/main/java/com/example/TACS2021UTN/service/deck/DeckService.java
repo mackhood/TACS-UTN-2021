@@ -33,11 +33,7 @@ public class DeckService implements IDeckService {
     @Override
     public List<DeckDTO> getAllDecks() {
         List<Deck> decks = deckRepository.findAll();
-
-        List<DeckDTO> deckDTOList = new ArrayList<DeckDTO>();
-
-        return decks.stream().map(deck -> this.deckToDTO(deck)).collect(Collectors.toList());
-
+        return decks.stream().map(deck -> modelMapper.map(deck, DeckDTO.class)).collect(Collectors.toList());
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

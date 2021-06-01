@@ -41,6 +41,8 @@ public class ApplicationConfig {
 
         modelMapper.createTypeMap(Game.class, GameDTO.class)
             .addMappings(mapper -> mapper.map(src -> src.getDeck().getName(), GameDTO::setDeckName))
+            .addMappings(mapper -> mapper.map(src -> src.getState().toString(), GameDTO::setState))
+            .addMappings(mapper -> mapper.map(src -> src.getDeck().getNumberOfCards(), GameDTO::setActualNumberCards))
         ;
     }
 
@@ -48,7 +50,8 @@ public class ApplicationConfig {
         modelMapper.createTypeMap(Duel.class, DuelDTO.class)
                 .addMappings(mapper -> mapper.<String>map(src -> src.getAttribute().getName(), DuelDTO::setAttribute))
                 .addMappings(mapper -> mapper.<String>map(src -> src.getWinner().getUsername(), (dest, user) -> dest.getResult().setWinner(user)))
-                .addMappings(mapper -> mapper.<Integer>map(src -> src.getGame().cardsLeft(), DuelDTO::setCardsLeft));
+                .addMappings(mapper -> mapper.<Integer>map(src -> src.getGame().cardsLeft(), DuelDTO::setCardsLeft))
+        ;
     }
 
     private void apiMappings(ModelMapper modelMapper){

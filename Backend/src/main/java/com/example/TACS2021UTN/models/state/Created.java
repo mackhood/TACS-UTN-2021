@@ -57,6 +57,11 @@ public class Created extends State{
     }
 
     @Override
+    public String getName() {
+        return this.toString();
+    }
+
+    @Override
     public String toString(){
         return "CREATED";
     }

@@ -17,4 +17,5 @@ public abstract class State {
     public abstract void flipCoin(Game game);
     public abstract Duel play(User user, Attribute attribute) throws NonPlayebleGameStateException, UserWithoutTurnException;
     public abstract User winner();
+    public abstract String getName();
 }

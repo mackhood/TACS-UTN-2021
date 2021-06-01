@@ -37,4 +37,8 @@ public class Deck extends PersistantEntity{
 
         return partitions;
     }
+
+    public Integer getNumberOfCards(){
+        return cardList.size();
+    }
 }
