@@ -1,55 +1,25 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import getGames from "../Resources/getGames";
-import {makeStyles} from "@material-ui/core/styles";
-import getDecks from "../Resources/getDecks";
-import getUsers from "../Resources/getUsers";
-import GameWithButtons from "../Components/GameWithButtons";
-import {useHistory, useLocation} from "react-router-dom";
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-
-const { customAlphabet } = require('nanoid')
-
-const useStyles = makeStyles((theme) => ({
-    layout: {
-        width: 'auto',
-        marginLeft: theme.spacing(2),
-        marginRight: theme.spacing(2),
-        [theme.breakpoints.up(800 + theme.spacing(2) * 2)]: {
-            width: 800,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-        },
-        margin: 10
-    },
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-    },
-}));
-
-export default function Games() {
+import getGames from "../../Resources/getGames";
+import getDecks from "../../Resources/getDecks";
+import getUsers from "../../Resources/getUsers";
+import GameWithButtons from "../../Components/GameWithButtons";
+import {useHistory} from "react-router-dom";
+import {CreateGameDialog} from "./CreateGameDialog";
+import {commonStyles} from "../../Resources/Styles";
+import {AppContext} from "../../Common/AppContext";
 
 
+export default function Games(props) {
+    const {setNotify} = props;
     let history = useHistory();
     const [games] = useState(getGames().data);
     const [decks] = useState(getDecks()[0].data);
     const [users] = useState(getUsers());
+    const {state} = useContext(AppContext);
 
-    const classes = useStyles();
+    const classes = commonStyles();
 
     const userId = 1;
 
@@ -60,16 +30,15 @@ export default function Games() {
     }
 
     function createStatistics() {
-        let gamesCreated = games.filter(x => x.creatorId == userId);
-        let participatedGames = games.filter(x => x.challengedId == userId);
+        let gamesCreated = games.filter(x => x.creatorId === userId);
         let data = [];
         gamesCreated.forEach((x) => {
             data.push(
                 createStatisticsData(
                     x.id,
-                    decks.filter(y => y.id == x.deckId)[0].name,
-                    users.filter(y => y.id == x.creatorId)[0].name,
-                    users.filter(y => y.id == x.challengedId)[0].name
+                    decks.filter(y => y.id === x.deckId)[0].name,
+                    users.filter(y => y.id === x.creatorId)[0].name,
+                    users.filter(y => y.id === x.challengedId)[0].name
                 ));
         })
         return data;
@@ -91,24 +60,13 @@ export default function Games() {
         return data;
     }
 
-    const createGame = async () => {
+    const continueGame = async (gameId) => {
         const location = {
-            pathname: '/game'
+            pathname: '/games/' + gameId
         }
         history.push(location);
     }
 
-    const continueGame = async (game) => {
-        const location = {
-            pathname: '/game'
-        }
-        history.push(location);
-    
-    }
-
-    const dropGame = async (game) => {
-
-    }
 
     const showStats = () => {
         showTable("/stats", "ESTADISTICAS", ["Partida", "Mazo", "Creador", "Desafiado"], createStatistics());
@@ -141,45 +99,14 @@ export default function Games() {
 
     return (
         <div className={classes.layout}>
-            <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
-                <DialogTitle>CREAR PARTIDA</DialogTitle>
-                <DialogContent>
-                    <form className={classes.container}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="demo-dialog-native">Mazo</InputLabel>
-                            <Select
-                                labelId="demo-dialog-select-label"
-                                id="demo-dialog-select"
-                                input={<Input />}
-                            >
-                                {decks.map((deck, index) => (
-                                    <MenuItem value={10}>{deck.name}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel id="demo-dialog-select-label">Contrincante</InputLabel>
-                            <Select
-                                labelId="demo-dialog-select-label"
-                                id="demo-dialog-select"
-                                input={<Input />}
-                            >
-                                {users.map((user, index) => (
-                                    <MenuItem value={10}>{user.name}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </form>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Cancel
-          </Button>
-                    <Button onClick={createGame} color="primary">
-                        Ok
-          </Button>
-                </DialogActions>
-            </Dialog>
+            <CreateGameDialog
+                handleClose={handleClose}
+                open={open}
+                setOpen={setOpen}
+                decks={state.decks}
+                users={state.users}
+                setNotify={setNotify}
+            />
             <Grid container alignItems={"center"} alignContent={"center"}>
                 <div style={{ width: "100%" }}>
                     <Grid container spacing={4} alignItems={"center"} alignContent={"center"}>
@@ -208,13 +135,12 @@ export default function Games() {
                     </Grid>
                 </div>
                 <Grid container alignItems={"center"} alignContent={"center"}>
-                    {games.map((game, index) => (
+                    {state.games.map((game, index) => (
                         <Grid item xs={12} sm={4} key={index}>
                             <GameWithButtons
                                 game={game}
-                                users={users}
-                                decks={decks}
-                                dropGame={dropGame}
+                                users={state.users}
+                                decks={state.decks}
                                 showGame={showGame}
                                 continueGame={continueGame}
                             />

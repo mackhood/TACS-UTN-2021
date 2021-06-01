@@ -16,16 +16,14 @@ const useStyles = makeStyles({
 });
 export default function HeroeCard(props) {
     const classes = useStyles();
-
     const {name, powerstats, image} = props;
-    
-    
+
     return (
         <Card className={classes.root}>
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
-                    image={image.url}
+                    image={"https://www.superherodb.com/pictures2/portraits/10/100/10060.jpg"}
                     title={name}
                 />
                 <CardContent>

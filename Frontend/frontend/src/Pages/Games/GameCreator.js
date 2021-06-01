@@ -1,16 +1,13 @@
 import React, {useState} from "react";
 import Grid from "@material-ui/core/Grid";
-import getGames from "../Resources/getGames";
+import getGames from "../../Resources/getGames";
 import {makeStyles} from "@material-ui/core/styles";
-import getDecks from "../Resources/getDecks";
-import getUsers from "../Resources/getUsers";
+import getDecks from "../../Resources/getDecks";
+import getUsers from "../../Resources/getUsers";
 import {useHistory, useLocation} from "react-router-dom";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
-
-
-const { customAlphabet } = require('nanoid')
 
 const useStyles = makeStyles((theme) => ({
     layout: {
@@ -103,7 +100,7 @@ export default function GameCreator() {
                             >
                                 
                                     {users.map((user, index) => (
-                                        <MenuItem value={10}>{user.name}</MenuItem>
+                                        <MenuItem value={10}>{user.username}</MenuItem>
                                     ))}
                                 
                             </Select>

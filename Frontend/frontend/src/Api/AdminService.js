@@ -1,6 +1,6 @@
 import axios from 'axios'
 import * as _ from 'lodash';
-import {REACT_APP_DECK_REST_API_URL} from '../Common/Constants';
+import {REACT_APP_DECK_REST_API_URL, REACT_APP_USER_REST_API_URL} from '../Common/Constants';
 
 class AdminService{
 
@@ -37,6 +37,24 @@ class AdminService{
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + token
                 }
+        });
+    }
+
+    getDecks(token){
+        return axios.get(REACT_APP_DECK_REST_API_URL , {
+            "headers":{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        });
+    }
+
+    getUsers(token){
+        return axios.get(REACT_APP_USER_REST_API_URL , {
+            "headers":{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
         });
     }
     

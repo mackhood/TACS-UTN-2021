@@ -23,7 +23,6 @@ export default function DeckCardWithButtons(props) {
     const classes = useStyles();
 
     const {deck, navigateToUpdate, navigateToDeckView, setNotify} = props;
-
     return (
         <Card className={classes.root}>
             <CardActionArea>
