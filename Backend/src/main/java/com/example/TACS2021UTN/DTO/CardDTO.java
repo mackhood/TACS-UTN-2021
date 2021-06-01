@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class CardDTO {
 
+    private Long id;
     private String name;
     private Integer strength;
     private Integer intelligence;

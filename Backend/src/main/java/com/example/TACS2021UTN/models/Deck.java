@@ -32,9 +32,13 @@ public class Deck extends PersistantEntity{
         int numberOfCards = this.cardList.size() / n;
 
         for(int i = 0; i < this.cardList.size(); i += numberOfCards){
-            partitions.add(this.cardList.subList(i, i + numberOfCards - 1));
+            partitions.add(this.cardList.subList(i, i + numberOfCards));
         }
 
         return partitions;
+    }
+
+    public Integer getNumberOfCards(){
+        return cardList.size();
     }
 }

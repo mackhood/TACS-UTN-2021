@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserRepository extends GenericRepository<User> implements IUserRepository{
@@ -52,5 +54,11 @@ public class UserRepository extends GenericRepository<User> implements IUserRepo
     @Override
     public Boolean usernameExists(String username){
         return this.database.stream().anyMatch(user -> user.getUsername().equals(username));
+    }
+
+    @Override
+    public List<User> findAllMatchingUsername(String username, Integer page) {
+        return findAll().stream().filter(u -> u.getUsername().toLowerCase().matches(".*" + username.toLowerCase() +  ".*"))
+                .collect(Collectors.toList());
     }
 }

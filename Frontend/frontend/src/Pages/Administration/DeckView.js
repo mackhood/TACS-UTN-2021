@@ -5,7 +5,6 @@ import CardList from "../../Components/CardList";
 export const DeckView =(props) => {
 
     const {name, cardList} = props;
-
     return (
         <Grid item xs={12}>
             {

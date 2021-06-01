@@ -1,6 +1,6 @@
 import axios from 'axios'
 import * as _ from 'lodash';
-import {REACT_APP_DECK_REST_API_URL} from '../Common/Constants';
+import {REACT_APP_DECK_REST_API_URL, REACT_APP_USER_REST_API_URL} from '../Common/Constants';
 
 class AdminService{
 
@@ -8,6 +8,7 @@ class AdminService{
         const cardIdList = _.map(deck.cardList, (card) => parseInt(card.id));
         return {name: deck.name, cardListId: cardIdList};
     }
+
     createDeck(deck, token){
 
         return axios.post(REACT_APP_DECK_REST_API_URL , this.generateBody(deck) , {
@@ -28,6 +29,7 @@ class AdminService{
         }
         );
     }
+
     deleteDeck(deckId, token){
         return axios.delete(REACT_APP_DECK_REST_API_URL + '/' + parseInt(deckId) , {
             'headers':
@@ -37,6 +39,25 @@ class AdminService{
                 }
         });
     }
+
+    getDecks(token){
+        return axios.get(REACT_APP_DECK_REST_API_URL , {
+            "headers":{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        });
+    }
+
+    getUsers(token){
+        return axios.get(REACT_APP_USER_REST_API_URL , {
+            "headers":{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        });
+    }
+    
 }
 
 export default new AdminService();

@@ -4,7 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.criteria.CriteriaBuilder;
 
+import com.example.TACS2021UTN.exceptions.InvalidAttributeException;
+import com.example.TACS2021UTN.models.attribute.Attribute;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,9 +45,14 @@ public class Card extends PersistantEntity{
 
         return true;
     }
-
-
-
-
-
+    public Integer getValueOfAttribute(Attribute attribute){
+        try{
+            Field field = Card.class.getDeclaredField(attribute.getName());
+            return (Integer) field.get(this);
+        }
+        catch(Exception ex)
+        {
+            throw new InvalidAttributeException("Invalid attribute " + attribute.getName());
+        }
+    }
 }

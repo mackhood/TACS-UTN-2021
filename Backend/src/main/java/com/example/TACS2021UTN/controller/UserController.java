@@ -2,17 +2,18 @@ package com.example.TACS2021UTN.controller;
 
 import com.example.TACS2021UTN.DTO.RoleDTO;
 import com.example.TACS2021UTN.DTO.UserDTO;
+import com.example.TACS2021UTN.DTO.UserSearchDTO;
 import com.example.TACS2021UTN.DTO.request.UserRegisterRequestDTO;
+import com.example.TACS2021UTN.functions.JSONWrapper;
 import com.example.TACS2021UTN.models.user.User;
 import com.example.TACS2021UTN.service.user.IUserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins ="*",maxAge = 3600)
 @RestController
@@ -27,6 +28,15 @@ public class UserController {
     public ResponseEntity<UserDTO> getUserByID(@PathVariable String userName)
     {
         return ResponseEntity.ok(service.findByUserName(userName));
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<JSONWrapper<UserSearchDTO>>getUsers(
+            @RequestParam(name = "username",required = false, defaultValue = "") String username,
+            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page
+    )
+    {
+        return ResponseEntity.ok(new JSONWrapper<>(service.findAllMatchingUsername(username, page)));
     }
 
     @PostMapping("/users")
