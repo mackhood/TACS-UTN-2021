@@ -16,5 +16,5 @@ public class GameDTO {
     public String deckName;
     public Integer actualNumberCards;
     public String state;
-
+    public Integer stateCode;
 }

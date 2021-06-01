@@ -41,6 +41,11 @@ public class Finished extends State{
     }
 
     @Override
+    public Integer getStateCode() {
+        return State.FINISHED;
+    }
+
+    @Override
     public String toString(){
         return "FINISHED";
     }

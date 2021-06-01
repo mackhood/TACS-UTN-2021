@@ -49,6 +49,11 @@ public class InProgress extends State {
     }
 
     @Override
+    public Integer getStateCode() {
+        return State.INPROGRESS;
+    }
+
+    @Override
     public String toString(){
         return "IN PROGRESS";
     }

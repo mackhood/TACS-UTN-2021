@@ -11,6 +11,11 @@ import lombok.Data;
 
 @Data
 public abstract class State {
+    public static final Integer CREATED = 0;
+    public static final Integer INPROGRESS = 1;
+    public static final Integer FINISHED = 2;
+
+
     protected Game game;
 
     public abstract boolean startGame(Game game);
@@ -18,4 +23,6 @@ public abstract class State {
     public abstract Duel play(User user, Attribute attribute) throws NonPlayebleGameStateException, UserWithoutTurnException;
     public abstract User winner();
     public abstract String getName();
+    public abstract Integer getStateCode();
+
 }

@@ -62,6 +62,11 @@ public class Created extends State{
     }
 
     @Override
+    public Integer getStateCode() {
+        return State.CREATED;
+    }
+
+    @Override
     public String toString(){
         return "CREATED";
     }
