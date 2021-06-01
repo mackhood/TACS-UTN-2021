@@ -15,7 +15,7 @@ public class CardWorker {
     private CardRepository cardRepository;
     private Integer callsTillWait = 5; //TODO configurable
     private Integer maxCards = 20; //Por ahora para la entrega 3 tener cartas, voy a buscar solo las 20 primeras cartas
-    private Long waitingSeconds = 5L; //TODO Configurable
+    private Long waitingSeconds = 2L; //TODO Configurable
     private ModelMapper modelMapper;
 
     public CardWorker(CardRepository cardRepository, ModelMapper modelMapper){
@@ -29,7 +29,7 @@ public class CardWorker {
         try{
             for(Integer i = 1; i <= 20; i++){
                 if(i % callsTillWait == 0)
-                    TimeUnit.SECONDS.sleep(waitingSeconds);
+                    TimeUnit.SECONDS.sleep(waitingSeconds); //para no sobrecargar la api
 
                 SuperHero hero = service.getSuperHero(i);
 

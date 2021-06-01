@@ -32,7 +32,7 @@ public class ApplicationConfig {
     }
 
     public void apiMappings(ModelMapper modelMapper){
-        Converter<String, Integer> stringToInteger = ctx -> ctx.getSource() != null ? new Integer(ctx.getSource()) : null;
+        Converter<String, Integer> stringToInteger = ctx -> !isNull(ctx.getSource()) ? new Integer(ctx.getSource()) : null;
 
         modelMapper.createTypeMap(SuperHero.class, Card.class)
                 .addMappings(mapper -> mapper.using(stringToInteger)
@@ -49,6 +49,10 @@ public class ApplicationConfig {
                         .<Integer>map(src -> src.getPowerstats().getCombat(), Card::setCombat))
         ;
 
+    }
+
+    private Boolean isNull(String property){
+        return property == null || property.equals("null");
     }
 
 }
