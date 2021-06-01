@@ -5,8 +5,10 @@ class CommonService{
 
     getCards(token){
         return axios.get(REACT_APP_CARD_REST_API_URL , {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
+            "headers":{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
         });
     }
 

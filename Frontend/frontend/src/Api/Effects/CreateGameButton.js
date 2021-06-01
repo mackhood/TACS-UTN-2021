@@ -10,7 +10,12 @@ export const CreateGameButton = (props) => {
     const {data, setNotify, resetDialog, handleClose} = props;
     const {user} = useAuth();
     function handleCreateGame() {
-        CommonService.createGame({user: data.user, deckId: data.deck}, user.token).then(r =>{
+        CommonService.createGame({
+            creatorUsername: user.username,
+            challengedUsername: data.user,
+            deckID: data.deck
+            }, user.token
+        ).then(r =>{
             dispatch({
                 type:"ADD_GAME",
                 payload: r.data

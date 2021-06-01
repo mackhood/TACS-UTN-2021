@@ -12,8 +12,15 @@ export default function CardList(props) {
                     <Grid item xs={12} sm={6} key={index}>
                         <HeroeCard
                             name={heroe.name}
-                            powerstats={heroe.powerstats}
-                            image={heroe.image}
+                            powerstats={{
+                                combat: heroe.combat,
+                                durability: heroe.durability,
+                                intelligence: heroe.intelligence,
+                                power: heroe.power,
+                                speed: heroe.speed,
+                                strength: heroe.strength,
+                            }}
+                            // image={heroe.image}
                         />
                     </Grid>
 

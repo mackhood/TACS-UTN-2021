@@ -162,7 +162,7 @@ export default function Game() {
             data.push(
                 createGameResultData(
                     x.id,
-                    users.filter(y => y.id == x.winnerId)[0].name
+                    users.filter(y => y.id === x.winnerId)[0].name
                 ));
         })
         return data;

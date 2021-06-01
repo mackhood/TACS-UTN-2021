@@ -42,4 +42,18 @@ export const reducer = (state, action) => {
         });
         return {...state, games: newGames}
     }
+
+    //Initial data load
+    if (action.type === "LOAD_CARDS"){
+        return {...state, heroes: action.payload, left: action.payload}
+    }
+    if (action.type === "LOAD_USERS"){
+        return {...state, users: action.payload}
+    }
+    if (action.type === "LOAD_DECKS"){
+        return {...state, decks: action.payload}
+    }
+    if (action.type === "LOAD_GAMES"){
+        return {...state, games: action.payload}
+    }
 }

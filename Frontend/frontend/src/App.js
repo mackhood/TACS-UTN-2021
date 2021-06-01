@@ -7,10 +7,9 @@ import {PageNotFound} from "./Components/404";
 import Register from "./Pages/Register";
 import {PrivateRoute} from "./Auth/PrivateRoute";
 import {Main} from "./Pages/Main";
-import Administration from "./Pages/Administration/Administration";
-import {UserGames} from "./Pages/Games/UserGames";
 import {AppContextProvider} from "./Common/AppContext";
 import Game2 from "./Pages/Game2";
+import {SecuredApp} from "./SecuredApp";
 
 function App() {
   return (
@@ -37,12 +36,7 @@ function App() {
                 <Game2/>
             </Route>
             <AppContextProvider>
-                <Route exact path="/games">
-                    <UserGames/>
-                </Route>
-                <Route path="/admin/decks">
-                    <Administration />
-                </Route>
+                <SecuredApp/>
             </AppContextProvider>
             <Route path="*">
                 <PageNotFound />

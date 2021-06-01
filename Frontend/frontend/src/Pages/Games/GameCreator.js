@@ -100,7 +100,7 @@ export default function GameCreator() {
                             >
                                 
                                     {users.map((user, index) => (
-                                        <MenuItem value={10}>{user.name}</MenuItem>
+                                        <MenuItem value={10}>{user.username}</MenuItem>
                                     ))}
                                 
                             </Select>

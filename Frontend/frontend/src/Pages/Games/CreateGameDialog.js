@@ -8,9 +8,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {CreateGameButton} from "../../Api/Effects/CreateGame";
+import {CreateGameButton} from "../../Api/Effects/CreateGameButton";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,6 +45,9 @@ export const CreateGameDialog = (props) => {
         });
     }
 
+    useEffect(() => {
+        console.log(selectData, 'sd');
+    })
     return (
         <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
             <DialogTitle>CREAR PARTIDA</DialogTitle>
@@ -58,7 +61,7 @@ export const CreateGameDialog = (props) => {
                             input={<Input />}
                         >
                             {decks.map((deck, index) => (
-                                <MenuItem key={index} value={10}>{deck.name}</MenuItem>
+                                <MenuItem key={index} value={deck.id}>{deck.name}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>
@@ -70,7 +73,7 @@ export const CreateGameDialog = (props) => {
                             onChange={handleSelectChange}
                         >
                             {users.map((user, index) => (
-                                <MenuItem key={index} value={10}>{user.name}</MenuItem>
+                                <MenuItem key={index} value={user.username}>{user.username}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>

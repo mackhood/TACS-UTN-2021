@@ -78,12 +78,12 @@ export default function Game() {
         }else{
 
             setGame(someGame);
-            setEnableGame(someGame.nextPlayerUsername == user.username);
+            setEnableGame(someGame.nextPlayerUsername === user.username);
             let currentDuel = someGame.duels[someGame.duels.length -1];
             if (currentDuel.result !== null){
                 setCurrenDuel(currentDuel);
             }
-            if (someGame.creator.username == user.username){
+            if (someGame.creator.username === user.username){
                 setSessionUser(someGame.creator);
             }else{
                 setSessionUser(someGame.challenged);
@@ -120,7 +120,7 @@ export default function Game() {
             data.push(
                 createGameResultData(
                     x.id,
-                    state.users.filter(y => y.id == x.winnerId)[0].name
+                    state.users.filter(y => y.id === x.winnerId)[0].name
                 ));
         })
         return data;
@@ -290,7 +290,7 @@ export default function Game() {
                             <Box component="span" display="block" bgcolor="blue">
                                 <PlayDuelButton
                                     attribute={currentDuel.attribute}
-                                    disabled={!enableGame || currentDuel.attribute == ""}
+                                    disabled={!enableGame || currentDuel.attribute === ""}
                                 />
                             </Box>
                         </Container>

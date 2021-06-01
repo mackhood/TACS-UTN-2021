@@ -31,7 +31,7 @@ export default function GameWithButtons(props) {
                     <CardMedia
                         component="img"
                         className={classes.media}
-                        image={"./" + game.gameStatus + ".png" }
+                        image="./finished.png"
                         title={game.name ? game.name : "Nombre" }
                         objectFit= "cover"
                     />
@@ -48,21 +48,21 @@ export default function GameWithButtons(props) {
                             Deck:  { decks.filter(x => x.id == game.deckId)[0].name }
                         </Typography>
                         <Typography gutterBottom>
-                            Creador: { users.filter(x => x.id == game.creatorId)[0].name }
+                            Creador: {game.creator.username}
                         </Typography>
                         <Typography gutterBottom>
-                            Desafiado: { users.filter(x => x.id == game.challengedId)[0].name }
+                            Desafiado: {game.challenged.username}
                         </Typography>
                     </div>
                 </CardContent>
             </CardActionArea>
-            {(game.gameStatus == "New") &&   
+            {(game.gameStatus === "New") &&
             <CardActions>
                 <Button size="small" color="primary" onClick={() => {continueGame(game.id)}}>
                     Continuar
                 </Button>
             </CardActions>}
-            {(game.gameStatus == "InProgress") &&   
+            {(game.gameStatus === "InProgress") &&
             <CardActions>
                 <Button size="small" color="primary" onClick={() => {showGame(game)}}>
                     Ver
@@ -74,7 +74,7 @@ export default function GameWithButtons(props) {
                     Abandonar
                 </Button>            
             </CardActions>}
-            {(game.gameStatus == "Finished") &&   
+            {(game.gameStatus === "Finished") &&
             <CardActions>
                 <Button size="small" color="primary" onClick={() => {showGame(game)}}>
                     Ver

@@ -21,6 +21,7 @@ export default function Games(props) {
     const [users] = useState(getUsers());
 
     const {state} = useContext(AppContext);
+    console.log(state.games, 'games');
 
     const classes = commonStyles();
 
@@ -33,16 +34,15 @@ export default function Games(props) {
     }
 
     function createStatistics() {
-        let gamesCreated = games.filter(x => x.creatorId == userId);
-        let participatedGames = games.filter(x => x.challengedId == userId);
+        let gamesCreated = games.filter(x => x.creatorId === userId);
         let data = [];
         gamesCreated.forEach((x) => {
             data.push(
                 createStatisticsData(
                     x.id,
-                    decks.filter(y => y.id == x.deckId)[0].name,
-                    users.filter(y => y.id == x.creatorId)[0].name,
-                    users.filter(y => y.id == x.challengedId)[0].name
+                    decks.filter(y => y.id === x.deckId)[0].name,
+                    users.filter(y => y.id === x.creatorId)[0].name,
+                    users.filter(y => y.id === x.challengedId)[0].name
                 ));
         })
         return data;
@@ -146,8 +146,8 @@ export default function Games(props) {
                         <Grid item xs={12} sm={4} key={index}>
                             <GameWithButtons
                                 game={game}
-                                users={users}
-                                decks={decks}
+                                users={state.users}
+                                decks={state.decks}
                                 dropGame={dropGame}
                                 showGame={showGame}
                                 continueGame={continueGame}

@@ -18,7 +18,7 @@ export const DisplayDecks = (props) => {
     const navigateToDeckView = (id) => {
         history.push('/admin/decks/' + id + '/display');
     }
-    console.log(state.decks, 'decks');
+
     return (
         state.decks.length > 0 ? (
             state.decks.map((deck, index) => (
