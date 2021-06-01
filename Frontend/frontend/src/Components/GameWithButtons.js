@@ -58,7 +58,7 @@ export default function GameWithButtons(props) {
             </CardActionArea>
             {(game.gameStatus == "New") &&   
             <CardActions>
-                <Button size="small" color="primary" onClick={() => {continueGame(game)}}>
+                <Button size="small" color="primary" onClick={() => {continueGame(game.id)}}>
                     Continuar
                 </Button>
             </CardActions>}
@@ -67,10 +67,10 @@ export default function GameWithButtons(props) {
                 <Button size="small" color="primary" onClick={() => {showGame(game)}}>
                     Ver
                 </Button>
-                <Button size="small" color="primary" onClick={() => {continueGame(game)}}>
+                <Button size="small" color="primary" onClick={() => {continueGame(game.id)}}>
                     Continuar
                 </Button>
-                <Button size="small" color="primary" onClick={() => {dropGame(game)}}>
+                <Button size="small" color="primary" onClick={() => {dropGame(game.id)}}>
                     Abandonar
                 </Button>            
             </CardActions>}
