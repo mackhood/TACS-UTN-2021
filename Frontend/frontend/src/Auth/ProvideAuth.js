@@ -14,13 +14,20 @@ export function ProvideAuth({ children }) {
 function useProvideAuth() {
     const [user, setUser] = useState(null);
 
-    //TODO get username & password from login form
-    const login = async data => {
-        await LoginService
-            .login(data.user)
-            .then(res => {
-                setUser({username: data.user.username, token: res.data.token});
-                return data.callback();
+    const setUserData = (userData) => {
+        setUser(userData);
+    }
+    const login = async user => {
+        return await LoginService
+            .login(user)
+            .then(res =>
+            {
+                let userData = { username:user.username, token: res.data.token };
+                setUserData(userData);
+                localStorage.setItem('tacs', JSON.stringify(userData));
+            })
+            .catch(() => {
+                localStorage.removeItem('tacs');
             });
 
     };
@@ -28,6 +35,7 @@ function useProvideAuth() {
     const signout = async cb => {
         setTimeout(() => {
             setUser(null);
+            localStorage.removeItem('tacs');
             return cb();
         }, 400);
 
@@ -44,6 +52,7 @@ function useProvideAuth() {
         user,
         login,
         signout,
-        register
+        register,
+        setUserData
     };
 }

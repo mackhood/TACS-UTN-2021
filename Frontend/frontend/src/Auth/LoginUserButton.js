@@ -14,13 +14,13 @@ export const LoginUserButton = (props) => {
     const {user} = props;
     let auth = useAuth();
     let history = useHistory();
-
-    const callback = () => {
-        history.push('/admin/decks');
-    };
     let login = (e) => {
         e.preventDefault();
-        auth.login({user, callback});
+        auth.login(user).then(
+            () => {
+                history.push('/admin/decks')
+            }
+        );
     };
     const classes = useStyles();
     return (

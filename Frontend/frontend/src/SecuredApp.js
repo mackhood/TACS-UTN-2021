@@ -14,6 +14,7 @@ export const SecuredApp = () => {
 
     const {dispatch} = useContext(AppContext);
     const {user} = useAuth();
+
     useEffect(() => {
 
         //TODO refactor: hacer un Promise.all()
@@ -34,8 +35,9 @@ export const SecuredApp = () => {
             }
         }
 
-        fetchData();
-    }, []);
+        if (user !== null) fetchData();
+
+    }, [user]);
 
     return (
 
