@@ -33,7 +33,6 @@ export default function GameWithButtons(props) {
                         className={classes.media}
                         image="./finished.png"
                         title={game.name ? game.name : "Nombre" }
-                        objectFit= "cover"
                     />
                 <CardContent>                    
                     <div>

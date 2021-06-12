@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import Grid from "@material-ui/core/Grid";
-import {useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
@@ -9,7 +9,6 @@ import HeroeCard from "../../Components/HeroeCard";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {AppContext} from "../../Common/AppContext";
-import {useRouteMatch} from "react-router";
 import {useAuth} from "../../Auth/useAuth";
 import {DropGameButton} from "../../Api/Effects/DropGameButton";
 import {PlayDuelButton} from "../../Api/Effects/PlayDuelButton";
@@ -28,7 +27,8 @@ export default function Game() {
     const [openResult, setOpenResult] = useState(false);
     const [jugadorTurno, setJugadorTurno] = useState(null);
     const {state} = useContext(AppContext);
-    let {id} = useRouteMatch();
+
+    let {id} = useParams();
 
     const getNextPlayerUsername= (game) => {
         if (game.creator.isMyTurn) return game.creator.username;
@@ -53,7 +53,6 @@ export default function Game() {
         }
         fetchData();
     }, []);
-
 
     //TODO get from API
     let attributes = ["intelligence", "strength", "speed", "durability", "power", "combat"];
