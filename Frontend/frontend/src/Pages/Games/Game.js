@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import Grid from "@material-ui/core/Grid";
-import {useHistory, useParams} from "react-router-dom";
+import {useHistory, useParams, useRouteMatch} from "react-router-dom";
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
@@ -13,6 +13,9 @@ import {useAuth} from "../../Auth/useAuth";
 import {DropGameButton} from "../../Api/Effects/DropGameButton";
 import {PlayDuelButton} from "../../Api/Effects/PlayDuelButton";
 import CommonService from "../../Api/CommonService";
+import {customAlphabet} from 'nanoid'
+
+const nanoid = customAlphabet('1234567890', 2);
 
 export default function Game() {
     let history = useHistory();
@@ -20,7 +23,31 @@ export default function Game() {
     const [game, setGame] = useState(null);
     const [sessionUser, setSessionUser] = useState({});
     const [enableGame, setEnableGame] = useState(false);
-    const [currentDuel, setCurrenDuel] = useState(null);
+    const [currentDuel, setCurrenDuel] = useState({
+        "cardsLeft": 1,
+        "creatorCard": {
+            "id": 4,
+            "name": "Abomination",
+            "strength": 80,
+            "intelligence": 63,
+            "speed": 53,
+            "durability": 90,
+            "power": 62,
+            "combat": 95
+        },
+        "challengedCard": {
+            "id": 1,
+            "name": "A-Bomb",
+            "strength": 100,
+            "intelligence": 38,
+            "speed": 17,
+            "durability": 80,
+            "power": 24,
+            "combat": 64
+        },
+        "attribute": null,
+        "result": null
+    });
     const [showCards, setShowCards] = useState(false);
     const [showAttributes, setShowAttributes] = useState(false);
     const [atributoEnJuego, setAtributoEnJuego] = useState("Elegir atributo");
@@ -29,30 +56,45 @@ export default function Game() {
     const {state} = useContext(AppContext);
 
     let {id} = useParams();
+    let {url} = useRouteMatch();
 
     const getNextPlayerUsername= (game) => {
-        if (game.creator.isMyTurn) return game.creator.username;
-        if (game.challenged.isMyTurn) return game.challenged.username;
+        //TODO pedir que la api devuelva un booleano o un number
+        if (game.creator.isMyTurn === "true") return game.creator.username;
+        if (game.challenged.isMyTurn === "true") return game.challenged.username;
         return "Partido finalizado";
     }
     useEffect(() => {
         async function fetchData(){
             const responseDuels = await CommonService.getGameDuels({id: id}, user.token);
             const responseGame = await CommonService.getSingleGame({id: id}, user.token);
+            console.log(responseGame, 'resga');
+            let newDuels = game !== null ? game.duels : [];
+            if (responseDuels.data.data !== null) newDuels.push({...responseDuels.data.data});
+
             setGame({
                 ...game,
-                game: responseGame.data.data,
-                duels: responseDuels.data
+                game: responseGame.data,
+                duels: newDuels
             });
-            if (user.username ===responseGame.data.data.creator.username){
-                setSessionUser(responseGame.data.data.creator);
+            if (user.username === responseGame.data.creator){
+                setSessionUser(responseGame.data.creator);
             }else{
-                setSessionUser(responseGame.data.data.challenged);
+                setSessionUser(responseGame.data.challenged);
             }
-            setJugadorTurno(getNextPlayerUsername(responseGame.data.data));
+            setJugadorTurno(getNextPlayerUsername(responseGame.data));
         }
         fetchData();
     }, []);
+    //Cuando es el turno del usuario logeado habilito el juego
+    useEffect(() => {
+        //TODO validaciones con estado de la partida
+        if (jugadorTurno !== null && sessionUser !== null) {
+            let cardsAvailable = game.duels[game.duels.length-1] > 0;
+            setEnableGame(jugadorTurno === sessionUser.username && cardsAvailable);
+        }
+    }, [jugadorTurno, sessionUser])
+
 
     //TODO get from API
     let attributes = ["intelligence", "strength", "speed", "durability", "power", "combat"];
@@ -91,6 +133,10 @@ export default function Game() {
         showTable("/duels", "PARTIDA " + game.id, ["Duelo", "Ganador"], createGameResults(game))
     }
 
+    const navigateToDuels = () => {
+        history.push(url + '/duels');
+    }
+
     const showTable = async (url, title, tableHeaders, tableRows) => {
         const location = {
             pathname: url,
@@ -105,10 +151,13 @@ export default function Game() {
     }
 
     function handleRepartirCartas() {
-        let creatorCard = game.creator.cards[0];
-        let challengedCard = game.challenged.cards[0];
-        setShowCards(true);
-        setCurrenDuel({...currentDuel, creatorCard: creatorCard, challengedCard: challengedCard});
+        //Si todavía quedan cartas por jugar
+        if (game.duels[game.duels.length-1] > 0){
+            let creatorCard = game.creator.cards[0];
+            let challengedCard = game.challenged.cards[0];
+            setShowCards(true);
+            setCurrenDuel({...currentDuel, creatorCard: creatorCard, challengedCard: challengedCard});
+        }
     }
 
     return (
@@ -118,7 +167,7 @@ export default function Game() {
                 <Dialog disableBackdropClick disableEscapeKeyDown open={openResult} onClose={handleClose}>
                     <DialogTitle>GANADOR</DialogTitle>
                 </Dialog>
-                <Grid container alignItems={"top"} alignContent={"center"}>
+                <Grid container alignContent={"center"}>
                     <Grid item xs={12} sm={4}>
                         <Container>
 
@@ -143,14 +192,14 @@ export default function Game() {
                                         {attributes.map((attr, index) => {
 
                                             return (
-                                                <Grid item xs={12}>
+                                                <Grid item xs={12} key={index}>
                                                     <Button
                                                         variant="contained"
                                                         onClick={() => setAttribute(attr)}
                                                         disabled={!showAttributes || !enableGame}
                                                         color="primary"
                                                         size="large"
-                                                        fullWidth="true"
+                                                        fullWidth
                                                     >
                                                         {attr}
                                                     </Button>
@@ -186,11 +235,11 @@ export default function Game() {
                                         <Grid item xs={12}>
                                             <Button
                                                 variant="contained"
-                                                disabled={!enableGame || !showCards}
+                                                disabled={!enableGame}
                                                 onClick={handleRepartirCartas}
                                                 color="primary"
                                                 size="large"
-                                                fullWidth="true"
+                                                fullWidth
                                             >
                                                 Repartir cartas
                                             </Button>
@@ -250,7 +299,7 @@ export default function Game() {
                             <br></br>
                             <Box component="span" display="block" bgcolor="blue">
                                 <PlayDuelButton
-                                    attribute={currentDuel.attribute}
+                                    attribute={currentDuel ? currentDuel.attribute : ""}
                                     disabled={!enableGame || currentDuel.attribute === ""}
                                 />
                             </Box>
@@ -265,7 +314,7 @@ export default function Game() {
                                 <Grid container alignItems={"center"} alignContent={"center"} justify="center" >
                                     <Box component="span" display="block" bgcolor="orange" width="75%">
                                         <Grid item xs={12}>
-                                            <Button variant="contained" onClick={showDuels} color="primary" size="large" fullWidth="true">
+                                            <Button variant="contained" onClick={navigateToDuels} color="primary" size="large" fullWidth>
                                                 Ver duelos
                                             </Button>
                                         </Grid>
@@ -279,24 +328,19 @@ export default function Game() {
                             <br></br>
                             <Box component="span" display="block" bgcolor="orange">
                                 <Typography gutterBottom variant="h4" component="h2">
-                                    CARTAS GANADAS
+                                    CARTAS GANADAS:
                                     </Typography>
                                 <Grid container alignItems={"center"} alignContent={"center"} justify="center" >
                                     <Box component="span" display="block" bgcolor="orange" width="75%">
-                                        {sessionUser.gainedCards.map((card, index) => {
-                                            return (
-                                                <Grid item xs={12} key={index}>
-                                                    <Button variant="contained" color="primary" size="large" fullWidth="true">
-                                                        {card.name}
-                                                    </Button>
-                                                    <br></br>
-                                                    <br></br>
-                                                </Grid>
-                                            )
-                                        })}
+                                        {sessionUser.gainedCards}
                                     </Box>
                                 </Grid>
                             </Box>
+                            <br/>
+                            <br/>
+                            <pre>{JSON.stringify(game, null, 2)}</pre>
+                            <pre>{JSON.stringify(currentDuel, null, 2)}</pre>
+                            <pre>{JSON.stringify(sessionUser, null, 2)}</pre>
                         </Container>
                     </Grid>
                 </Grid>

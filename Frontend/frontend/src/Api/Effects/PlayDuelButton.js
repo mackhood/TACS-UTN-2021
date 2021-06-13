@@ -26,7 +26,7 @@ export const PlayDuelButton = (props) => {
             disabled={disabled}
             color="primary"
             size="large"
-            fullWidth="true"
+            fullWidth
             style={{ height: "100%" }}
         >
             <Typography gutterBottom variant="h4" component="h2">

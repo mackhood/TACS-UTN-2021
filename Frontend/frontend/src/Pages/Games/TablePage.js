@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Grid from "@material-ui/core/Grid";
-import {useHistory, useLocation} from "react-router-dom"
+import {useHistory} from "react-router-dom"
 import Button from "@material-ui/core/Button";
 
 
@@ -35,10 +35,9 @@ export default function TablePage() {
 
   const classes = useStyles();
   let history = useHistory();
-  let location = useLocation();
-  const title = location.state.title;
-  const tableHeaders = location.state.tableHeaders;
-  const tableRows = location.state.tableRows;
+  const title = "ESTADISTICAS";
+  const tableHeaders = ["Partida", "Mazo", "Creador", "Desafiado"];
+  const tableRows = [];
 
   const headers = (tableHeaders ? tableHeaders : [])
   const rows = (tableRows ? tableRows : []);
@@ -70,8 +69,8 @@ export default function TablePage() {
           <TableHead>
             <TableRow>
               <TableCell> # </TableCell>
-              {headers.map((header) => (
-                <TableCell> { header} </TableCell>
+              {headers.map((header, index) => (
+                  <TableCell key={index}> { header} </TableCell>
               ))}
             </TableRow>
           </TableHead>
