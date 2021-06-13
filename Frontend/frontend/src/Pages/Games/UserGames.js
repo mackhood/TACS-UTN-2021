@@ -5,7 +5,7 @@ import {Switch} from "react-router-dom";
 import {PrivateRoute} from "../../Auth/PrivateRoute";
 import {commonStyles} from "../../Resources/Styles";
 import Games from "./Games";
-import TablePage from "./TablePage";
+import TablePage from "../Administration/TablePage";
 import Game from "./Game";
 import {useRouteMatch} from "react-router";
 

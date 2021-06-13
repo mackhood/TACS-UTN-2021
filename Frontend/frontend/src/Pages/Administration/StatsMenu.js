@@ -1,9 +1,7 @@
 import React, { useContext } from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import GameWithButtons from "../../Components/GameWithButtons";
 import { useHistory } from "react-router-dom";
-import { CreateGameDialog } from "./CreateGameDialog";
 import { commonStyles } from "../../Resources/Styles";
 import { AppContext } from "../../Common/AppContext";
 import ListItem from '@material-ui/core/ListItem';
@@ -11,13 +9,24 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import BarChart from '@material-ui/icons/BarChart';
 
-
-export default function Games(props) {
+export default function StatsMenu(props) {
     const { setNotify } = props;
     let history = useHistory();
     const { state } = useContext(AppContext);
     const classes = commonStyles();
     const [open, setOpen] = React.useState(false);
+
+    function gamesStats (){
+        history.push('/admin/stats/games');
+    }
+
+    function scoreboardStats (){
+        history.push('/admin/stats/scoreboard');
+    }
+
+    function userStats (){
+        history.push('/admin/stats/users');
+    }
 
     return (
         <div className={classes.layout}>
@@ -27,7 +36,6 @@ export default function Games(props) {
                     <ListItem button>
                         <ListItemIcon><BarChart /></ListItemIcon>
                         <ListItemText primary="Partidas" />
-
                     </ListItem>
                     <br></br>
                     <Grid container alignItems={"center"} alignContent={"center"}>
@@ -44,7 +52,7 @@ export default function Games(props) {
                     <br></br>
                     <Grid item xs={12} sm={4}>
                         <Button variant="contained" color="primary" onClick={() => {
-                            ;
+                            gamesStats();
                         }}>
                             Ver
                             </Button>
@@ -62,7 +70,7 @@ export default function Games(props) {
                         <Grid item xs={12} sm={8}>
                             <div>
                                 <p>
-                                Visualizar ranking y puntaje total de jugadores
+                                    Visualizar ranking y puntaje total de jugadores
                                         </p>
                             </div>
                         </Grid>
@@ -75,7 +83,7 @@ export default function Games(props) {
                     <br></br>
                     <Grid item xs={12} sm={4}>
                         <Button variant="contained" color="primary" onClick={() => {
-                            ;
+                            scoreboardStats();
                         }}>
                             Ver
                             </Button>
@@ -92,7 +100,7 @@ export default function Games(props) {
                         <Grid item xs={12} sm={8}>
                             <div>
                                 <p>
-                                Visualizar un usuario específico y ver sus estadísticas individuales
+                                    Visualizar un usuario específico y ver sus estadísticas individuales
                                         </p>
                             </div>
                         </Grid>
@@ -104,15 +112,12 @@ export default function Games(props) {
                     <br></br>
                     <Grid item xs={12} sm={4}>
                         <Button variant="contained" color="primary" onClick={() => {
-                            ;
+                            userStats();
                         }}>
                             Ver
                             </Button>
                     </Grid>
                 </Grid>
-
-
-
             </Grid>
         </div >
     );

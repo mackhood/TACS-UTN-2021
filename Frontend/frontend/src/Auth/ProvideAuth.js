@@ -12,11 +12,13 @@ export function ProvideAuth({ children }) {
 }
 
 function useProvideAuth() {
+    
     const [user, setUser] = useState(null);
 
     const setUserData = (userData) => {
         setUser(userData);
     }
+
     const login = async user => {
         return await LoginService
             .login(user)
@@ -55,4 +57,5 @@ function useProvideAuth() {
         register,
         setUserData
     };
+
 }
