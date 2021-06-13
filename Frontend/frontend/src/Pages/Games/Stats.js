@@ -6,6 +6,10 @@ import { useHistory } from "react-router-dom";
 import { CreateGameDialog } from "./CreateGameDialog";
 import { commonStyles } from "../../Resources/Styles";
 import { AppContext } from "../../Common/AppContext";
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import BarChart from '@material-ui/icons/BarChart';
 
 
 export default function Games(props) {
@@ -15,60 +19,100 @@ export default function Games(props) {
     const classes = commonStyles();
     const [open, setOpen] = React.useState(false);
 
-    /*
-    const continueGame = async (gameId) => {
-        const location = {
-            pathname: '/games/' + gameId
-        }
-        history.push(location);
-    }
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    function navigateToDuels(id) {
-        history.push('/games/' + id + '/duels');
-    }
-
-    function navigateToStats() {
-        history.push('/games/stats');
-    }
-    */
-
     return (
         <div className={classes.layout}>
+            <h1>ESTADÍSTICAS</h1>
             <Grid container alignItems={"center"} alignContent={"center"}>
-                <div style={{ width: "100%" }}>
-                    <Grid container spacing={4} alignItems={"center"} alignContent={"center"}>
-                        <Grid item xs={12} sm={4}>
-                            <Button variant="contained" color="primary" onClick={() => {
-                                ;
-                            }}>
-                                Estadísticas de partidas
-                            </Button>
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <Button variant="contained" color="primary" onClick={() => {
-                                ;
-                            }}>
-                                Estadísticas de usuarios
-                            </Button>
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <Button variant="contained" color="primary" onClick={() => {
-                                ;
-                            }}>
-                                Scoreboard
-                            </Button>
+                <Grid item xs={12} sm={4}>
+                    <ListItem button>
+                        <ListItemIcon><BarChart /></ListItemIcon>
+                        <ListItemText primary="Partidas" />
+
+                    </ListItem>
+                    <br></br>
+                    <Grid container alignItems={"center"} alignContent={"center"}>
+                        <Grid item xs={12} sm={1}></Grid>
+                        <Grid item xs={12} sm={8}>
+                            <div>
+                                <p>
+                                    Visualizar cantidad de partidas creadas, en curso, terminadas y canceladas permitiendo seleccionar el rango de fechas.
+                                        </p>
+                            </div>
                         </Grid>
                     </Grid>
-                    
-                </div>
+                    <br></br>
+                    <br></br>
+                    <Grid item xs={12} sm={4}>
+                        <Button variant="contained" color="primary" onClick={() => {
+                            ;
+                        }}>
+                            Ver
+                            </Button>
+                    </Grid>
+                </Grid>
+                <br></br>
+                <Grid item xs={12} sm={4}>
+                    <ListItem button>
+                        <ListItemIcon><BarChart /></ListItemIcon>
+                        <ListItemText primary="Scoreboard" />
+
+                    </ListItem>
+                    <Grid container alignItems={"center"} alignContent={"center"}>
+                        <Grid item xs={12} sm={1}></Grid>
+                        <Grid item xs={12} sm={8}>
+                            <div>
+                                <p>
+                                Visualizar ranking y puntaje total de jugadores
+                                        </p>
+                            </div>
+                        </Grid>
+                    </Grid>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <Grid item xs={12} sm={4}>
+                        <Button variant="contained" color="primary" onClick={() => {
+                            ;
+                        }}>
+                            Ver
+                            </Button>
+                    </Grid>
+                </Grid>
+                <br></br>
+                <Grid item xs={12} sm={4} border>
+                    <ListItem button>
+                        <ListItemIcon><BarChart /></ListItemIcon>
+                        <ListItemText primary="Jugadores" />
+                    </ListItem>
+                    <Grid container alignItems={"center"} alignContent={"center"}>
+                        <Grid item xs={12} sm={1}></Grid>
+                        <Grid item xs={12} sm={8}>
+                            <div>
+                                <p>
+                                Visualizar un usuario específico y ver sus estadísticas individuales
+                                        </p>
+                            </div>
+                        </Grid>
+                    </Grid>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <Grid item xs={12} sm={4}>
+                        <Button variant="contained" color="primary" onClick={() => {
+                            ;
+                        }}>
+                            Ver
+                            </Button>
+                    </Grid>
+                </Grid>
+
+
+
             </Grid>
         </div >
     );
