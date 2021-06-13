@@ -132,6 +132,9 @@ export default function PersistentDrawerLeft() {
                         (<Button onClick={logout}>Logout</Button>) :
                         (<Button onClick={handleLogin}>Login</Button>)
                     }
+                    {auth.user &&
+                        (<Typography>Usuario: {auth.user.username.toUpperCase()}</Typography>)
+                    }
 
 
                 </Toolbar>
