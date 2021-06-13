@@ -10,7 +10,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from "@material-ui/core/Grid";
 import {useHistory} from "react-router-dom"
 import Button from "@material-ui/core/Button";
-
+import {AppContext} from "../../Common/AppContext";
+import {useContext} from "react";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -35,12 +36,35 @@ export default function GameStats() {
 
   const classes = useStyles();
   let history = useHistory();
+  const {state} = useContext(AppContext);
   const title = "ESTADISTICAS";
-  const tableHeaders = ["Partida", "Mazo", "Creador", "Desafiado"];
+  const tableHeaders = ["Estado", "Cantidad De Partidas"];
   const tableRows = [];
 
   const headers = (tableHeaders ? tableHeaders : [])
-  const rows = (tableRows ? tableRows : []);
+  
+  console.log(state.games);
+
+  const gameStates = [];
+  state.games.map((game, index) => {
+    console.log(game.state);
+    if (! gameStates.includes(game.state)) {
+      gameStates.push(game.state);
+    }
+  })
+  
+  console.log(gameStates);
+
+  const data = [];
+  gameStates.map((gameState, index) => {
+    console.log(gameState);
+    const gamesCount = state.games.filter((currentGame) => currentGame.state === gameState).length;
+    data.push ({ "gamestate": gameState, "games": gamesCount});
+  })
+  
+  console.log(data);
+
+  const rows = (tableRows ? data : []);
 
   let rowsList = rows.map((row, index) => (
     <TableRow key={index}>
