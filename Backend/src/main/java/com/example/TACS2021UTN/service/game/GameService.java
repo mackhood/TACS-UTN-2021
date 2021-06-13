@@ -79,8 +79,8 @@ public class GameService implements IGameService {
     @Override
     public List<DuelDTO> getAllDuels(Long gameId) {
         Game game = gameRepository.findById(gameId).orElseThrow(() -> new NotFoundException("Game not found with ID" + gameId));
-        //return game.getDuels();
-        return null;
+        List<Duel> duels = game.getDuels();
+        return duels.stream().map(duel -> modelMapper.map(duel, DuelDTO.class)).collect(Collectors.toList());
     }
 
 
