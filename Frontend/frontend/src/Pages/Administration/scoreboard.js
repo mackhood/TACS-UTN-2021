@@ -10,6 +10,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from "@material-ui/core/Grid";
 import {useHistory} from "react-router-dom"
 import Button from "@material-ui/core/Button";
+import {AppContext} from "../../Common/AppContext";
+import {useContext} from "react";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,12 +37,38 @@ export default function Scoreboard() {
 
   const classes = useStyles();
   let history = useHistory();
-  const title = "ESTADISTICAS";
-  const tableHeaders = ["Partida", "Mazo", "Creador", "Desafiado"];
+  const title = "SCOREBOARD";
+  const tableHeaders = ["Jugador", "Partidas Creadas", "Partidas Desafiadas", "Partidas Ganadas"];
   const tableRows = [];
+  const {state} = useContext(AppContext);
 
   const headers = (tableHeaders ? tableHeaders : [])
-  const rows = (tableRows ? tableRows : []);
+  
+
+  console.log(state);
+
+  const users = state.users.map((user, index) => user.username);
+
+  console.log(users);
+
+  const data = [];
+  users.map((user, index) => {
+    const gamesCreated = state.games.filter((game) => game.creator.username === user ).length;
+    const gamesChallenged = state.games.filter((game) => game.challenged.username === user ).length;
+    const gamesWon = 0;
+    data.push({user: user, gamesCreated: gamesCreated, gamesChallenged: gamesChallenged, gamesWon: gamesWon});
+  });
+
+
+  data.sort(function (user1, user2){
+    if(user1.gamesWon > user2.gamesWon){
+      return -1;
+    }else{
+      return 1;
+    }
+  });
+
+  const rows = (data ? data : []);
 
   let rowsList = rows.map((row, index) => (
     <TableRow key={index}>

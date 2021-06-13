@@ -37,7 +37,7 @@ export default function GameStats() {
   const classes = useStyles();
   let history = useHistory();
   const {state} = useContext(AppContext);
-  const title = "ESTADISTICAS";
+  const title = "ESTADISTICAS PARTIDAS";
   const tableHeaders = ["Estado", "Cantidad De Partidas"];
   const tableRows = [];
 
@@ -47,22 +47,17 @@ export default function GameStats() {
 
   const gameStates = [];
   state.games.map((game, index) => {
-    console.log(game.state);
     if (! gameStates.includes(game.state)) {
       gameStates.push(game.state);
     }
   })
   
-  console.log(gameStates);
-
+  
   const data = [];
   gameStates.map((gameState, index) => {
-    console.log(gameState);
     const gamesCount = state.games.filter((currentGame) => currentGame.state === gameState).length;
     data.push ({ "gamestate": gameState, "games": gamesCount});
   })
-  
-  console.log(data);
 
   const rows = (tableRows ? data : []);
 
