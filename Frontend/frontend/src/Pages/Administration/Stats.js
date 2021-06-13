@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
-import { Switch } from "react-router-dom";
-import { PrivateRoute } from "../../Auth/PrivateRoute";
-import { commonStyles } from "../../Resources/Styles";
-import { useRouteMatch } from "react-router";
+import {Switch} from "react-router-dom";
+import {PrivateRoute} from "../../Auth/PrivateRoute";
+import {commonStyles} from "../../Resources/Styles";
+import {useRouteMatch} from "react-router";
 import StatsMenu from "./StatsMenu";
-import TablePage from "./TablePage";
 import GameStats from "./gameStats";
 import Scoreboard from "./scoreboard";
 import UserStats from "./userStats";

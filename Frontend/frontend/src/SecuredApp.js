@@ -1,13 +1,13 @@
-import React, { useContext, useEffect } from "react";
+import React, {useContext, useEffect} from "react";
 import CommonService from "./Api/CommonService";
-import { Route, Switch } from "react-router-dom";
-import { UserGames } from "./Pages/Games/UserGames";
+import {Route, Switch} from "react-router-dom";
+import {UserGames} from "./Pages/Games/UserGames";
 import Administration from "./Pages/Administration/Administration";
-import { useAuth } from "./Auth/useAuth";
-import { AppContext } from "./Common/AppContext";
+import {useAuth} from "./Auth/useAuth";
+import {AppContext} from "./Common/AppContext";
 import * as _ from 'lodash';
 import AdminService from "./Api/AdminService";
-import { Stats } from "./Pages/Administration/Stats";    
+import {Stats} from "./Pages/Administration/Stats";
 
 export const SecuredApp = () => {
 

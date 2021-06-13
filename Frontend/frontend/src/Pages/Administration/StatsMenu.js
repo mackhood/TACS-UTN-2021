@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React, {useContext} from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import { useHistory } from "react-router-dom";
-import { commonStyles } from "../../Resources/Styles";
-import { AppContext } from "../../Common/AppContext";
+import {useHistory} from "react-router-dom";
+import {commonStyles} from "../../Resources/Styles";
+import {AppContext} from "../../Common/AppContext";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
