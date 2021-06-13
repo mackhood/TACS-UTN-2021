@@ -3,6 +3,7 @@ import CommonService from "./Api/CommonService";
 import {Route, Switch} from "react-router-dom";
 import {UserGames} from "./Pages/Games/UserGames";
 import Administration from "./Pages/Administration/Administration";
+import Stats from "./Pages/Games/Stats";
 import {useAuth} from "./Auth/useAuth";
 import {AppContext} from "./Common/AppContext";
 
@@ -47,6 +48,9 @@ export const SecuredApp = () => {
             </Route>
             <Route path="/admin/decks">
                 <Administration />
+            </Route>
+            <Route path="/admin/stats">
+                <Stats />
             </Route>
         </Switch>
 
