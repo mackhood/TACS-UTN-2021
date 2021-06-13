@@ -71,7 +71,7 @@ public class GameService implements IGameService {
             throw new NotFoundException("Game not found with ID: " + gameId);
 
         Duel duel = game.play(user, attribute);
-        //gameRepository.update(game);
+        gameRepository.update(game);
 
         return modelMapper.map(duel, DuelDTO.class);
     }

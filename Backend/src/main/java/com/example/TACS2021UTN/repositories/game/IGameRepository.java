@@ -13,6 +13,7 @@ public interface IGameRepository {
     List<Game> findAll();
     Optional<Game> findById(Long id);
     void save(Game newGame);
+    void update(Game game);
     Game leaveGame(Long id, User player);
     List<Game> showGamesByFilters(LocalDate from, LocalDate to);
 
