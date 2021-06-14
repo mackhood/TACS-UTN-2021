@@ -76,10 +76,10 @@ export default function Game() {
                 game: responseGame.data,
                 duels: newDuels
             });
-            if (user.username === responseGame.data.creator){
+            if (user.username === responseGame.data.creator.username){
                 setSessionUser(responseGame.data.creator);
             }else{
-                setSessionUser(responseGame.data.challenged);
+                setSessionUser(responseGame.data.challenged.username);
             }
             setJugadorTurno(getNextPlayerUsername(responseGame.data));
         }
@@ -89,7 +89,7 @@ export default function Game() {
     useEffect(() => {
         //TODO validaciones con estado de la partida
         if (jugadorTurno !== null && sessionUser !== null) {
-            let cardsAvailable = game.duels[game.duels.length-1] > 0;
+            let cardsAvailable = game.game.cardsLeft > 0;
             setEnableGame(jugadorTurno === sessionUser.username && cardsAvailable);
         }
     }, [jugadorTurno, sessionUser])
