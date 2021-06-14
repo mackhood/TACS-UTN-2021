@@ -10,3 +10,7 @@ Desde el directorio raiz, ejecutar el comando
 #####Para builder el .jar del backend:
 
 mvn package  -DskipTests=true
+
+## Consigna
+
+https://docs.google.com/document/u/1/d/e/2PACX-1vSDeXS8A44GMMKxL47FTspYC6_4BXiWP2_lwo2Oiy4P7oRXORfseOdQ9F3K8vZ_xyHNPf6euMP1wEIV/pub
