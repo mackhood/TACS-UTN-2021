@@ -68,7 +68,6 @@ export default function Game() {
         async function fetchData(){
             const responseDuels = await CommonService.getGameDuels({id: id}, user.token);
             const responseGame = await CommonService.getSingleGame({id: id}, user.token);
-            console.log(responseGame, 'resga');
             let newDuels = game !== null ? game.duels : [];
             if (responseDuels.data.data !== null) newDuels.push({...responseDuels.data.data});
 

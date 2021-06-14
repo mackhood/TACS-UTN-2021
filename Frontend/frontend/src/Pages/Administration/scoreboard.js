@@ -42,14 +42,7 @@ export default function Scoreboard() {
   const {state} = useContext(AppContext);
 
   const headers = (tableHeaders ? tableHeaders : [])
-  
-
-  console.log(state);
-
   const users = state.users.map((user, index) => user.username);
-
-  console.log(users);
-
   const data = [];
   users.map((user, index) => {
     const gamesCreated = state.games.filter((game) => game.creator.username === user ).length;

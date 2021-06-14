@@ -47,11 +47,8 @@ export default function UserStats() {
   }));
   let history = useHistory();
   const { state } = useContext(AppContext);
-  const [currentUser, setCurrentUser] = React.useState();
   const [tableRows, setTableRows] = React.useState([]);
-
   const tableHeaders = ["Partida", "Mazo", "Creador", "Desafiado", "Estado", "Resultado"];
-  
   const headers = (tableHeaders ? tableHeaders : [])
   const rows = (tableRows ? tableRows : []);
 
@@ -65,23 +62,15 @@ export default function UserStats() {
   ));
 
   function handleSelectChange(e) {
-    const {name, value} = e.target;
-    
-    console.log(value);
-
+    const {value} = e.target;
     const gamesCreated = state.games.filter((game) => game.creator.username === value );
     const gamesChallenged = state.games.filter((game) => game.challenged.username === value );
-
     const allGames = gamesCreated.concat(gamesChallenged);
-
     const data = [];
 
     allGames.map((game, index) => {
       data.push( {gameId: game.id, deck: game.deckName, creator: game.challenged.username, challenged: game.creator.username, state: game.state, result: "Winner/Loser"} );
     });
-
-
-
     setTableRows(data);
 
   }

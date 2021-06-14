@@ -41,9 +41,6 @@ export default function GameStats() {
   const tableRows = [];
 
   const headers = (tableHeaders ? tableHeaders : [])
-  
-  console.log(state.games);
-
   const gameStates = [];
   state.games.map((game, index) => {
     if (! gameStates.includes(game.state)) {
