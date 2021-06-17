@@ -1,6 +1,5 @@
 import React, {useContext} from "react";
 import AdminService from "../AdminService";
-import {useAuth} from "../../Auth/useAuth";
 import {AppContext} from "../../Common/AppContext";
 import Button from "@material-ui/core/Button";
 import {useConfirm} from "material-ui-confirm";
@@ -11,14 +10,13 @@ export const DeleteDeckButton = (props) => {
     const confirm = useConfirm();
     const {dispatch} = useContext(AppContext);
     const {deckId} = props;
-    const {user} = useAuth();
     const {setNotify} = useContext(NotifyContext);
 
     function handleDeleteDeck() {
 
         confirm({ description: 'Desea eliminar el mazo?' })
             .then(() => {
-                AdminService.deleteDeck(deckId, user.token).then(r =>{
+                AdminService.deleteDeck(deckId).then(r =>{
                     dispatch({
                         type:"DELETE_DECK",
                         payload:{

@@ -1,6 +1,5 @@
 import React, {useContext} from "react";
 import {AppContext} from "../../Common/AppContext";
-import {useAuth} from "../../Auth/useAuth";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import AdminService from "../AdminService";
@@ -9,12 +8,11 @@ import {NotifyContext} from "../../Common/NotifyContextProvider";
 export const UpdateDeckButton = (props) => {
     const {dispatch} = useContext(AppContext);
     const {disabled, deck} = props;
-    const {user} = useAuth();
     const {setNotify} = useContext(NotifyContext);
     function handleUpdateDeck() {
 
 
-        AdminService.updateDeck(deck, user.token).then(response =>{
+        AdminService.updateDeck(deck).then(response =>{
             dispatch({
                 type:"UPDATE_DECK",
                 payload:{
