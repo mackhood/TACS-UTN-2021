@@ -13,9 +13,25 @@ import {apiAxiosInstance} from "./Api/Axios";
 
 function App() {
 
-    const {setUserData} = useAuth();
+    const {setUserData, signout} = useAuth();
     const {notify, setNotify} = useContext(NotifyContext);
     let history = useHistory();
+
+    const UNAUTHORIZED = 401;
+    apiAxiosInstance.interceptors.response.use(
+        response => response,
+        error => {
+            const {status} = error.response;
+            if (status === UNAUTHORIZED) {
+                signout().then(() => {
+                    history.replace('/login');
+                });
+            }
+            return Promise.reject(error);
+        }
+    );
+
+
     useEffect(() => {
         const storedUser = localStorage.getItem('tacs');
         async function reloadUser() {
