@@ -5,14 +5,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router} from "react-router-dom";
 import {ProvideAuth} from "./Auth/ProvideAuth";
+import {NotifyContextProvider} from "./Common/NotifyContextProvider";
 
 ReactDOM.render(
   <React.StrictMode>
-      <ProvideAuth>
-          <Router>
-              <App />
-          </Router>
-      </ProvideAuth>
+      <NotifyContextProvider>
+          <ProvideAuth>
+              <Router>
+                      <App />
+              </Router>
+          </ProvideAuth>
+      </NotifyContextProvider>
 
   </React.StrictMode>,
   document.getElementById('root')

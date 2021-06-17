@@ -1,20 +1,16 @@
-import React, {useContext} from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router-dom";
 import {commonStyles} from "../../Resources/Styles";
-import {AppContext} from "../../Common/AppContext";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import BarChart from '@material-ui/icons/BarChart';
 
 export default function StatsMenu(props) {
-    const { setNotify } = props;
     let history = useHistory();
-    const { state } = useContext(AppContext);
     const classes = commonStyles();
-    const [open, setOpen] = React.useState(false);
 
     function gamesStats (){
         history.push('/admin/stats/games');
@@ -71,7 +67,7 @@ export default function StatsMenu(props) {
                             <div>
                                 <p>
                                     Visualizar ranking y puntaje total de jugadores
-                                        </p>
+                                </p>
                             </div>
                         </Grid>
                     </Grid>
@@ -90,7 +86,7 @@ export default function StatsMenu(props) {
                     </Grid>
                 </Grid>
                 <br></br>
-                <Grid item xs={12} sm={4} border>
+                <Grid item xs={12} sm={4}>
                     <ListItem button>
                         <ListItemIcon><BarChart /></ListItemIcon>
                         <ListItemText primary="Jugadores" />

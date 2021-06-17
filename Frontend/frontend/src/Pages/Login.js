@@ -90,6 +90,7 @@ export default function Login() {
                         name="password"
                         label="Contraseña"
                         type="password"
+                        autoComplete="password"
                         onChange={handleInputChange}
                     />
                     <LoginUserButton

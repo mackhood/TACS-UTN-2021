@@ -13,7 +13,6 @@ export const CreateDeck = (props) => {
     const {state} = useContext(AppContext);
     const [heroeList, setHeroeList] = useState(state.heroes);
     const [newDeckCardList, setNewDeckCardList] = useState([]);
-    const {setNotify} = props;
     const [formIsValid, setFormIsValid] = useState(false);
 
     const [deckNames, setDeckNames] = useState([]);
@@ -50,7 +49,6 @@ export const CreateDeck = (props) => {
                 disabled={formIsValid}
                 deck={{name: deckName, cardList: newDeckCardList}}
                 resetForm={resetForm}
-                setNotify={setNotify}
             />
             <Grid item xs={12}>
                 <TextField

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 export const CreateGameDialog = (props) => {
 
 
-    const {handleClose, open, decks, users, setNotify} = props;
+    const {handleClose, open, decks, users} = props;
 
     const [selectData, setSelectData] = useState({user:null, deck: null});
 
@@ -83,7 +83,6 @@ export const CreateGameDialog = (props) => {
                     data={selectData}
                     resetDialog={resetDialog}
                     handleClose={handleClose}
-                    setNotify={setNotify}
                 />
             </DialogActions>
         </Dialog>

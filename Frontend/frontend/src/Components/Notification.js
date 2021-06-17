@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -10,7 +10,6 @@ const useStyles= makeStyles(theme => ({
 }))
 export default function Notification({notify, setNotify}) {
     const classes = useStyles();
-    const nodeRef = useRef(null);
     const handleClose = (e, reason) => {
         if (reason === 'clickaway') return;
 
@@ -20,15 +19,11 @@ export default function Notification({notify, setNotify}) {
         <Snackbar
             className={classes.root}
             open={notify.isOpen}
-            autoHideDuration={2000}
+            autoHideDuration={notify.duration || 2000}
             anchorOrigin={{vertical:'top', horizontal:'center'}}
             onClose={handleClose}
-            noderef={nodeRef}
         >
-            <Alert
-                severity={notify.type}
-                ref={nodeRef}
-            >
+            <Alert severity={notify.type}>
                 {notify.message}
             </Alert>
         </Snackbar>

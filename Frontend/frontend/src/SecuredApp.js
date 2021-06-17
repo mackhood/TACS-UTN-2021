@@ -39,7 +39,6 @@ export const SecuredApp = () => {
     }, [user]);
 
     return (
-
         <Switch>
             <Route path="/games">
                 <UserGames />
@@ -51,6 +50,5 @@ export const SecuredApp = () => {
                 <Stats />
             </Route>
         </Switch>
-
     )
 }

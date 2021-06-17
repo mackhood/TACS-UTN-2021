@@ -9,7 +9,6 @@ import {AppContext} from "../../Common/AppContext";
 
 
 export default function Games(props) {
-    const {setNotify} = props;
     let history = useHistory();
     const {state} = useContext(AppContext);
     const classes = commonStyles();
@@ -46,7 +45,6 @@ export default function Games(props) {
                 setOpen={setOpen}
                 decks={state.decks}
                 users={state.users}
-                setNotify={setNotify}
             />
             <Grid container alignItems={"center"} alignContent={"center"}>
                 <div style={{ width: "100%" }}>
