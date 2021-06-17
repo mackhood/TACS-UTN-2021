@@ -24,26 +24,31 @@ export default function Game() {
     const [sessionUser, setSessionUser] = useState({});
     const [enableGame, setEnableGame] = useState(false);
     const [currentDuel, setCurrenDuel] = useState({
-        "cardsLeft": 1,
+        "cardsLeft": 3,
         "creatorCard": {
             "id": 4,
             "name": "Abomination",
-            "strength": 80,
-            "intelligence": 63,
-            "speed": 53,
-            "durability": 90,
-            "power": 62,
-            "combat": 95
+            "powerstats": {
+                "strength": 80,
+                "intelligence": 63,
+                "speed": 53,
+                "durability": 90,
+                "power": 62,
+                "combat": 95
+            }
         },
         "challengedCard": {
             "id": 1,
             "name": "A-Bomb",
-            "strength": 100,
-            "intelligence": 38,
-            "speed": 17,
-            "durability": 80,
-            "power": 24,
-            "combat": 64
+            "powerstats": {
+                "strength": 100,
+                "intelligence": 38,
+                "speed": 17,
+                "durability": 80,
+                "power": 24,
+                "combat": 64
+            }
+
         },
         "attribute": null,
         "result": null
@@ -66,8 +71,8 @@ export default function Game() {
     }
     useEffect(() => {
         async function fetchData(){
-            const responseDuels = await CommonService.getGameDuels({id: id}, user.token);
-            const responseGame = await CommonService.getSingleGame({id: id}, user.token);
+            const responseDuels = await CommonService.getGameDuels({id: id});
+            const responseGame = await CommonService.getSingleGame({id: id});
             let newDuels = game !== null ? game.duels : [];
             if (responseDuels.data.data !== null) newDuels.push({...responseDuels.data.data});
 
@@ -89,7 +94,7 @@ export default function Game() {
     useEffect(() => {
         //TODO validaciones con estado de la partida
         if (jugadorTurno !== null && sessionUser !== null) {
-            let cardsAvailable = game.game.cardsLeft > 0;
+            let cardsAvailable = game.game.actualNumberCards > 0;
             setEnableGame(jugadorTurno === sessionUser.username && cardsAvailable);
         }
     }, [jugadorTurno, sessionUser])
@@ -151,11 +156,14 @@ export default function Game() {
 
     function handleRepartirCartas() {
         //Si todavía quedan cartas por jugar
-        if (game.duels[game.duels.length-1] > 0){
-            let creatorCard = game.creator.cards[0];
-            let challengedCard = game.challenged.cards[0];
+        if (game.game.actualNumberCards > 0){
+            console.log(game.duels);
+            // let creatorCard = game.duels[game.duels.length-1].creatorCard;
+            // let creatorCard = {};
+            // let challengedCard = game.duels[game.duels.length-1].challengedCard;
+            // let challengedCard = {};
             setShowCards(true);
-            setCurrenDuel({...currentDuel, creatorCard: creatorCard, challengedCard: challengedCard});
+            // setCurrenDuel({...currentDuel, creatorCard: creatorCard, challengedCard: challengedCard});
         }
     }
 
@@ -195,7 +203,6 @@ export default function Game() {
                                                     <Button
                                                         variant="contained"
                                                         onClick={() => setAttribute(attr)}
-                                                        disabled={!showAttributes || !enableGame}
                                                         color="primary"
                                                         size="large"
                                                         fullWidth
@@ -264,9 +271,9 @@ export default function Game() {
                                                         Tu carta
                                                     </Typography>
                                                     <HeroeCard
-                                                        name={sessionUser.cards[0].name}
-                                                        powerstats={sessionUser.cards[0].powerstats}
-                                                        image={sessionUser.cards[0].image}
+                                                        name={currentDuel.creatorCard.name}
+                                                        powerstats={currentDuel.creatorCard.powerstats}
+                                                        image={currentDuel.creatorCard.image}
                                                     />
                                                 </Box>
                                             </Grid>
