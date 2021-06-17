@@ -1,6 +1,7 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {authContext} from './AuthContext'
 import LoginService from "../Api/LoginService";
+import {NotifyContext} from "../Common/NotifyContextProvider";
 
 export function ProvideAuth({ children }) {
     const auth = useProvideAuth();
@@ -14,7 +15,7 @@ export function ProvideAuth({ children }) {
 function useProvideAuth() {
     
     const [user, setUser] = useState(null);
-
+    const {setNotify} = useContext(NotifyContext);
     const setUserData = (userData) => {
         setUser(userData);
     }
@@ -29,6 +30,7 @@ function useProvideAuth() {
                 localStorage.setItem('tacs', JSON.stringify(userData));
             })
             .catch(() => {
+                setNotify({ isOpen: true, message: 'Usuario no encontrado o contraseña inválida', type: 'error', duration: 3000 });
                 localStorage.removeItem('tacs');
             });
 
@@ -45,9 +47,13 @@ function useProvideAuth() {
     const register = async data => {
         await LoginService.register(data.user)
             .then(() => {
+                setNotify({ isOpen: true, message: 'Registro exitoso', type: 'success', duration: 3000 });
                 return data.callback();
             })
-            .catch(err => console.log(err, 'err'));
+            .catch(err => {
+                setNotify({ isOpen: true, message: 'No se pudo realizar el registro', type: 'error', duration: 3000 });
+                console.log(err, 'err')
+            });
     }
 
     return {
