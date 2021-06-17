@@ -1,17 +1,15 @@
 import React, {useContext} from "react";
 import Button from "@material-ui/core/Button";
 import CommonService from "../CommonService";
-import {useAuth} from "../../Auth/useAuth";
 import {AppContext} from "../../Common/AppContext";
 import {NotifyContext} from "../../Common/NotifyContextProvider";
 
 export const DropGameButton = (props) => {
     const {game} = props;
-    const {user} = useAuth();
     const {dispatch} = useContext(AppContext);
     const {setNotify} = useContext(NotifyContext);
     const handleDropGame = () => {
-        CommonService.dropGame(game.id, user.token)
+        CommonService.dropGame(game.id)
             .then(res => {
                 dispatch({type:"END_GAME", payload: res.data});
                 setNotify({isOpen:true, message:'Juego finalizado', type:'success', duration: 3000});

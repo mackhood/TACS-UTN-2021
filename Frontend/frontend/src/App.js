@@ -9,6 +9,7 @@ import {SecuredApp} from "./SecuredApp";
 import {useAuth} from "./Auth/useAuth";
 import Notification from "./Components/Notification";
 import {NotifyContext, NotifyContextProvider} from "./Common/NotifyContextProvider";
+import {apiAxiosInstance} from "./Api/Axios";
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         async function reloadUser() {
 
             let userData = JSON.parse(storedUser);
+            apiAxiosInstance.defaults.headers.common = { 'Content-Type': 'application/json','Authorization': `Bearer ${userData.token}`}
             setUserData(userData);
         }
         if (storedUser !== null){

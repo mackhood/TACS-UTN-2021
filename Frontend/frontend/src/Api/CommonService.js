@@ -1,86 +1,30 @@
-import axios from 'axios'
-import {REACT_APP_CARD_REST_API_URL, REACT_APP_GAME_REST_API_URL} from '../Common/Constants';
+import {apiAxiosInstance} from "./Axios";
 
 class CommonService{
 
-    getCards(token){
-        return axios.get(REACT_APP_CARD_REST_API_URL , {
-            "headers":{
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            }
-        });
+    getCards(){
+        return apiAxiosInstance.get('/cards');
+    }
+    createGame(game){
+        return apiAxiosInstance.post('/games', game);
+    }
+    postDuel(data){
+        return apiAxiosInstance.post('/games/' + data.id + '/duels', data.attribute);
+    }
+    getGameDuels(data){
+        return apiAxiosInstance.get('/games/' + (data.id) + '/replay')
     }
 
-    createCard(card, token){
-        return axios.post(REACT_APP_CARD_REST_API_URL , card, {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        });
-    }
-    deleteCard(cardId, token){
-        return axios.delete(REACT_APP_CARD_REST_API_URL + '/' + cardId , {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        });
-    }
-    createGame(game, token){
-
-        return axios.post(REACT_APP_GAME_REST_API_URL + '', game, {
-            'headers':
-                {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                }
-        });
-    }
-    postDuel(data, token){
-        return axios.post(REACT_APP_GAME_REST_API_URL + '/' + data.id + '/duels', data.attribute, {
-            'headers':
-                {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                }
-        });
-    }
-    getGameDuels(data, token){
-        return axios.get(REACT_APP_GAME_REST_API_URL + '/' + (data.id) + '/replay', {
-            'headers':
-                {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                }
-        })
+    getSingleGame(data){
+        return apiAxiosInstance.get('/games/' + data.id)
     }
 
-    getSingleGame(data, token){
-        return axios.get(REACT_APP_GAME_REST_API_URL + '/' + data.id, {
-            'headers':
-                {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                }
-        })
+    getGames(){
+        return apiAxiosInstance.get('/games' )
     }
 
-    getGames(token){
-        return axios.get(REACT_APP_GAME_REST_API_URL , {
-            'headers':
-                {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                }
-        })
-    }
-
-    dropGame(gameId, token){
-        return axios.post(REACT_APP_GAME_REST_API_URL + '/' + gameId, null, {
-            'headers':
-                {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                }
-        });
+    dropGame(gameId){
+        return apiAxiosInstance.post('/games/' + gameId, null);
     }
 
 }

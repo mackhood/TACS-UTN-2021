@@ -16,7 +16,7 @@ export const CreateGameButton = (props) => {
             creatorUsername: user.username,
             challengedUsername: data.user,
             deckID: data.deck
-            }, user.token
+            }
         ).then(r =>{
             dispatch({
                 type:"ADD_GAME",

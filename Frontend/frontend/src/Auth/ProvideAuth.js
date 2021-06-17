@@ -2,6 +2,7 @@ import React, {useContext, useState} from "react";
 import {authContext} from './AuthContext'
 import LoginService from "../Api/LoginService";
 import {NotifyContext} from "../Common/NotifyContextProvider";
+import {apiAxiosInstance} from "../Api/Axios";
 
 export function ProvideAuth({ children }) {
     const auth = useProvideAuth();
@@ -29,6 +30,7 @@ function useProvideAuth() {
                 setUserData(userData);
                 localStorage.setItem('tacs', JSON.stringify(userData));
                 setNotify({isOpen:true, message:'Inicio de sesion exitoso', type:'success', duration: 3000})
+                apiAxiosInstance.defaults.headers.common = { 'Content-Type': 'application/json','Authorization': `Bearer ${res.data.token}`}
             })
             .catch(() => {
                 setNotify({ isOpen: true, message: 'Usuario no encontrado o contraseña inválida', type: 'error', duration: 3000 });

@@ -15,15 +15,15 @@ export const PlayDuelButton = (props) => {
         CommonService.postDuel({
             id: data.id,
             attribute: data.attribute
-        }, user.token)
-            .then(res => {
-                dispatch({type:"ADD_DUEL", payload: res.data});
-                setNotify({isOpen:true, message:'Nueva partida creada', type:'success', duration: 3000})
-            })
-            .catch(err => {
-                console.log(err, 'err');
-                setNotify({isOpen:true, message:'No se pudo crear la partida', type:'error', duration: 3000})
-            });
+        })
+        .then(res => {
+            dispatch({type:"ADD_DUEL", payload: res.data});
+            setNotify({isOpen:true, message:'Nueva partida creada', type:'success', duration: 3000})
+        })
+        .catch(err => {
+            console.log(err, 'err');
+            setNotify({isOpen:true, message:'No se pudo crear la partida', type:'error', duration: 3000})
+        });
     }
     return (
         <Button
