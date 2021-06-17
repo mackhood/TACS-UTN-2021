@@ -4,11 +4,13 @@ import {useAuth} from "../../Auth/useAuth";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import CommonService from "../CommonService";
+import {NotifyContext} from "../../Common/NotifyContextProvider";
 
 export const CreateGameButton = (props) => {
     const {dispatch} = useContext(AppContext);
-    const {data, setNotify, resetDialog, handleClose} = props;
+    const {data, resetDialog, handleClose} = props;
     const {user} = useAuth();
+    const {setNotify} = useContext(NotifyContext);
     function handleCreateGame() {
         CommonService.createGame({
             creatorUsername: user.username,

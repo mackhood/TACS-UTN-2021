@@ -4,10 +4,12 @@ import {useAuth} from "../../Auth/useAuth";
 import AdminService from "../AdminService";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import {NotifyContext} from "../../Common/NotifyContextProvider";
 
 export const CreateDeckButton = (props) => {
     const {dispatch} = useContext(AppContext);
-    const {disabled, deck, setNotify, resetForm} = props;
+    const {setNotify} = useContext(NotifyContext);
+    const {disabled, deck, resetForm} = props;
     const {user} = useAuth();
     function handleCreateDeck() {
         AdminService.createDeck(deck, user.token).then(r =>{

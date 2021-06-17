@@ -4,12 +4,13 @@ import {useAuth} from "../../Auth/useAuth";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import AdminService from "../AdminService";
+import {NotifyContext} from "../../Common/NotifyContextProvider";
 
 export const UpdateDeckButton = (props) => {
     const {dispatch} = useContext(AppContext);
-    const {disabled, deck, setNotify, resetForm} = props;
+    const {disabled, deck} = props;
     const {user} = useAuth();
-
+    const {setNotify} = useContext(NotifyContext);
     function handleUpdateDeck() {
 
 
@@ -20,10 +21,10 @@ export const UpdateDeckButton = (props) => {
                     id: deck.id, name: deck.name, cardList: deck.cardList
                 }
             });
-            setNotify({isOpen:true, message:'Mazo actualizado', type:'success'})
+            setNotify({isOpen:true, message:'Mazo actualizado', type:'success', duration: 3000})
         })
         .catch((err) => {
-            setNotify({isOpen:true, message:'El mazo no pudo ser actualizado', type:'error'})
+            setNotify({isOpen:true, message:'El mazo no pudo ser actualizado', type:'error', duration: 3000})
         });
     }
     return (

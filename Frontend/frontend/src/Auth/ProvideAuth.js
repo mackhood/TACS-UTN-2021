@@ -28,6 +28,7 @@ function useProvideAuth() {
                 let userData = { username:user.username, token: res.data.token };
                 setUserData(userData);
                 localStorage.setItem('tacs', JSON.stringify(userData));
+                setNotify({isOpen:true, message:'Inicio de sesion exitoso', type:'success', duration: 3000})
             })
             .catch(() => {
                 setNotify({ isOpen: true, message: 'Usuario no encontrado o contraseña inválida', type: 'error', duration: 3000 });

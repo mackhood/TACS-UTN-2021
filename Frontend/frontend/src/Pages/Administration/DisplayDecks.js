@@ -8,9 +8,9 @@ import {useHistory} from 'react-router-dom';
 const NoDecksMessage = () => {return (
     <h1>Aun no hay ningún mazo</h1>
 );}
-export const DisplayDecks = (props) => {
-    const {setNotify} = props;
+export const DisplayDecks = () => {
     const {state} = useContext(AppContext);
+
     let history = useHistory();
     const navigateToUpdate = (id) => {
         history.push('/admin/decks/' + id + '/update');
@@ -27,7 +27,6 @@ export const DisplayDecks = (props) => {
                         deck={deck}
                         navigateToUpdate={navigateToUpdate}
                         navigateToDeckView={navigateToDeckView}
-                        setNotify={setNotify}
                     />
                 </Grid>
             ))

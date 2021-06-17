@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 export default function DeckCardWithButtons(props) {
     const classes = useStyles();
 
-    const {deck, navigateToUpdate, navigateToDeckView, setNotify} = props;
+    const {deck, navigateToUpdate, navigateToDeckView} = props;
     return (
         <Card className={classes.root}>
             <CardActionArea>
@@ -47,7 +47,6 @@ export default function DeckCardWithButtons(props) {
                 <ConfirmProvider>
                     <DeleteDeckButton
                         deckId={deck.id}
-                        setNotify={setNotify}
                     />
                 </ConfirmProvider>
 
