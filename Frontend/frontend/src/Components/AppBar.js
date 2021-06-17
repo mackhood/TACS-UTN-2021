@@ -98,9 +98,9 @@ export default function PersistentDrawerLeft() {
     };
 
     const logout = () => {
-        auth.signout(() => {
+        auth.signout().then(() => {
             history.replace('/login');
-        })
+        });
     };
 
     function handleLogin() {

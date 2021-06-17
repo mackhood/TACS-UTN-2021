@@ -39,24 +39,18 @@ function useProvideAuth() {
 
     };
 
-    const signout = async cb => {
-        setTimeout(() => {
-            setUser(null);
-            localStorage.removeItem('tacs');
-            return cb();
-        }, 400);
+    const signout = async () => {
+        setUser(null);
+        localStorage.removeItem('tacs');
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve('logout');
+            }, 2000);
+        });
 
     };
-    const register = async data => {
-        await LoginService.register(data.user)
-            .then(() => {
-                setNotify({ isOpen: true, message: 'Registro exitoso', type: 'success', duration: 3000 });
-                return data.callback();
-            })
-            .catch(err => {
-                setNotify({ isOpen: true, message: 'No se pudo realizar el registro', type: 'error', duration: 3000 });
-                console.log(err, 'err')
-            });
+    const register = async user => {
+        return await LoginService.register(user)
     }
 
     return {
