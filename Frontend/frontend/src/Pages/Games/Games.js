@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import GameWithButtons from "../../Components/GameWithButtons";
@@ -6,13 +6,24 @@ import {useHistory} from "react-router-dom";
 import {CreateGameDialog} from "./CreateGameDialog";
 import {commonStyles} from "../../Resources/Styles";
 import {AppContext} from "../../Common/AppContext";
+import {useAuth} from "../../Auth/useAuth";
+import * as _ from 'lodash';
 
 
-export default function Games(props) {
+export default function Games() {
     let history = useHistory();
     const {state} = useContext(AppContext);
+    const {user} = useAuth();
     const classes = commonStyles();
     const [open, setOpen] = React.useState(false);
+    const [userList, setUserList] = useState([]);
+
+    useEffect(() => {
+        let users = _.filter(state.users, (elem)=> {
+            return elem.username !== user.username
+        });
+        setUserList(users);
+    }, [state.users]);
 
     const continueGame = async (gameId) => {
         const location = {
@@ -44,7 +55,7 @@ export default function Games(props) {
                 open={open}
                 setOpen={setOpen}
                 decks={state.decks}
-                users={state.users}
+                users={userList}
             />
             <Grid container alignItems={"center"} alignContent={"center"}>
                 <div style={{ width: "100%" }}>
