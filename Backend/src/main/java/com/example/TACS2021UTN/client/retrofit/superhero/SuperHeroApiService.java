@@ -32,9 +32,9 @@ public class SuperHeroApiService {
     }
 
     public SuperHero getSuperHero(Integer id) throws IOException {
-        SuperHeroService georefService = this.retrofit.create(SuperHeroService.class);
-        Call<SuperHero> requestProvinciasArgentinas = georefService.superHero(id);
-        Response<SuperHero> responseProvinciasArgentinas = requestProvinciasArgentinas.execute();
-        return responseProvinciasArgentinas.body();
+        SuperHeroService superHeroService = this.retrofit.create(SuperHeroService.class);
+        Call<SuperHero> requestSuperHero = superHeroService.superHero(id);
+        Response<SuperHero> responseSuperHero = requestSuperHero.execute();
+        return responseSuperHero.body();
     }
 }
