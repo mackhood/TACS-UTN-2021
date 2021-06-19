@@ -1,9 +1,6 @@
 package com.example.TACS2021UTN.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 
 import com.example.TACS2021UTN.exceptions.InvalidAttributeException;
@@ -19,14 +16,22 @@ import java.util.List;
 
 @Getter @Setter @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Card extends PersistantEntity{
 
+    @Column(name = "name")
     private String name;
+    @Column(name = "strength")
     private Integer strength;
+    @Column(name = "intelligence")
     private Integer intelligence;
+    @Column(name = "speed")
     private Integer speed;
+    @Column(name = "durability")
     private Integer durability;
+    @Column(name = "power")
     private Integer power;
+    @Column(name = "combat")
     private Integer combat;
 
 

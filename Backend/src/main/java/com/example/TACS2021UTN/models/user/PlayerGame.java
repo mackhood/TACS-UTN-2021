@@ -3,6 +3,7 @@ package com.example.TACS2021UTN.models.user;
 import com.example.TACS2021UTN.models.Card;
 import com.example.TACS2021UTN.models.Duel;
 import com.example.TACS2021UTN.models.Game;
+import com.example.TACS2021UTN.models.PersistantEntity;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,12 +20,30 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlayerGame {
+@Entity
+public class PlayerGame extends PersistantEntity {
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User player;
+    @OneToOne
+    @JoinColumn(name = "game_id", referencedColumnName = "id")
     private Game game;
+    @ManyToMany
+    @JoinTable(name = "player_game_main_card",
+            joinColumns = @JoinColumn(name = "player_game_id"),
+            inverseJoinColumns = @JoinColumn(name = "card_id")
+    )
     private List<Card> mainCards = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "player_game_gained_card",
+            joinColumns = @JoinColumn(name = "player_game_id"),
+            inverseJoinColumns = @JoinColumn(name = "card_id")
+    )
     private List<Card> gainedCards = new ArrayList<>();
+    @Column(name = "turn")
     private Integer turn;
+    @Column(name = "is_my_turn")
     private Boolean isMyTurn = false;
 
     public PlayerGame(User player, Game game)

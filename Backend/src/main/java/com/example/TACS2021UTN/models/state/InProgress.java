@@ -5,7 +5,15 @@ import com.example.TACS2021UTN.models.Duel;
 import com.example.TACS2021UTN.models.Game;
 import com.example.TACS2021UTN.models.attribute.Attribute;
 import com.example.TACS2021UTN.models.user.User;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("in_progress")
+@AllArgsConstructor
 public class InProgress extends State {
 
     public InProgress(Game game){

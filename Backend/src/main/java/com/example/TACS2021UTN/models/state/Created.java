@@ -7,11 +7,17 @@ import com.example.TACS2021UTN.models.Game;
 import com.example.TACS2021UTN.models.attribute.Attribute;
 import com.example.TACS2021UTN.models.user.PlayerGame;
 import com.example.TACS2021UTN.models.user.User;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+@Entity
+@DiscriminatorValue("created")
+@AllArgsConstructor
 public class Created extends State{
 
     public Created(Game game){

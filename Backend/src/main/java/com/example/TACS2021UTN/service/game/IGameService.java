@@ -12,7 +12,7 @@ public interface IGameService {
 
     GameDTO createNewGame(NewGameDTO gameDTO, String creatorUsername);
     GameDTO findById(Long id);
-    void leaveGame(Long id, User player);
+    //void leaveGame(Long id, User player);
     GamesStatisticsDTO showGamesByFilters(LocalDate from, LocalDate to);
     List<GameDTO> getAllGames();
     DuelDTO generateDuel(Long gameId, String playerUsername, DuelRequestDTO duelRequestDTO) throws NonPlayebleGameStateException, UserWithoutTurnException;
