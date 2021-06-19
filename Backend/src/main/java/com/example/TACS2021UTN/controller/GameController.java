@@ -22,7 +22,7 @@ import java.util.List;
 
 @CrossOrigin(origins ="*",maxAge = 3600)
 @RestController
-public class GameController {
+public class GameController extends BaseController{
 
     private final IGameService service;
 
@@ -33,7 +33,9 @@ public class GameController {
 
     @PostMapping("/games")
     public ResponseEntity<GameDTO> createNewGame(@RequestBody NewGameDTO gameDTO){
-        return ResponseEntity.status(201).body(service.createNewGame(gameDTO));
+        String creatorUsername = super.getAuthenticatedUsername();
+
+        return ResponseEntity.status(201).body(service.createNewGame(gameDTO, creatorUsername));
     }
 
     @PostMapping("/games/{id}/duels")

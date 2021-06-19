@@ -46,8 +46,8 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public GameDTO createNewGame(NewGameDTO gameDTO) {
-        User creator = userRepository.findByUserName(gameDTO.getCreatorUsername()).orElseThrow(() -> new NotFoundException("User not found: " + gameDTO.getCreatorUsername()));
+    public GameDTO createNewGame(NewGameDTO gameDTO, String creatorUsername) {
+        User creator = userRepository.findByUserName(creatorUsername).orElseThrow(() -> new NotFoundException("User not found: " + creatorUsername));
         User challenged = userRepository.findByUserName(gameDTO.getChallengedUsername()).orElseThrow(() -> new NotFoundException("User not found" + gameDTO.getChallengedUsername()));
         Deck deck = deckRepository.findById(gameDTO.getDeckID()).orElseThrow(() -> new NotFoundException("Deck not found with ID: " + gameDTO.getDeckID()));
 

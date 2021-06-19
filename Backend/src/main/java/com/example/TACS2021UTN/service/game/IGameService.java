@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface IGameService {
 
-    GameDTO createNewGame(NewGameDTO gameDTO);
+    GameDTO createNewGame(NewGameDTO gameDTO, String creatorUsername);
     GameDTO findById(Long id);
     void leaveGame(Long id, User player);
     GamesStatisticsDTO showGamesByFilters(LocalDate from, LocalDate to);
