@@ -86,7 +86,7 @@ public class PlayerGame extends PersistantEntity {
     }
 
     public Integer cardsLeft(){
-        return Math.max(getNumberGainedCards() - turn, 0);
+        return Math.max(getNumberMainCards() - turn, 0);
     }
 
     public Integer getNumberGainedCards(){
