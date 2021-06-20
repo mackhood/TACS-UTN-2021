@@ -54,6 +54,9 @@ public class PlayerGame extends PersistantEntity {
     }
 
     public Card getNextCard(){
+        if(turn >= getNumberMainCards())
+            return null;
+
         return this.mainCards.get(turn);
     }
 

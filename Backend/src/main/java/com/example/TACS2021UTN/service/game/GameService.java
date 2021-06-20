@@ -1,9 +1,11 @@
 package com.example.TACS2021UTN.service.game;
 
 import com.example.TACS2021UTN.DTO.*;
+import com.example.TACS2021UTN.exceptions.ChallengedUserException;
 import com.example.TACS2021UTN.exceptions.NonPlayebleGameStateException;
 import com.example.TACS2021UTN.exceptions.NotFoundException;
 import com.example.TACS2021UTN.exceptions.UserWithoutTurnException;
+import com.example.TACS2021UTN.models.Card;
 import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.models.Duel;
 import com.example.TACS2021UTN.models.Game;
@@ -47,8 +49,13 @@ public class GameService implements IGameService {
 
     @Override
     public GameDTO createNewGame(NewGameDTO gameDTO, String creatorUsername) {
+
+        if(creatorUsername.equals(gameDTO.getChallengedUsername()))
+            throw new ChallengedUserException("You cant challenge yourself");
+
         User creator = userRepository.findByUsername(creatorUsername).orElseThrow(() -> new NotFoundException("User not found: " + creatorUsername));
         User challenged = userRepository.findByUsername(gameDTO.getChallengedUsername()).orElseThrow(() -> new NotFoundException("User not found" + gameDTO.getChallengedUsername()));
+
         Deck deck = deckRepository.findById(gameDTO.getDeckID()).orElseThrow(() -> new NotFoundException("Deck not found with ID: " + gameDTO.getDeckID()));
 
         Game newGame = new Game(creator, challenged, deck);
@@ -112,5 +119,4 @@ public class GameService implements IGameService {
         Game game = gameRepository.findById(id).orElseThrow(() -> new NotFoundException("Game not found with ID" + id));
         return modelMapper.map(game, GameDTO.class);
     }
-
 }
