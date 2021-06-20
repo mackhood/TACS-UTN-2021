@@ -14,6 +14,7 @@ import com.example.TACS2021UTN.repositories.deck.IDeckRepository;
 import com.example.TACS2021UTN.repositories.game.IGameRepository;
 import com.example.TACS2021UTN.repositories.user.IUserRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -39,8 +40,8 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public List<GameDTO> getAllGames() {
-        List<Game> games = gameRepository.findAll();
+    public List<GameDTO> getAllGames(Pageable paging) {
+        List<Game> games = gameRepository.findAll(paging).toList();
         return games.stream().map(game -> modelMapper.map(game, GameDTO.class)).collect(Collectors.toList());
     }
 

@@ -10,6 +10,7 @@ import com.example.TACS2021UTN.exceptions.DeckNotFoundException;
 import com.example.TACS2021UTN.repositories.card.ICardRepository;
 import com.example.TACS2021UTN.repositories.deck.IDeckRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,8 +31,8 @@ public class DeckService implements IDeckService {
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
-    public List<DeckDTO> getAllDecks() {
-        List<Deck> decks = deckRepository.findAll();
+    public List<DeckDTO> getAllDecks(Pageable paging) {
+        List<Deck> decks = deckRepository.findAll(paging).toList();
         return decks.stream().map(deck -> modelMapper.map(deck, DeckDTO.class)).collect(Collectors.toList());
     }
 

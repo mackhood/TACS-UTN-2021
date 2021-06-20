@@ -6,6 +6,7 @@ import com.example.TACS2021UTN.exceptions.NotFoundException;
 import com.example.TACS2021UTN.models.Card;
 import com.example.TACS2021UTN.repositories.card.ICardRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,16 +25,13 @@ public class CardService implements ICardService {
     }
 
     @Override
-    public List<CardDTO> getAllCards() {
-
-        List<Card> list = cardRepository.findAll();
+    public List<CardDTO> getAllCards(Pageable paging) {
+        List<Card> list = cardRepository.findAll(paging).toList();
         List<CardDTO> cardApiDTOS = new ArrayList<>();
-        list.forEach(card -> {
 
+        list.forEach(card -> {
             cardApiDTOS.add(modelMapper.map(card, CardDTO.class));
         });
-
-
 
         return cardApiDTOS;
     }

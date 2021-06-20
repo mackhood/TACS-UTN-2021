@@ -10,6 +10,8 @@ import com.example.TACS2021UTN.models.Duel;
 import com.example.TACS2021UTN.models.user.PlayerGame;
 import com.example.TACS2021UTN.models.user.User;
 import com.example.TACS2021UTN.service.game.IGameService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,16 +53,16 @@ public class GameController extends BaseController{
     }
 
     @GetMapping("/games")
-    public ResponseEntity<JSONWrapper> getAllGames(){
-        return ResponseEntity.ok(new JSONWrapper<>(service.getAllGames()));
-        //TODO devuelve el game suelto, sin id
+    public ResponseEntity<JSONWrapper> getAllGames(@RequestParam(defaultValue = "0") Integer page,
+                                                   @RequestParam(defaultValue = "10") Integer size){
+        Pageable paging = PageRequest.of(page, size);
+
+        return ResponseEntity.ok(new JSONWrapper<>(service.getAllGames(paging)));
     }
 
 
     @GetMapping("/games/{id}/replay")
     public ResponseEntity<JSONWrapper> getDuels(@PathVariable Long id) {
-
-
       return ResponseEntity.ok(new JSONWrapper<>(service.getAllDuels(id)));
     }
 
