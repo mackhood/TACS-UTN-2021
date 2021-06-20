@@ -22,7 +22,7 @@ import java.util.List;
 
 @CrossOrigin(origins ="*",maxAge = 3600)
 @RestController
-public class DeckController {
+public class DeckController extends BaseController{
 
     private final IDeckService service;
 
@@ -36,7 +36,7 @@ public class DeckController {
     public ResponseEntity<JSONWrapper>  getAllDecks(@RequestParam(defaultValue = "0") Integer page,
                                                     @RequestParam(defaultValue = "10") Integer size)
     {
-        Pageable paging = PageRequest.of(page, size);
+        Pageable paging = PageRequest.of(page, getPageSize(size));
 
         return ResponseEntity.ok(new JSONWrapper<>(service.getAllDecks(paging)));
     } //OK

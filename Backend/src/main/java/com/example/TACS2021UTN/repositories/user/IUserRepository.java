@@ -1,6 +1,8 @@
 package com.example.TACS2021UTN.repositories.user;
 
 import com.example.TACS2021UTN.models.user.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,7 +15,7 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);
     //void save(User user);
     //Boolean usernameExists(String username);
-    @Query("FROM User u where u.username like %:username%")
-    List<User> findAllMatchingUsername(String username);
+    //@Query("FROM User u where u.username like %:username%")
+    Page<User> findByUsernameContaining(String username, Pageable paging);
 
 }

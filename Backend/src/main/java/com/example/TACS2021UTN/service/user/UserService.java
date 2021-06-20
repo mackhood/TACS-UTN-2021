@@ -14,6 +14,7 @@ import com.example.TACS2021UTN.repositories.roles.IRolRepository;
 import com.example.TACS2021UTN.repositories.user.IUserRepository;
 import com.example.TACS2021UTN.utils.JwtTokenProvider;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -82,8 +83,8 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     @Override
-    public List<UserSearchDTO> findAllMatchingUsername(String username, Integer page) {
-        List<User> users = userRepository.findAllMatchingUsername(username);
+    public List<UserSearchDTO> findAllMatchingUsername(String username, Pageable paging) {
+        List<User> users = userRepository.findByUsernameContaining(username, paging).toList();
         return users.stream().map(u -> modelMapper.map(u, UserSearchDTO.class)).collect(Collectors.toList());
     }
 

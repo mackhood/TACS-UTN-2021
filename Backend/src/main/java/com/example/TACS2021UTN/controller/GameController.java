@@ -49,13 +49,14 @@ public class GameController extends BaseController{
 
     @GetMapping("/games/{id}")
     public ResponseEntity<GameDTO> getGame(@PathVariable Long id) {
+
         return ResponseEntity.ok(service.findById(id));
     }
 
     @GetMapping("/games")
     public ResponseEntity<JSONWrapper> getAllGames(@RequestParam(defaultValue = "0") Integer page,
                                                    @RequestParam(defaultValue = "10") Integer size){
-        Pageable paging = PageRequest.of(page, size);
+        Pageable paging = PageRequest.of(page, getPageSize(size));
 
         return ResponseEntity.ok(new JSONWrapper<>(service.getAllGames(paging)));
     }
@@ -117,6 +118,5 @@ public class GameController extends BaseController{
 
         return ResponseEntity.ok().build();
     }
-
 
 }
