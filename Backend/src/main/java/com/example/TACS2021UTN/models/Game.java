@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.Authentication;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -117,5 +118,10 @@ public class Game extends PersistantEntity {
 
     public Boolean isUserTurn(User user){
         return getPlayerGameByUser(user).getIsMyTurn();
+    }
+
+    public Card getNextCardForPlayerTurn(User user){
+        return getPlayerGameByUser(user).getNextCard();
+
     }
 }

@@ -17,6 +17,7 @@ import com.example.TACS2021UTN.repositories.game.IGameRepository;
 import com.example.TACS2021UTN.repositories.user.IUserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -90,7 +91,18 @@ public class GameService implements IGameService {
         return duels.stream().map(duel -> modelMapper.map(duel, DuelDTO.class)).collect(Collectors.toList());
     }
 
-/*
+    @Override
+    public CardDTO showCardForDuel(Long gameId, String playerUsername) {
+        Game game = gameRepository.findById(gameId).orElseThrow(() -> new NotFoundException("Game not found with ID" + gameId));
+        User user = userRepository.findByUsername(playerUsername).get();
+        if (!game.userIsInGame(user)){
+            throw new UsernameNotFoundException(user.getUsername());
+        }
+        return modelMapper.map(game.getNextCardForPlayerTurn(user), CardDTO.class);
+    }
+
+
+    /*
     @Override
     public void leaveGame(Long id, User player) {
         gameRepository.leaveGame(id, player);

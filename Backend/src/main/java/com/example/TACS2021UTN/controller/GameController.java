@@ -46,6 +46,10 @@ public class GameController extends BaseController{
         return ResponseEntity.status(201).body(service.generateDuel(id, user.getName(), duelRequestDTO));
     }
 
+    @GetMapping("/games/{id}/duels")
+    public ResponseEntity<?> showCardForDuel(@PathVariable Long id, Authentication user) {
+        return ResponseEntity.status(200).body(service.showCardForDuel(id, user.getName()));
+    }
 
     @GetMapping("/games/{id}")
     public ResponseEntity<GameDTO> getGame(@PathVariable Long id) {
