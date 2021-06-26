@@ -52,17 +52,7 @@ public class InProgress extends State {
     }
 
     @Override
-    public String getName() {
-        return toString();
-    }
-
-    @Override
-    public Integer getStateCode() {
-        return State.INPROGRESS;
-    }
-
-    @Override
-    public String toString(){
-        return "IN PROGRESS";
+    public EState getStateEnum() {
+        return EState.INPROGRESS;
     }
 }

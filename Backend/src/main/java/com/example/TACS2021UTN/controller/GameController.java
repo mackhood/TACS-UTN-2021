@@ -7,6 +7,7 @@ import com.example.TACS2021UTN.exceptions.UserWithoutTurnException;
 import com.example.TACS2021UTN.functions.DateAnalizer;
 import com.example.TACS2021UTN.functions.JSONWrapper;
 import com.example.TACS2021UTN.models.Duel;
+import com.example.TACS2021UTN.models.Game;
 import com.example.TACS2021UTN.models.user.PlayerGame;
 import com.example.TACS2021UTN.models.user.User;
 import com.example.TACS2021UTN.service.game.IGameService;
@@ -106,8 +107,6 @@ public class GameController extends BaseController{
         LocalDate dateFrom = DateAnalizer.transformStringToLocalDate(conditionByDateFrom);
         LocalDate dateTo = DateAnalizer.transformStringToLocalDate(conditionByDateTo);
 
-
-
         if(!DateAnalizer.validateOrderOfDatesInserted(dateFrom, dateTo)){
             throw new BadDatesInserted("The dateFrom is greater than the dateTo");
         }
@@ -123,4 +122,12 @@ public class GameController extends BaseController{
         return ResponseEntity.ok().build();
     }
 
+/*    @GetMapping("/games/{id}/cards")
+    public ResponseEntity getUserCards(@PathVariable(value = "id") Long id, Authentication user){
+        String username = super.getAuthenticatedUsername();
+
+        return service.getGameCards(id, username);
+    }
+
+ */
 }

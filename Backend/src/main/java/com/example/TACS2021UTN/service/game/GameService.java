@@ -10,6 +10,7 @@ import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.models.Duel;
 import com.example.TACS2021UTN.models.Game;
 import com.example.TACS2021UTN.models.attribute.Attribute;
+import com.example.TACS2021UTN.models.state.EState;
 import com.example.TACS2021UTN.models.user.User;
 import com.example.TACS2021UTN.repositories.attributes.IAttributeRepository;
 import com.example.TACS2021UTN.repositories.deck.IDeckRepository;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -87,8 +89,7 @@ public class GameService implements IGameService {
     @Override
     public List<DuelDTO> getAllDuels(Long gameId) {
         Game game = gameRepository.findById(gameId).orElseThrow(() -> new NotFoundException("Game not found with ID" + gameId));
-        List<Duel> duels = game.getDuels();
-        return duels.stream().map(duel -> modelMapper.map(duel, DuelDTO.class)).collect(Collectors.toList());
+        return game.getDuels().stream().map(duel -> modelMapper.map(duel, DuelDTO.class)).collect(Collectors.toList());
     }
 
     @Override
@@ -112,17 +113,19 @@ public class GameService implements IGameService {
     public GamesStatisticsDTO showGamesByFilters(LocalDate from, LocalDate to) {
         List<Game> games = gameRepository.showGamesByFilters(from, to);
         GamesStatisticsDTO statistics = new GamesStatisticsDTO();
-        for(Game game : games){
-            if(game.getState().getClass().getSimpleName().equals("Created")){
-                statistics.setCreated(statistics.getCreated() + 1);
-            }
-            else if(game.getState().getClass().getSimpleName().equals("InProgress")){
-                statistics.setCreated(statistics.getInProgress() + 1);
-            }
-            else{
-                statistics.setCreated(statistics.getFinished() + 1);
-            }
-        }
+
+        Map<EState, List<Game>> mapGames = games.stream().collect(Collectors.groupingBy(game -> game.getState().getStateEnum()));
+
+        if(mapGames.containsKey(EState.CREATED))
+            statistics.setCreated(mapGames.get(EState.CREATED).size());
+
+        if(mapGames.containsKey(EState.INPROGRESS))
+            statistics.setInProgress(mapGames.get(EState.INPROGRESS).size());
+
+        if(mapGames.containsKey(EState.FINISHED))
+            statistics.setFinished(mapGames.get(EState.FINISHED).size());
+
+
         return statistics;
     }
 

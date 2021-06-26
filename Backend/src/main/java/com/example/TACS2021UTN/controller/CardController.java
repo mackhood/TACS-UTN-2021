@@ -35,7 +35,7 @@ public class CardController extends BaseController{
 
         List<CardDTO> cards = service.getAllCards(paging);
         if(cards.isEmpty())
-            worker.Execute(); //llenamos el repo para pruebas, esto se va a hacer en otro lado, no lo meto en el load del repo por referencias circulares
+            worker.Execute();
 
         return ResponseEntity.ok(new JSONWrapper<>((List<CardDTO>) service.getAllCards(paging)));
     }

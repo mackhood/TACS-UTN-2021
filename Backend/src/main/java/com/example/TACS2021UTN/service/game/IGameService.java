@@ -6,6 +6,7 @@ import com.example.TACS2021UTN.exceptions.UserWithoutTurnException;
 import com.example.TACS2021UTN.models.Card;
 import com.example.TACS2021UTN.models.user.User;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 
 import java.time.LocalDate;
@@ -21,4 +22,6 @@ public interface IGameService {
     DuelDTO generateDuel(Long gameId, String playerUsername, DuelRequestDTO duelRequestDTO) throws NonPlayebleGameStateException, UserWithoutTurnException;
     List<DuelDTO> getAllDuels(Long id);
     CardDTO showCardForDuel(Long id, String playerUsername);
+
+    //List<CardDTO> getGameCards(Long id, String username);
 }

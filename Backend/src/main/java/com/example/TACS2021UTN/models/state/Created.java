@@ -54,7 +54,7 @@ public class Created extends State{
     }
 
     private void dealCards(Game game){
-        List<List<Card>> partitions = game.getDeck().splitInNParts(2);
+        List<List<Card>> partitions = game.getDeck().divideDeck();
 
         List<PlayerGame> playerGames = new ArrayList<>();
         game.getCreator().setMainCards(partitions.get(0));
@@ -63,17 +63,7 @@ public class Created extends State{
     }
 
     @Override
-    public String getName() {
-        return this.toString();
-    }
-
-    @Override
-    public Integer getStateCode() {
-        return State.CREATED;
-    }
-
-    @Override
-    public String toString(){
-        return "CREATED";
+    public EState getStateEnum() {
+        return EState.CREATED;
     }
 }

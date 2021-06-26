@@ -49,17 +49,7 @@ public class Finished extends State{
     }
 
     @Override
-    public String getName() {
-        return this.toString();
-    }
-
-    @Override
-    public Integer getStateCode() {
-        return State.FINISHED;
-    }
-
-    @Override
-    public String toString(){
-        return "FINISHED";
+    public EState getStateEnum() {
+        return EState.FINISHED;
     }
 }

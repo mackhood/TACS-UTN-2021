@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Getter @Setter @NoArgsConstructor
 @AllArgsConstructor
@@ -36,7 +37,6 @@ public class Card extends PersistantEntity{
 
 
     public Boolean correctCard() {
-
         try{
             for (Field f : getClass().getDeclaredFields()) {
                 if (f.get(this) == null)

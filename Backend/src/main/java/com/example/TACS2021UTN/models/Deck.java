@@ -33,14 +33,14 @@ public class Deck extends PersistantEntity{
         Collections.shuffle(this.cardList);
     }
 
-    public List<List<Card>> splitInNParts(int n)
+    public List<List<Card>> divideDeck()
     {
         List<List<Card>> partitions = new ArrayList<>();
 
-        int numberOfCards = this.cardList.size() / n;
+        int partitionSize = getNumberOfCards() / 2 ;
 
-        for(int i = 0; i < this.cardList.size(); i += numberOfCards){
-            partitions.add(this.cardList.subList(i, i + numberOfCards));
+        for (int i=0; i< getNumberOfCards(); i += partitionSize) {
+            partitions.add(this.cardList.subList(i, Math.min(i + partitionSize, getNumberOfCards())));
         }
 
         return partitions;

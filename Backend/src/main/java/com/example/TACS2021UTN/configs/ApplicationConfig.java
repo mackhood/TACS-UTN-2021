@@ -41,7 +41,7 @@ public class ApplicationConfig {
 
         modelMapper.createTypeMap(Game.class, GameDTO.class)
             .addMappings(mapper -> mapper.map(src -> src.getDeck().getName(), GameDTO::setDeckName))
-            .addMappings(mapper -> mapper.map(src -> src.getState().toString(), GameDTO::setState))
+            .addMappings(mapper -> mapper.map(src -> src.getState().getName(), GameDTO::setState))
             .addMappings(mapper -> mapper.map(src -> src.getDeck().getNumberOfCards(), GameDTO::setActualNumberCards))
             .addMappings(mapper -> mapper.map(src -> src.getState().getStateCode(), GameDTO::setStateCode))
         ;
