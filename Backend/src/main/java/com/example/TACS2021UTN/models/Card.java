@@ -1,9 +1,6 @@
 package com.example.TACS2021UTN.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 
 import com.example.TACS2021UTN.exceptions.InvalidAttributeException;
@@ -16,22 +13,30 @@ import lombok.NoArgsConstructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Getter @Setter @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Card extends PersistantEntity{
 
+    @Column(name = "name")
     private String name;
+    @Column(name = "strength")
     private Integer strength;
+    @Column(name = "intelligence")
     private Integer intelligence;
+    @Column(name = "speed")
     private Integer speed;
+    @Column(name = "durability")
     private Integer durability;
+    @Column(name = "power")
     private Integer power;
+    @Column(name = "combat")
     private Integer combat;
 
 
     public Boolean correctCard() {
-
         try{
             for (Field f : getClass().getDeclaredFields()) {
                 if (f.get(this) == null)

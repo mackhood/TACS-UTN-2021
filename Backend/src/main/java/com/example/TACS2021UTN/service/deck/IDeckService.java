@@ -7,6 +7,7 @@ import com.example.TACS2021UTN.DTO.request.DeckRequestDTO;
 import com.example.TACS2021UTN.exceptions.CardNotFoundException;
 import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.exceptions.DeckNotFoundException;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface IDeckService {
 
     void updateDeck(Long deckId, DeckRequestDTO deck);
 
-    List<DeckDTO> getAllDecks();
+    List<DeckDTO> getAllDecks(Pageable paging);
 
     DeckDTO findById(Long id);
 

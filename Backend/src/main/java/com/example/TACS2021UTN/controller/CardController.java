@@ -7,17 +7,16 @@ import com.example.TACS2021UTN.functions.JSONWrapper;
 import com.example.TACS2021UTN.models.Card;
 import com.example.TACS2021UTN.service.card.ICardService;
 import com.example.TACS2021UTN.worker.CardWorker;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @CrossOrigin(origins ="*",maxAge = 3600)
 @RestController
-public class CardController {
+public class CardController extends BaseController{
 
 
     private final ICardService service;
@@ -29,14 +28,16 @@ public class CardController {
     }
 
     @GetMapping("/cards")
-    public ResponseEntity<JSONWrapper> getAllCards(){
-        List<CardDTO> cards = service.getAllCards();
+    public ResponseEntity<JSONWrapper> getAllCards(@RequestParam(defaultValue = "0") Integer page,
+                                                   @RequestParam(defaultValue = "4") Integer size){
+
+        Pageable paging = PageRequest.of(page, getPageSize(size));
+
+        List<CardDTO> cards = service.getAllCards(paging);
         if(cards.isEmpty())
-            worker.Execute(); //llenamos el repo para pruebas, esto se va a hacer en otro lado, no lo meto en el load del repo por referencias circulares
+            worker.Execute();
 
-        cards = service.getAllCards();
-
-        return ResponseEntity.ok(new JSONWrapper<>((List<CardDTO>) service.getAllCards()));
+        return ResponseEntity.ok(new JSONWrapper<>((List<CardDTO>) service.getAllCards(paging)));
     }
 
     @GetMapping("/cards/{id}")
