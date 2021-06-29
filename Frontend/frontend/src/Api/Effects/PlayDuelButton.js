@@ -1,8 +1,6 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext} from "react";
 import Button from "@material-ui/core/Button";
 import CommonService from "../CommonService";
-import {useAuth} from "../../Auth/useAuth";
-import {AppContext} from "../../Common/AppContext";
 import Typography from "@material-ui/core/Typography";
 import {NotifyContext} from "../../Common/NotifyContextProvider";
 import * as _ from "lodash";
