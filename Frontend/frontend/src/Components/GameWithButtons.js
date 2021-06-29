@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -57,7 +57,7 @@ export default function GameWithButtons(props) {
             </CardActionArea>
             <CardActions>
                 {
-                    (game.state === "IN PROGRESS" || game.state === "CREATED") &&
+                    (game.state === "INPROGRESS" || game.state === "CREATED") &&
                         (
                             <>
                                 <Button size="small" color="primary" onClick={() => {continueGame(game.id)}}>
@@ -70,7 +70,7 @@ export default function GameWithButtons(props) {
                     )
                 }
                 {
-                    (game.gameStatus === "FINISHED") && (
+                    (game.state === "FINISHED") && (
                         <Button size="small" color="primary" onClick={() => {showGame(game)}}>
                             Ver
                         </Button>

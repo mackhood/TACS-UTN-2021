@@ -1,34 +1,46 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import Button from "@material-ui/core/Button";
 import CommonService from "../CommonService";
 import {useAuth} from "../../Auth/useAuth";
 import {AppContext} from "../../Common/AppContext";
 import Typography from "@material-ui/core/Typography";
 import {NotifyContext} from "../../Common/NotifyContextProvider";
+import * as _ from "lodash";
 
 export const PlayDuelButton = (props) => {
-    const {game, disabled, attribute} = props;
-    const {user} = useAuth();
-    const {dispatch} = useContext(AppContext);
+    const {game, disabled, attribute, setGame} = props;
     const {setNotify} = useContext(NotifyContext);
+
+    async function fetchGameData(data) {
+        try{
+            return await CommonService.getSingleGame({id: data.game.id});
+        }catch (e) {
+            console.log(e, 'err');
+        }
+    }
     const handlePlayDuel = (data) => {
         CommonService.postDuel({
-            id: data.id,
+            id: data.game.id,
             attribute: data.attribute
         })
-        .then(res => {
-            dispatch({type:"ADD_DUEL", payload: res.data});
-            setNotify({isOpen:true, message:'Nueva partida creada', type:'success', duration: 3000})
+        .then(response => {
+            fetchGameData({game:data.game, duel: response.data, id: data.game.id})
+                .then((res) => {
+                    let newDuels =  game.duels || [];
+                    newDuels = _.union(newDuels, [response.data]);
+                    setGame({...game, duels: newDuels, ...res.data});
+                });
+            setNotify({isOpen:true, message:'¡Duelo exitoso!', type:'success', duration: 3000})
         })
         .catch(err => {
             console.log(err, 'err');
-            setNotify({isOpen:true, message:'No se pudo crear la partida', type:'error', duration: 3000})
+            setNotify({isOpen:true, message:'No se pudo jugar el duelo', type:'error', duration: 3000})
         });
     }
     return (
         <Button
             variant="contained"
-            onClick={() => handlePlayDuel({id: game.id, attribute: attribute})}
+            onClick={() => handlePlayDuel({...game, attribute: attribute})}
             disabled={disabled}
             color="primary"
             size="large"

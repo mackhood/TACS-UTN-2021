@@ -13,9 +13,7 @@ import {useAuth} from "../../Auth/useAuth";
 import {DropGameButton} from "../../Api/Effects/DropGameButton";
 import {PlayDuelButton} from "../../Api/Effects/PlayDuelButton";
 import CommonService from "../../Api/CommonService";
-import {customAlphabet} from 'nanoid'
-
-const nanoid = customAlphabet('1234567890', 2);
+import * as _ from "lodash";
 
 export default function Game() {
     let history = useHistory();
@@ -24,7 +22,6 @@ export default function Game() {
     const [sessionUser, setSessionUser] = useState({});
     const [enableGame, setEnableGame] = useState(false);
     const [currentDuel, setCurrenDuel] = useState({
-        "cardsLeft": 3,
         "creatorCard": {
             "id": 4,
             "name": "Abomination",
@@ -54,10 +51,12 @@ export default function Game() {
         "result": null
     });
     const [showCards, setShowCards] = useState(false);
-    const [showAttributes, setShowAttributes] = useState(false);
     const [atributoEnJuego, setAtributoEnJuego] = useState("Elegir atributo");
     const [openResult, setOpenResult] = useState(false);
     const [jugadorTurno, setJugadorTurno] = useState(null);
+
+    const [loading, setLoading] = useState(true);
+
     const {state} = useContext(AppContext);
 
     let {id} = useParams();
@@ -74,17 +73,16 @@ export default function Game() {
             const responseDuels = await CommonService.getGameDuels({id: id});
             const responseGame = await CommonService.getSingleGame({id: id});
             let newDuels = game !== null ? game.duels : [];
-            if (responseDuels.data.data !== null) newDuels.push({...responseDuels.data.data});
-
+            if (responseDuels.data.data !== []) newDuels = _.union(newDuels, [responseDuels.data.data]);
             setGame({
                 ...game,
                 game: responseGame.data,
                 duels: newDuels
             });
             if (user.username === responseGame.data.creator.username){
-                setSessionUser(responseGame.data.creator);
+                setSessionUser({...sessionUser, username: responseGame.data.creator.username});
             }else{
-                setSessionUser(responseGame.data.challenged.username);
+                setSessionUser({...sessionUser, username: responseGame.data.challenged.username});
             }
             setJugadorTurno(getNextPlayerUsername(responseGame.data));
         }
@@ -93,11 +91,15 @@ export default function Game() {
     //Cuando es el turno del usuario logeado habilito el juego
     useEffect(() => {
         //TODO validaciones con estado de la partida
+        if (game !== null && game.game.state !== "INPROGRESS") {
+            setEnableGame(false);
+            return true;
+        }
         if (jugadorTurno !== null && sessionUser !== null) {
             let cardsAvailable = game.game.actualNumberCards > 0;
-            setEnableGame(jugadorTurno === sessionUser.username && cardsAvailable);
+            setEnableGame((jugadorTurno === sessionUser.username) && cardsAvailable);
         }
-    }, [jugadorTurno, sessionUser])
+    }, [jugadorTurno, sessionUser, enableGame]);
 
 
     //TODO get from API
@@ -108,13 +110,7 @@ export default function Game() {
     }
 
     function setAttribute(attr) {
-        if (showAttributes) {
-            setShowAttributes(false);
-            setCurrenDuel({...currentDuel, attribute: attr});
-        } else {
-            setShowAttributes(true);
-            setCurrenDuel({...currentDuel, attribute: "Elegir atributo"});
-        }
+        setAtributoEnJuego(attr);
     }
 
     function createGameResultData(duel, winnerName) {
@@ -155,20 +151,38 @@ export default function Game() {
     }
 
     function handleRepartirCartas() {
-        //Si todavía quedan cartas por jugar
+        async function fetchNextCard() {
+            return await CommonService.getNextUserCard({id: game.game.id});
+        }
         if (game.game.actualNumberCards > 0){
-            console.log(game.duels);
-            // let creatorCard = game.duels[game.duels.length-1].creatorCard;
-            // let creatorCard = {};
-            // let challengedCard = game.duels[game.duels.length-1].challengedCard;
-            // let challengedCard = {};
+            setLoading(true);
+            fetchNextCard().then((response)=>{
+                setSessionUser({
+                    ...sessionUser,
+                    card: {
+                        name: response.data.name
+                    },
+                    powerstats: {
+                        "strength": response.data.strength,
+                        "intelligence": response.data.intelligence,
+                        "speed": response.data.speed,
+                        "durability": response.data.durability,
+                        "power": response.data.power,
+                        "combat": response.data.combat
+                    }
+                });
+            }).catch((err) => console.log(err)).then(() =>setLoading(false));
+
             setShowCards(true);
-            // setCurrenDuel({...currentDuel, creatorCard: creatorCard, challengedCard: challengedCard});
         }
     }
 
+    useEffect(() => {
+        setLoading(game === null || sessionUser === null);
+    }, [game, sessionUser]);
+
     return (
-        game === null || sessionUser === null ? <h3>Loading...</h3> :
+        loading ? <h3>Loading...</h3> :
         (
             <div>
                 <Dialog disableBackdropClick disableEscapeKeyDown open={openResult} onClose={handleClose}>
@@ -271,9 +285,8 @@ export default function Game() {
                                                         Tu carta
                                                     </Typography>
                                                     <HeroeCard
-                                                        name={currentDuel.creatorCard.name}
-                                                        powerstats={currentDuel.creatorCard.powerstats}
-                                                        image={currentDuel.creatorCard.image}
+                                                        name={sessionUser && sessionUser.card.name}
+                                                        powerstats={sessionUser && sessionUser.powerstats}
                                                     />
                                                 </Box>
                                             </Grid>
@@ -285,7 +298,6 @@ export default function Game() {
                                                     <HeroeCard
                                                         name={ currentDuel.result ? game.challengedCard.name : "??" }
                                                         powerstats={currentDuel.result ? game.challengedCard.powerstats : "??"}
-                                                        image={currentDuel.result ? game.challengedCard.image : "??"}
                                                     />
                                                 </Box>
                                             </Grid>
@@ -305,8 +317,10 @@ export default function Game() {
                             <br></br>
                             <Box component="span" display="block" bgcolor="blue">
                                 <PlayDuelButton
-                                    attribute={currentDuel ? currentDuel.attribute : ""}
-                                    disabled={!enableGame || currentDuel.attribute === ""}
+                                    game={{game: game.game}}
+                                    attribute={atributoEnJuego}
+                                    disabled={!enableGame || atributoEnJuego === "Elegir atributo" || !showCards}
+                                    setGame={setGame}
                                 />
                             </Box>
                         </Container>

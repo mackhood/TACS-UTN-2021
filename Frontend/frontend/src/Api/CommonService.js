@@ -9,7 +9,7 @@ class CommonService{
         return apiAxiosInstance.post('/games', game);
     }
     postDuel(data){
-        return apiAxiosInstance.post('/games/' + data.id + '/duels', data.attribute);
+        return apiAxiosInstance.post('/games/' + data.id + '/duels', {id: data.id, attribute: data.attribute});
     }
     getGameDuels(data){
         return apiAxiosInstance.get('/games/' + (data.id) + '/replay')
@@ -21,6 +21,13 @@ class CommonService{
 
     getGames(){
         return apiAxiosInstance.get('/games' )
+    }
+    getDeckCards(data){
+        return apiAxiosInstance.get('/decks' + '/' + data.id + '/cards' );
+    }
+
+    getNextUserCard(data){
+        return apiAxiosInstance.get('/games' + '/' + data.id + '/duels' );
     }
 
     dropGame(gameId){
