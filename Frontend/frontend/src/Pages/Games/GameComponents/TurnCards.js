@@ -1,0 +1,86 @@
+import * as PropTypes from "prop-types";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import HeroeCard from "../../../Components/HeroeCard";
+import React from "react";
+
+export function TurnCards(props) {
+    return <>
+        {props.showCards ?
+            (
+                <Box component="span" display="block" bgcolor="orange">
+                    <Typography gutterBottom variant="h4" component="h2">
+                        CARTAS
+                    </Typography>
+                    <Grid container alignItems={"center"} alignContent={"center"} justify="center"
+                          spacing={4}>
+                        <Grid item xs={12} sm={5}>
+                            <Box component="span" display="block" bgcolor="orange">
+                                <Typography gutterBottom variant="h4" component="h2">
+                                    Tu carta
+                                </Typography>
+                                <HeroeCard
+                                    name={props.sessionUser && props.sessionUser.card.name}
+                                    powerstats={props.sessionUser && props.sessionUser.powerstats}
+                                />
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12} sm={5}>
+                            <Box component="span" display="block" bgcolor="orange">
+                                <Typography gutterBottom variant="h4" component="h2">
+                                    Contrincante
+                                </Typography>
+                                <HeroeCard
+                                    name={props.currentDuel.result ? props.game.challengedCard.name : "??"}
+                                    powerstats={props.currentDuel.result ? props.game.challengedCard.powerstats : "??"}
+                                />
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Box>
+            ) :
+            (
+                <div>
+                    <Typography gutterBottom variant="h4" component="h2">
+                        Por favor, repartir las cartas
+                    </Typography>
+                </div>
+            )
+        }
+    </>;
+}
+
+TurnCards.propTypes = {
+    showCards: PropTypes.bool,
+    sessionUser: PropTypes.shape({}),
+    currentDuel: PropTypes.shape({
+        result: PropTypes.any,
+        challengedCard: PropTypes.shape({
+            name: PropTypes.string,
+            powerstats: PropTypes.shape({
+                strength: PropTypes.number,
+                durability: PropTypes.number,
+                combat: PropTypes.number,
+                power: PropTypes.number,
+                speed: PropTypes.number,
+                intelligence: PropTypes.number
+            }),
+            id: PropTypes.number
+        }),
+        creatorCard: PropTypes.shape({
+            name: PropTypes.string,
+            powerstats: PropTypes.shape({
+                strength: PropTypes.number,
+                durability: PropTypes.number,
+                combat: PropTypes.number,
+                power: PropTypes.number,
+                speed: PropTypes.number,
+                intelligence: PropTypes.number
+            }),
+            id: PropTypes.number
+        }),
+        attribute: PropTypes.any
+    }),
+    game: PropTypes.any
+};

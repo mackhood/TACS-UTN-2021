@@ -1,19 +1,23 @@
 import React, {useContext, useEffect, useState} from "react";
 import Grid from "@material-ui/core/Grid";
 import {useHistory, useParams, useRouteMatch} from "react-router-dom";
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Button from "@material-ui/core/Button";
-import HeroeCard from "../../Components/HeroeCard";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {AppContext} from "../../Common/AppContext";
 import {useAuth} from "../../Auth/useAuth";
-import {DropGameButton} from "../../Api/Effects/DropGameButton";
 import {PlayDuelButton} from "../../Api/Effects/PlayDuelButton";
 import CommonService from "../../Api/CommonService";
 import * as _ from "lodash";
+import {TurnAttributes} from "./GameComponents/TurnAttributes";
+import {AttributeLabel} from "./GameComponents/AttributeLabel";
+import {TurnCards} from "./GameComponents/TurnCards";
+import {CardsWonLabel} from "./GameComponents/CardsWonLabel";
+import {SeeDuels} from "./GameComponents/SeeDuels";
+import {PlayersTurnLabel} from "./GameComponents/PlayerTurnLabel";
+import {ShuffleCardsButton} from "./GameComponents/ShuffleCards";
 
 export default function Game() {
     let history = useHistory();
@@ -129,25 +133,8 @@ export default function Game() {
         return data;
     }
 
-    const showDuels = () => {
-        showTable("/duels", "PARTIDA " + game.id, ["Duelo", "Ganador"], createGameResults(game))
-    }
-
     const navigateToDuels = () => {
         history.push(url + '/duels');
-    }
-
-    const showTable = async (url, title, tableHeaders, tableRows) => {
-        const location = {
-            pathname: url,
-            state: {
-                title: title,
-                tableHeaders: tableHeaders,
-                tableRows: tableRows
-            }
-        }
-
-        history.push(location);
     }
 
     function handleRepartirCartas() {
@@ -192,126 +179,52 @@ export default function Game() {
                     <Grid item xs={12} sm={4}>
                         <Container>
 
-                            <Box component="span" display="block" bgcolor="green">
-                                <Typography gutterBottom variant="h4" component="h2">
-                                    TURNO DE JUGADOR
-                                    </Typography>
-                                <Typography gutterBottom variant="h5" component="h2">
-                                    {jugadorTurno}
-                                </Typography>
-                                <DropGameButton game={game}/>
-                                <br></br>
-                                <br></br>
-                            </Box>
+                            <PlayersTurnLabel
+                                jugadorTurno={jugadorTurno}
+                                game={game}
+                            />
                             <br></br>
-                            <Box component="span" display="block" bgcolor="orange">
-                                <Typography gutterBottom variant="h4" component="h2">
-                                    ATRIBUTOS
-                                    </Typography>
-                                <Grid container alignItems={"center"} alignContent={"center"} justify="center" >
-                                    <Box component="span" display="block" bgcolor="orange" width="75%">
-                                        {attributes.map((attr, index) => {
+                            <TurnAttributes strings={attributes} callbackfn={(attr, index) => {
 
-                                            return (
-                                                <Grid item xs={12} key={index}>
-                                                    <Button
-                                                        variant="contained"
-                                                        onClick={() => setAttribute(attr)}
-                                                        color="primary"
-                                                        size="large"
-                                                        fullWidth
-                                                    >
-                                                        {attr}
-                                                    </Button>
-                                                    <br></br>
-                                                    <br></br>
-                                                </Grid>
-                                            )
-                                        })}
-                                    </Box>
-                                </Grid>
-                            </Box>
+                                return (
+                                    <Grid item xs={12} key={index}>
+                                        <Button
+                                            variant="contained"
+                                            onClick={() => setAttribute(attr)}
+                                            color="primary"
+                                            size="large"
+                                            fullWidth
+                                        >
+                                            {attr}
+                                        </Button>
+                                        <br></br>
+                                        <br></br>
+                                    </Grid>
+                                )
+                            }}/>
                             <br></br>
-                            <Box component="span" display="block" bgcolor="green">
-                                <Typography gutterBottom variant="h4" component="h2">
-                                    Atributo:
-                                    </Typography>
-                                <Typography gutterBottom variant="h5" component="h2">
-                                    {!enableGame ? "Aguarda tu turno" :  atributoEnJuego}
-                                </Typography>
-                            </Box>
+                            <AttributeLabel
+                                enableGame={enableGame}
+                                atributoEnJuego={atributoEnJuego}
+                            />
                             <br></br>
                             <br></br>
                         </Container>
                     </Grid>
                     <Grid item xs={12} sm={4}>
                         <Container>
-                            <Box component="span" display="block" bgcolor="green" height="500">
-                                <Typography gutterBottom variant="h4" component="h2">
-                                    MAZO
-                                </Typography>
-                                <Grid container alignItems={"center"} alignContent={"center"} justify="center" >
-                                    <Box component="span" display="block" bgcolor="orange" width="75%">
-                                        <Grid item xs={12}>
-                                            <Button
-                                                variant="contained"
-                                                disabled={!enableGame}
-                                                onClick={handleRepartirCartas}
-                                                color="primary"
-                                                size="large"
-                                                fullWidth
-                                            >
-                                                Repartir cartas
-                                            </Button>
-                                        </Grid>
-                                    </Box>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
-                                </Grid>
-                            </Box>
+                            <ShuffleCardsButton
+                                enableGame={enableGame}
+                                onClick={handleRepartirCartas}
+                            />
                             <br></br>
                             <br></br>
-                            {showCards ?
-                                (
-                                    <Box component="span" display="block" bgcolor="orange">
-                                        <Typography gutterBottom variant="h4" component="h2">
-                                            CARTAS
-                                        </Typography>
-                                        <Grid container alignItems={"center"} alignContent={"center"} justify="center" spacing={4}>
-                                            <Grid item xs={12} sm={5}>
-                                                <Box component="span" display="block" bgcolor="orange">
-                                                    <Typography gutterBottom variant="h4" component="h2">
-                                                        Tu carta
-                                                    </Typography>
-                                                    <HeroeCard
-                                                        name={sessionUser && sessionUser.card.name}
-                                                        powerstats={sessionUser && sessionUser.powerstats}
-                                                    />
-                                                </Box>
-                                            </Grid>
-                                            <Grid item xs={12} sm={5}>
-                                                <Box component="span" display="block" bgcolor="orange">
-                                                    <Typography gutterBottom variant="h4" component="h2">
-                                                        Contrincante
-                                                    </Typography>
-                                                    <HeroeCard
-                                                        name={ currentDuel.result ? game.challengedCard.name : "??" }
-                                                        powerstats={currentDuel.result ? game.challengedCard.powerstats : "??"}
-                                                    />
-                                                </Box>
-                                            </Grid>
-                                        </Grid>
-                                    </Box>
-                                ) :
-                                (
-                                    <div>
-                                        <Typography gutterBottom variant="h4" component="h2">
-                                            Por favor, repartir las cartas
-                                        </Typography>
-                                    </div>
-                                )
-                            }
+                            <TurnCards
+                                showCards={showCards}
+                                sessionUser={sessionUser}
+                                currentDuel={currentDuel}
+                                game={game}
+                            />
 
                             <br></br>
                             <br></br>
@@ -327,40 +240,12 @@ export default function Game() {
                     </Grid>
                     <Grid item xs={12} sm={4}>
                         <Container>
-                            <Box component="span" display="block" bgcolor="green" height="500">
-                                <Typography gutterBottom variant="h4" component="h2">
-                                    DUELOS
-                                    </Typography>
-                                <Grid container alignItems={"center"} alignContent={"center"} justify="center" >
-                                    <Box component="span" display="block" bgcolor="orange" width="75%">
-                                        <Grid item xs={12}>
-                                            <Button variant="contained" onClick={navigateToDuels} color="primary" size="large" fullWidth>
-                                                Ver duelos
-                                            </Button>
-                                        </Grid>
-                                    </Box>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
-                                </Grid>
-                            </Box>
+                            <SeeDuels onClick={navigateToDuels}/>
                             <br></br>
                             <br></br>
-                            <Box component="span" display="block" bgcolor="orange">
-                                <Typography gutterBottom variant="h4" component="h2">
-                                    CARTAS GANADAS:
-                                    </Typography>
-                                <Grid container alignItems={"center"} alignContent={"center"} justify="center" >
-                                    <Box component="span" display="block" bgcolor="orange" width="75%">
-                                        {sessionUser.gainedCards}
-                                    </Box>
-                                </Grid>
-                            </Box>
+                            <CardsWonLabel sessionUser={sessionUser}/>
                             <br/>
                             <br/>
-                            <pre>{JSON.stringify(game, null, 2)}</pre>
-                            <pre>{JSON.stringify(currentDuel, null, 2)}</pre>
-                            <pre>{JSON.stringify(sessionUser, null, 2)}</pre>
                         </Container>
                     </Grid>
                 </Grid>
