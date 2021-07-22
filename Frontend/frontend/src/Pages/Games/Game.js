@@ -116,23 +116,6 @@ export default function Game() {
     function setAttribute(attr) {
         setAtributoEnJuego(attr);
     }
-
-    function createGameResultData(duel, winnerName) {
-        return { duel, winnerName };
-    }
-
-    function createGameResults(game) {
-        let data = [];
-        game.duels.forEach((x) => {
-            data.push(
-                createGameResultData(
-                    x.id,
-                    state.users.filter(y => y.id === x.winnerId)[0].name
-                ));
-        })
-        return data;
-    }
-
     const navigateToDuels = () => {
         history.push(url + '/duels');
     }
@@ -144,20 +127,37 @@ export default function Game() {
         if (game.game.actualNumberCards > 0){
             setLoading(true);
             fetchNextCard().then((response)=>{
-                setSessionUser({
-                    ...sessionUser,
-                    card: {
-                        name: response.data.name
+                setCurrenDuel(
+                {
+                        ...currentDuel,
+                    creatorCard:{
+                        card: {
+                            name: response.data.name
+                        },
+                        powerstats: {
+                            "strength": response.data.strength,
+                            "intelligence": response.data.intelligence,
+                            "speed": response.data.speed,
+                            "durability": response.data.durability,
+                            "power": response.data.power,
+                            "combat": response.data.combat
+                        }
                     },
-                    powerstats: {
-                        "strength": response.data.strength,
-                        "intelligence": response.data.intelligence,
-                        "speed": response.data.speed,
-                        "durability": response.data.durability,
-                        "power": response.data.power,
-                        "combat": response.data.combat
+                    challengedCard: {
+                        card: {
+                            name: "??"
+                        },
+                        powerstats: {
+                            "strength": "??",
+                            "intelligence": "??",
+                            "speed": "??",
+                            "durability": "??",
+                            "power": "??",
+                            "combat": "??"
+                        }
                     }
-                });
+                    }
+                );
             }).catch((err) => console.log(err)).then(() =>setLoading(false));
 
             setShowCards(true);
@@ -221,7 +221,6 @@ export default function Game() {
                             <br></br>
                             <TurnCards
                                 showCards={showCards}
-                                sessionUser={sessionUser}
                                 currentDuel={currentDuel}
                                 game={game}
                             />

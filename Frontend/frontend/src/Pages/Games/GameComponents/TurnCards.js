@@ -6,8 +6,10 @@ import HeroeCard from "../../../Components/HeroeCard";
 import React from "react";
 
 export function TurnCards(props) {
+
+    const {showCards, currentDuel, game} = props;
     return <>
-        {props.showCards ?
+        {showCards ?
             (
                 <Box component="span" display="block" bgcolor="orange">
                     <Typography gutterBottom variant="h4" component="h2">
@@ -21,8 +23,8 @@ export function TurnCards(props) {
                                     Tu carta
                                 </Typography>
                                 <HeroeCard
-                                    name={props.sessionUser && props.sessionUser.card.name}
-                                    powerstats={props.sessionUser && props.sessionUser.powerstats}
+                                    name={currentDuel.creatorCard && currentDuel.creatorCard.card.name}
+                                    powerstats={currentDuel.creatorCard && currentDuel.creatorCard.powerstats}
                                 />
                             </Box>
                         </Grid>
@@ -32,8 +34,8 @@ export function TurnCards(props) {
                                     Contrincante
                                 </Typography>
                                 <HeroeCard
-                                    name={props.currentDuel.result ? props.game.challengedCard.name : "??"}
-                                    powerstats={props.currentDuel.result ? props.game.challengedCard.powerstats : "??"}
+                                    name={currentDuel.challengedCard.card.name}
+                                    powerstats={currentDuel.challengedCard.powerstats}
                                 />
                             </Box>
                         </Grid>
@@ -53,7 +55,6 @@ export function TurnCards(props) {
 
 TurnCards.propTypes = {
     showCards: PropTypes.bool,
-    sessionUser: PropTypes.shape({}),
     currentDuel: PropTypes.shape({
         result: PropTypes.any,
         challengedCard: PropTypes.shape({
