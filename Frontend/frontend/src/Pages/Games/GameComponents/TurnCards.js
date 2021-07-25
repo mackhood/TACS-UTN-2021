@@ -7,9 +7,9 @@ import React from "react";
 
 export function TurnCards(props) {
 
-    const {showCards, currentDuel, game} = props;
+    const {showCards, currentDuel} = props;
     return <>
-        {showCards ?
+        {showCards && currentDuel ?
             (
                 <Box component="span" display="block" bgcolor="orange">
                     <Typography gutterBottom variant="h4" component="h2">
