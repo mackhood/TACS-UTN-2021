@@ -99,6 +99,9 @@ export default function Games() {
                         </Grid>
                     ))}
                 </Grid>
+                <Grid item xs={12}>
+                    <pre>{JSON.stringify(state.games, null, 2)}</pre>
+                </Grid>
             </Grid>
         </div>
     );
