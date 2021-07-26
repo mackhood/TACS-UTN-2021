@@ -61,9 +61,10 @@ export default function Game() {
                 </Dialog>
                 <Grid container alignContent={"center"}>
                     <Grid item xs={12}>
-                        <TurnResult result={currentDuel.result}/>
-                        {game && <DropGameButton game={game.game}/>}
-
+                        {
+                            currentDuel.result.result !== null &&
+                            <TurnResult result={currentDuel.result}/>
+                        }
                     </Grid>
                     <Grid item xs={12} sm={4}>
                         <Container>
