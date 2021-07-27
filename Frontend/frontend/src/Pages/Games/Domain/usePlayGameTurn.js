@@ -14,7 +14,6 @@ export const usePlayGameTurn = (props) => {
     const [sessionUser, setSessionUser] = useState({});
     const [enableGame, setEnableGame] = useState(false);
     const [enableNextTurnButton, setEnableNextTurnButton] = useState(true);
-    const [enablePrevTurnButton, setEnablePrevTurnButton] = useState(true);
     const [jugadorTurno, setJugadorTurno] = useState(null);
     const [loading, setLoading] = useState(true);
     const [showCards, setShowCards] = useState(false);
@@ -106,17 +105,17 @@ export const usePlayGameTurn = (props) => {
             //Si ya se jugó un duel
             if (oneDuel !== undefined){
                 var index=_.indexOf(game.duels,oneDuel);
-                //Si el duelo actual es al menos el segundo (posicion 1 del array) habilito el boton prevButton
-                if (index > 0 && (index-1 >= 0) ) {
-                    setEnablePrevTurnButton(true);
-                }
+                console.log(index, 'indice del duelo');
                 //Si estamos en el último duel y la partida no terminó habilito el nextButton
                 if (index === game.duels.length-1) {
                     const lastTurn = _.last(game.duels);
-                    if (lastTurn && lastTurn.result) setEnableNextTurnButton(true);
+                    console.log(lastTurn && lastTurn.result && game.state === "FINISHED", 'Ultimo duel y no termino partida');
+                    setEnableNextTurnButton(lastTurn && lastTurn.result && game.state !== "FINISHED");
+                }else{
+                    //Si tenemos duels siguientes al actual habilito el nextButton
+                    console.log(index < game.duels.length-1, 'Tengo duels por delante')
+                    setEnableNextTurnButton(index < game.duels.length-1);
                 }
-                //Si tenemos duels siguientes al actual habilito el nextButton
-                if (index < game.duels.length-1) setEnableNextTurnButton(true);
             }
         }
     }, [currentDuel, game])
@@ -165,7 +164,6 @@ export const usePlayGameTurn = (props) => {
 
 
     const getNextPlayerUsername= (game) => {
-        //TODO pedir que la api devuelva un booleano o un number
         if (game.game.creator.isMyTurn === "true") return game.game.creator.username;
         if (game.game.challenged.isMyTurn === "true") return game.game.challenged.username;
         return "Partido finalizado";
@@ -224,56 +222,6 @@ export const usePlayGameTurn = (props) => {
             console.log("Turno actual en juego, no puedo crear siguiente");
         }
     }
-    /**
-     * Si el turno actual está en juego, busco turno anterior y lo seteo
-     */
-    const getPrevTurn = (currentDuel) => {
-        if (currentDuel && currentDuel.id) {
-
-            var oneDuel = _.find(game.duels, function (duel) {
-                return duel.id === currentDuel.id;
-            });
-            var index = _.indexOf(game.duels, oneDuel);
-            let prevTurn = game.duels[index-1];
-            if (prevTurn !== undefined){
-                // setCurrentDuel(prevTurn);
-                setCurrentDuel({
-                    ...currentDuel,
-                    attribute: prevTurn.attribute,
-                    cardsLeft: prevTurn.cardsLeft,
-                    creatorCard:{
-                        card: {
-                            name: prevTurn.creatorCard.name
-                        },
-                        powerstats: {
-                            "strength": prevTurn.creatorCard.strength,
-                            "intelligence": prevTurn.creatorCard.intelligence,
-                            "speed": prevTurn.creatorCard.speed,
-                            "durability": prevTurn.creatorCard.durability,
-                            "power": prevTurn.creatorCard.power,
-                            "combat": prevTurn.creatorCard.combat
-                        }
-                    },
-                    challengedCard: {
-                        card: {
-                            name: prevTurn.challengedCard.name
-                        },
-                        powerstats: {
-                            "strength": prevTurn.challengedCard.strength,
-                            "intelligence": prevTurn.challengedCard.intelligence,
-                            "speed": prevTurn.challengedCard.speed,
-                            "durability": prevTurn.challengedCard.durability,
-                            "power": prevTurn.challengedCard.power,
-                            "combat": prevTurn.challengedCard.combat
-                        }
-                    },
-                    id: prevTurn.id,
-                    result: prevTurn.result
-                });
-            }
-        }
-
-    }
     const handleRepartirCartas = () => {
         async function fetchNextCard() {
             return await CommonService.getNextUserCard({id: game.game.id});
@@ -331,9 +279,7 @@ export const usePlayGameTurn = (props) => {
         sessionUser,
         attributes,
         getNextTurn,
-        getPrevTurn,
         enableNextTurnButton,
-        enablePrevTurnButton,
     ];
 
 }

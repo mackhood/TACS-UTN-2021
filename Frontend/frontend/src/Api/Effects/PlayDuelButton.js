@@ -29,10 +29,12 @@ export const PlayDuelButton = (props) => {
                     setGame({
                         ...game,
                         duels: newDuels,
-                        state: res.data.state,
-                        stateCode: res.data.stateCode,
-                        creator: res.data.creator,
-                        challenged: res.data.challenged
+                        game: {
+                            state: res.data.state,
+                            stateCode: res.data.stateCode,
+                            creator: res.data.creator,
+                            challenged: res.data.challenged
+                        }
                     });
                 });
             setNotify({isOpen:true, message:'¡Duelo exitoso!', type:'success', duration: 3000})

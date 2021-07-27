@@ -19,20 +19,3 @@ export const NextTurnButton = (props) => {
         </Button>
     )
 }
-export const PrevTurnButton = (props) => {
-    const {disabled, getPrevTurn, currentDuel} = props;
-    return (
-        <Button
-            variant="contained"
-            disabled={!disabled}
-            color="primary"
-            size="large"
-            fullWidth
-            onClick={()=>getPrevTurn(currentDuel)}
-        >
-            <Typography gutterBottom variant="h4" component="h2">
-                Turno Anterior
-            </Typography>
-        </Button>
-    )
-}

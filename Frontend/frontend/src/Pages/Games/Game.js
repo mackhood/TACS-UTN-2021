@@ -13,7 +13,7 @@ import {PlayersTurnLabel} from "./GameComponents/PlayerTurnLabel";
 import {ShuffleCardsButton} from "./GameComponents/ShuffleCards";
 import {usePlayGameTurn} from "./Domain/usePlayGameTurn";
 import {TurnResult} from "./GameComponents/TurnResult";
-import {NextTurnButton, PrevTurnButton} from "./GameComponents/NextTurnButton";
+import {NextTurnButton} from "./GameComponents/NextTurnButton";
 
 
 export default function Game() {
@@ -31,9 +31,7 @@ export default function Game() {
         sessionUser,
         attributes,
         getNextTurn,
-        getPrevTurn,
         enableNextTurnButton,
-        enablePrevTurnButton,
     ] = usePlayGameTurn({id});
 
     function setAttribute(attr) {
@@ -110,7 +108,7 @@ export default function Game() {
                                 />
                             </Box>
                             <br/>
-                            {game.duels.length !== 0 && (
+                            {game.duels.length !== 0 && jugadorTurno === sessionUser.username && (
                                 <>
                                     <Box component="span" display="block" bgcolor="blue">
                                         <NextTurnButton
@@ -120,13 +118,6 @@ export default function Game() {
                                         />
                                     </Box>
                                     <br/>
-                                    <Box component="span" display="block" bgcolor="blue">
-                                    <PrevTurnButton
-                                    getPrevTurn={getPrevTurn}
-                                    disabled={enablePrevTurnButton}
-                                    currentDuel={currentDuel}
-                                    />
-                                    </Box>
                                 </>
                             )}
                         </Container>

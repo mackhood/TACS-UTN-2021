@@ -20,7 +20,7 @@ export function TurnCards(props) {
                         <Grid item xs={12} sm={5}>
                             <Box component="span" display="block" bgcolor="orange">
                                 <Typography gutterBottom variant="h4" component="h2">
-                                    Tu carta
+                                    Carta creador
                                 </Typography>
                                 <HeroeCard
                                     name={currentDuel.creatorCard && currentDuel.creatorCard.card.name}
@@ -31,7 +31,7 @@ export function TurnCards(props) {
                         <Grid item xs={12} sm={5}>
                             <Box component="span" display="block" bgcolor="orange">
                                 <Typography gutterBottom variant="h4" component="h2">
-                                    Contrincante
+                                    Carta desafiado
                                 </Typography>
                                 <HeroeCard
                                     name={currentDuel.challengedCard.card.name}

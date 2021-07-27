@@ -31,7 +31,9 @@ export const REACT_APP_REST_API_URL =
 export const NEW_TURN = {
     "creatorCard": {
         "id": null,
-        "name": "",
+        "card": {
+            "name": "",
+        },
         "powerstats": {
             "strength": null,
             "intelligence": null,
@@ -43,7 +45,9 @@ export const NEW_TURN = {
     },
     "challengedCard": {
         "id": null,
-        "name": "",
+        "card": {
+            "name": "",
+        },
         "powerstats": {
             "strength": null,
             "intelligence": null,
