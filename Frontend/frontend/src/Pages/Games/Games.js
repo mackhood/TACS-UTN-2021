@@ -44,10 +44,6 @@ export default function Games() {
         history.push('/games/' + id);
     }
 
-    function navigateToStats() {
-        history.push('/games/stats');
-    }
-
     return (
         <div className={classes.layout}>
             <CreateGameDialog
@@ -67,19 +63,9 @@ export default function Games() {
                             <Grid container spacing={4} alignItems={"center"} alignContent={"center"}>
                                 <Grid item xs={12} sm={4}>
                                     <Button variant="contained" color="primary" onClick={() => {
-
                                         handleClickOpen();
                                     }}>
                                         Crear Partida
-                            </Button>
-                                </Grid>
-                                <Grid item xs={12} sm={4}>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={navigateToStats}
-                                    >
-                                        Ver Estadisticas
                                     </Button>
                                 </Grid>
                             </Grid>

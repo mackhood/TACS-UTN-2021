@@ -6,6 +6,7 @@ import {commonStyles} from "../../Resources/Styles";
 import Games from "./Games";
 import Game from "./Game";
 import {useRouteMatch} from "react-router";
+import {CollapsibleTable} from "./GameComponents/CollapsibleTable";
 
 export const UserGames = ()=>{
 
@@ -21,6 +22,9 @@ export const UserGames = ()=>{
                     </PrivateRoute>
                     <PrivateRoute exact path={`${path}/:id`}>
                         <Game/>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={`${path}/:id/duels`}>
+                        <CollapsibleTable/>
                     </PrivateRoute>
                 </Switch>
             </Grid>

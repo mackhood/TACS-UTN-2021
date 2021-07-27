@@ -1,6 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams, useRouteMatch} from "react-router-dom";
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Button from "@material-ui/core/Button";
@@ -14,10 +14,13 @@ import {ShuffleCardsButton} from "./GameComponents/ShuffleCards";
 import {usePlayGameTurn} from "./Domain/usePlayGameTurn";
 import {TurnResult} from "./GameComponents/TurnResult";
 import {NextTurnButton} from "./GameComponents/NextTurnButton";
+import {SeeDuels} from "./GameComponents/SeeDuels";
 
 
 export default function Game() {
     let {id} = useParams();
+    let {url} = useRouteMatch();
+    let history = useHistory();
     const [
         game,
         setGame,
@@ -34,8 +37,13 @@ export default function Game() {
         enableNextTurnButton,
     ] = usePlayGameTurn({id});
 
+
+
     function setAttribute(attr) {
         setCurrenDuel({...currentDuel, attribute: attr});
+    }
+    function navigateToDuelsTable() {
+        history.push(url + '/duels');
     }
 
     return (
@@ -127,6 +135,7 @@ export default function Game() {
                             <CardsWonLabel sessionUser={sessionUser}/>
                             <br/>
                             <br/>
+                            <SeeDuels navigate={navigateToDuelsTable}/>
                         </Container>
                     </Grid>
                     <Grid item xs={12}>

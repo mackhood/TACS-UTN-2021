@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
 export function SeeDuels(props) {
+    const {navigate} = props;
     return <Box component="span" display="block" bgcolor="green" height="500">
         <Typography gutterBottom variant="h4" component="h2">
             DUELOS
@@ -13,7 +14,7 @@ export function SeeDuels(props) {
         <Grid container alignItems={"center"} alignContent={"center"} justify="center">
             <Box component="span" display="block" bgcolor="orange" width="75%">
                 <Grid item xs={12}>
-                    <Button variant="contained" onClick={props.onClick} color="primary"
+                    <Button variant="contained" onClick={navigate} color="primary"
                             size="large" fullWidth>
                         Ver duelos
                     </Button>

@@ -105,15 +105,12 @@ export const usePlayGameTurn = (props) => {
             //Si ya se jugó un duel
             if (oneDuel !== undefined){
                 var index=_.indexOf(game.duels,oneDuel);
-                console.log(index, 'indice del duelo');
                 //Si estamos en el último duel y la partida no terminó habilito el nextButton
                 if (index === game.duels.length-1) {
                     const lastTurn = _.last(game.duels);
-                    console.log(lastTurn && lastTurn.result && game.state === "FINISHED", 'Ultimo duel y no termino partida');
                     setEnableNextTurnButton(lastTurn && lastTurn.result && game.state !== "FINISHED");
                 }else{
                     //Si tenemos duels siguientes al actual habilito el nextButton
-                    console.log(index < game.duels.length-1, 'Tengo duels por delante')
                     setEnableNextTurnButton(index < game.duels.length-1);
                 }
             }
@@ -218,8 +215,6 @@ export const usePlayGameTurn = (props) => {
             }else{
                 setCurrentDuel(NEW_TURN);
             }
-        }else{
-            console.log("Turno actual en juego, no puedo crear siguiente");
         }
     }
     const handleRepartirCartas = () => {
