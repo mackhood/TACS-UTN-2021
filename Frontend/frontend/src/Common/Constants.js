@@ -28,58 +28,36 @@ export const REACT_APP_REST_API_URL =
         process.env.REACT_APP_REST_API_URL:
         'http://localhost:8080';
 
-const TURNO = {
+export const NEW_TURN = {
     "creatorCard": {
-        "id": 4,
-        "name": "Abomination",
+        "id": null,
+        "name": "",
         "powerstats": {
-            "strength": 80,
-            "intelligence": 63,
-            "speed": 53,
-            "durability": 90,
-            "power": 62,
-            "combat": 95
+            "strength": null,
+            "intelligence": null,
+            "speed": null,
+            "durability": null,
+            "power": null,
+            "combat": null
         }
     },
     "challengedCard": {
-        "id": 1,
-        "name": "A-Bomb",
+        "id": null,
+        "name": "",
         "powerstats": {
-            "strength": 100,
-            "intelligence": 38,
-            "speed": 17,
-            "durability": 80,
-            "power": 24,
-            "combat": 64
+            "strength": null,
+            "intelligence": null,
+            "speed": null,
+            "durability": null,
+            "power": null,
+            "combat": null
         }
-    },
-    "attribute": null,
-    "result": null,
-    "turnUsername": "player"
-};
 
-const GAME =
-    {
-        "game": {
-            "id": 1,
-            "creator": {
-                "username": "test",
-                "mainCards": 1,
-                "gainedCards": 0,
-                "isMyTurn": "false"
-            },
-            "challenged": {
-                "username": "player",
-                "mainCards": 1,
-                "gainedCards": 0,
-                "isMyTurn": "true"
-            },
-            "deckName": "Nuevo mazo",
-            "actualNumberCards": 2,
-            "state": "INPROGRESS",
-            "stateCode": 1
-        },
-        "duels": [
-            []
-        ]
-    };
+    },
+    "attribute": "Elegir atributo",
+    "result": {
+        "winner": null,
+        "result": null
+    },
+    "id": null
+};

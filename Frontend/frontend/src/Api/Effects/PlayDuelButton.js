@@ -11,7 +11,7 @@ export const PlayDuelButton = (props) => {
 
     async function fetchGameData(data) {
         try{
-            return await CommonService.getSingleGame({id: data.game.id});
+            return await CommonService.getSingleGame({id: data.gameId});
         }catch (e) {
             console.log(e, 'err');
         }
@@ -22,11 +22,18 @@ export const PlayDuelButton = (props) => {
             attribute: data.attribute
         })
         .then(response => {
-            fetchGameData({game:data.game, duel: response.data, id: data.game.id})
+            fetchGameData({gameId: data.game.id})
                 .then((res) => {
                     let newDuels =  game.duels || [];
                     newDuels = _.union(newDuels, [response.data]);
-                    setGame({...game, duels: newDuels, ...res.data});
+                    setGame({
+                        ...game,
+                        duels: newDuels,
+                        state: res.data.state,
+                        stateCode: res.data.stateCode,
+                        creator: res.data.creator,
+                        challenged: res.data.challenged
+                    });
                 });
             setNotify({isOpen:true, message:'¡Duelo exitoso!', type:'success', duration: 3000})
         })

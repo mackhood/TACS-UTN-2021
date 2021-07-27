@@ -41,7 +41,7 @@ export default function Games() {
     };
 
     function navigateToDuels(id) {
-        history.push('/games/' + id + '/duels');
+        history.push('/games/' + id);
     }
 
     function navigateToStats() {
