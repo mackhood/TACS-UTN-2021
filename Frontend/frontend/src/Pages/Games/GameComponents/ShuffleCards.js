@@ -25,9 +25,9 @@ export function ShuffleCardsButton(props) {
                     </Button>
                 </Grid>
             </Box>
-            <br></br>
-            <br></br>
-            <br></br>
+            <br/>
+            <br/>
+            <br/>
         </Grid>
     </Box>;
 }

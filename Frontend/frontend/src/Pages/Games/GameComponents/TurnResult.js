@@ -12,8 +12,8 @@ export const TurnResult= (props) => {
         <Typography gutterBottom variant="h5" component="h2">
             {(result && result.result !== "DRAW") ? 'Ganador: ' + result.winner : "Empate"}
         </Typography>
-        <br></br>
-        <br></br>
+        <br/>
+        <br/>
     </Box>);
 }
 

@@ -19,9 +19,9 @@ export function SeeDuels(props) {
                     </Button>
                 </Grid>
             </Box>
-            <br></br>
-            <br></br>
-            <br></br>
+            <br/>
+            <br/>
+            <br/>
         </Grid>
     </Box>;
 }

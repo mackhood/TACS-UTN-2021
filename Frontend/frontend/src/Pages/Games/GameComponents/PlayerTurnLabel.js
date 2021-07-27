@@ -13,8 +13,8 @@ export function PlayersTurnLabel(props) {
             {props.jugadorTurno}
         </Typography>
         <DropGameButton game={props.game}/>
-        <br></br>
-        <br></br>
+        <br/>
+        <br/>
     </Box>;
 }
 

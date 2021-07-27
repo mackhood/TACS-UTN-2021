@@ -39,7 +39,7 @@ export default function GameWithButtons(props) {
                     <Typography gutterBottom variant="h5" component="h2">
                             { game.gameStatus }
                         </Typography>
-                        <br></br>
+                        <br/>
                         <Typography gutterBottom>
                             Partida: { game.id }          
                         </Typography>
