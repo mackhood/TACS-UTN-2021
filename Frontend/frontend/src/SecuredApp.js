@@ -6,7 +6,6 @@ import Administration from "./Pages/Administration/Administration";
 import {AppContext} from "./Common/AppContext";
 import * as _ from 'lodash';
 import AdminService from "./Api/AdminService";
-import {Stats} from "./Pages/Administration/Stats";
 
 export const SecuredApp = () => {
 
@@ -43,9 +42,6 @@ export const SecuredApp = () => {
             </Route>
             <Route path="/admin/decks">
                 <Administration />
-            </Route>
-            <Route path="/admin/stats">
-                <Stats />
             </Route>
         </Switch>
     )
