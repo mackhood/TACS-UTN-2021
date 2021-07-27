@@ -238,37 +238,72 @@ export const usePlayGameTurn = (props) => {
         if (game.game.actualNumberCards > 0){
             setLoading(true);
             fetchNextCard().then((response)=>{
-                setCurrentDuel(
-                    {
-                        ...currentDuel,
-                        creatorCard:{
-                            card: {
-                                name: response.data.name
+                if (sessionUser.username === game.game.creator.username){
+                    setCurrentDuel(
+                        {
+                            ...currentDuel,
+                            creatorCard:{
+                                card: {
+                                    name: response.data.name
+                                },
+                                powerstats: {
+                                    "strength": response.data.strength,
+                                    "intelligence": response.data.intelligence,
+                                    "speed": response.data.speed,
+                                    "durability": response.data.durability,
+                                    "power": response.data.power,
+                                    "combat": response.data.combat
+                                }
                             },
-                            powerstats: {
-                                "strength": response.data.strength,
-                                "intelligence": response.data.intelligence,
-                                "speed": response.data.speed,
-                                "durability": response.data.durability,
-                                "power": response.data.power,
-                                "combat": response.data.combat
-                            }
-                        },
-                        challengedCard: {
-                            card: {
-                                name: "??"
-                            },
-                            powerstats: {
-                                "strength": "??",
-                                "intelligence": "??",
-                                "speed": "??",
-                                "durability": "??",
-                                "power": "??",
-                                "combat": "??"
+                            challengedCard: {
+                                card: {
+                                    name: "??"
+                                },
+                                powerstats: {
+                                    "strength": "??",
+                                    "intelligence": "??",
+                                    "speed": "??",
+                                    "durability": "??",
+                                    "power": "??",
+                                    "combat": "??"
+                                }
                             }
                         }
-                    }
-                );
+                    );
+                }else{
+                    setCurrentDuel(
+                        {
+                            ...currentDuel,
+                            challengedCard:{
+                                card: {
+                                    name: response.data.name
+                                },
+                                powerstats: {
+                                    "strength": response.data.strength,
+                                    "intelligence": response.data.intelligence,
+                                    "speed": response.data.speed,
+                                    "durability": response.data.durability,
+                                    "power": response.data.power,
+                                    "combat": response.data.combat
+                                }
+                            },
+                            creatorCard: {
+                                card: {
+                                    name: "??"
+                                },
+                                powerstats: {
+                                    "strength": "??",
+                                    "intelligence": "??",
+                                    "speed": "??",
+                                    "durability": "??",
+                                    "power": "??",
+                                    "combat": "??"
+                                }
+                            }
+                        }
+                    );
+                }
+
             }).catch((err) => console.log(err)).then(() =>setLoading(false));
 
             setShowCards(true);
