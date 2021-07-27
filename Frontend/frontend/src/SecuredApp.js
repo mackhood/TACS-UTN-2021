@@ -16,6 +16,9 @@ export const SecuredApp = () => {
     const heroeCardIsValid = (card) => {
         return _.values(card).every((attr) => attr !== null)
     }
+    function userBelongsToGame(game) {
+        return game.creator.username === auth.user.username || game.challenged.username === auth.user.username || auth.user.username === "admin" ;
+    }
 
     useEffect(() => {
         async function fetchData() {
@@ -28,7 +31,8 @@ export const SecuredApp = () => {
                 const deckResponse = await AdminService.getDecks();
                 dispatch({ type: "LOAD_DECKS", payload: deckResponse.data.data });
                 const gamesResponse = await CommonService.getGames();
-                dispatch({ type: "LOAD_GAMES", payload: gamesResponse.data.data });
+                let filteredGames = _.filter(gamesResponse.data.data, userBelongsToGame);
+                dispatch({ type: "LOAD_GAMES", payload: filteredGames });
                 await auth.fetchUserRoles();
             } catch (e) {
                 console.log(e, 'err cards');

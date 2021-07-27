@@ -34,8 +34,6 @@ export const reducer = (state, action) => {
         return {...state, games: newGames}
     }
 
-    //TODO que devuelve terminar la partida?
-
     if (action.type === "END_GAME"){
         let newGames = _.map(state.games, function (elem) {
             return elem.id === action.payload.id ? {...elem, state: action.payload.state} : elem;
@@ -53,7 +51,9 @@ export const reducer = (state, action) => {
     if (action.type === "LOAD_DECKS"){
         return {...state, decks: action.payload}
     }
+
     if (action.type === "LOAD_GAMES"){
+
         return {...state, games: action.payload}
     }
 }
