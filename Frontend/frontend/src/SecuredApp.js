@@ -12,13 +12,15 @@ export const SecuredApp = () => {
 
     const { dispatch } = useContext(AppContext);
 
+    const heroeCardIsValid = (card) => {
+        return _.values(card).every((attr) => attr !== null)
+    }
+
     useEffect(() => {
-        //TODO refactor: hacer un Promise.all()
         async function fetchData() {
             try {
                 const cardResponse = await CommonService.getCards();
-                //TODO me quedo los primeros 6 que son válidos. Esto tenemos que arreglarlo desde el back
-                let validHeroes = _.take(cardResponse.data.data, 6);
+                let validHeroes = _.filter(cardResponse.data.data, (card)=>heroeCardIsValid(card));
                 dispatch({ type: "LOAD_CARDS", payload: validHeroes });
                 const userResponse = await AdminService.getUsers();
                 dispatch({ type: "LOAD_USERS", payload: userResponse.data.data });

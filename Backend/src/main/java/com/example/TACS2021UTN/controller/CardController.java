@@ -29,7 +29,7 @@ public class CardController extends BaseController{
 
     @GetMapping("/cards")
     public ResponseEntity<JSONWrapper> getAllCards(@RequestParam(defaultValue = "0") Integer page,
-                                                   @RequestParam(defaultValue = "4") Integer size){
+                                                   @RequestParam(defaultValue = "30") Integer size){
 
         Pageable paging = PageRequest.of(page, getPageSize(size));
 
