@@ -3,23 +3,6 @@ networks:
   tacs:
 
 services:
-    frontend:
-      image: node:10
-      container_name: frontend
-#      volumes:
-#        - /frontend/src:/app/src
-      ports:
-        - '3001:3000'
-      build:
-        context: ./Frontend
-        dockerfile: ./Dockerfile
-      networks:
-        tacs:
-      environment:
-        REACT_APP_LOGIN_REST_API_URL: backend
-        REACT_APP_DECK_REST_API_URL: backend/decks
-        REACT_APP_CARD_REST_API_URL: backend/cards
-
     backend:
       image: openjdk:8-jdk-alpine
       container_name: backend
