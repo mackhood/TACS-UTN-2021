@@ -1,15 +1,29 @@
 # TACS-UTN-2021
 
 ## ¿Cómo levantar el TP?
-Desde el directorio raiz, ejecutar el comando
+
+### Docker: Backend + db 
 
 `$ docker-compose up --build -d`
 
-#####Para buildear y levantar backend y base de datos. 
+Al ejecutar este comando, se buildea el backend + la base de datos y queda accesible por su ip publica. Se puede acceder a la ip publica mediante el comando
 
-#####Para builder el .jar del backend:
+`docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container_name_or_id
+`
 
-mvn package  -DskipTests=true
+Luego desde el explorador o postman:
+
+`ip_publica:8080`
+
+### Entorno local sin Docker
+
+En el directorio raiz del proyecto se encuentra el script `startup.sh` inicia tanto el backend en el puerto 8080, como el frontend en el puerto 3000.
+Para conectarse a la base de datos mysql, configurar `spring.datasource.url` a gusto. Puede ser mysql local en una computadora, o el link a la instancia de ClearDB de Heroku que dejé configurada.
+
+Para matar los procesos que inicia este script:
+
+`lsof -t -i:3000` o bien `lsof -t -i:8080` para obtener los respectivos PIDs y luego
+`kill -9 PID` para matar el proceso que ocupa el puerto  
 
 ## Consigna
 
