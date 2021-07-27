@@ -11,7 +11,7 @@ export const DropGameButton = (props) => {
     const handleDropGame = () => {
         CommonService.dropGame(game.id)
             .then(res => {
-                dispatch({type:"END_GAME", payload: res.data});
+                dispatch({type:"END_GAME", payload: {id: game.id}});
                 setNotify({isOpen:true, message:'Juego finalizado', type:'success', duration: 3000});
             })
             .catch((err) => {
@@ -19,7 +19,7 @@ export const DropGameButton = (props) => {
             });
     }
     return (
-        <Button variant="contained" onClick={() => handleDropGame(game)} color="primary" size="medium">
+        <Button variant="contained" disabled={true} onClick={() => handleDropGame(game)} color="primary" size="medium">
             Abandonar Partida
         </Button>
     )

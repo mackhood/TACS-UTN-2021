@@ -31,7 +31,7 @@ class CommonService{
     }
 
     dropGame(gameId){
-        return apiAxiosInstance.post('/games/' + gameId, null);
+        return apiAxiosInstance.post('/games/' + gameId + '/dropouts', null);
     }
 
 }

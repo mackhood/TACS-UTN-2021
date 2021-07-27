@@ -54,17 +54,19 @@ export default function Game() {
                     <Grid item xs={12}>
                         {
                             currentDuel.result.result !== null &&
-                            <TurnResult
-                                turnNumber={currentDuel.id}
-                                result={currentDuel.result}/>
+                                <Container>
+                                    <TurnResult
+                                        turnNumber={currentDuel.id}
+                                        result={currentDuel.result}/>
+                                        <br/>
+                                </Container>
                         }
                     </Grid>
                     <Grid item xs={12} sm={4}>
                         <Container>
-
                             <PlayersTurnLabel
                                 jugadorTurno={jugadorTurno}
-                                game={game}
+                                game={game.game}
                             />
                             <br/>
                             <TurnAttributes strings={attributes} callbackfn={(attr, index) => {

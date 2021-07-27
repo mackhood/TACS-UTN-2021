@@ -36,7 +36,7 @@ export const reducer = (state, action) => {
 
     if (action.type === "END_GAME"){
         let newGames = _.map(state.games, function (elem) {
-            return elem.id === action.payload.id ? {...elem, state: action.payload.state} : elem;
+            return elem.id === action.payload.id ? {...elem, state: "FINISHED", stateCode: 2} : elem;
         });
         return {...state, games: newGames}
     }
