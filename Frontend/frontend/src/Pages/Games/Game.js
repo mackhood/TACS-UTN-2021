@@ -143,10 +143,6 @@ export default function Game() {
                             <SeeDuels navigate={navigateToDuelsTable}/>
                         </Container>
                     </Grid>
-                    <Grid item xs={12}>
-                        <pre>{JSON.stringify(game, null, 2)}</pre>
-                        <pre>{JSON.stringify(currentDuel, null, 2)}</pre>
-                    </Grid>
                 </Grid>
             </div>
         )
