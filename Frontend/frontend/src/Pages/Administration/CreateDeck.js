@@ -31,7 +31,7 @@ export const CreateDeck = (props) => {
         setHeroeList(state.heroes);
     }
     function newDeckIsValid() {
-        return deckName.length > 0 && newDeckCardList.length > 0 && !deckNames.includes(deckName);
+        return deckName.length > 0 && newDeckCardList.length > 0 && !deckNames.includes(deckName) && newDeckCardList.length % 2 === 0;
     }
 
     useEffect(() => {
