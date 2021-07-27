@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3'
 networks:
   tacs:
 
@@ -14,10 +14,12 @@ services:
         DB_NAME: tacs_db
         DB_USER: root
         DB_USER_PASSWORD: root
-        SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb
-        API_SUPERHERO_URL: https://superheroapi.com/api/${SUPERHERO_TOKEN}/
-      ports:
-        - '8087:8080'
+        API_SUPERHERO_URL: https://superheroapi.com/api/4309521039059601/
+        CLEARDB_DATABASE_URL: jdbc:mysql://tacs_db:3306/tacs_db?createDatabaseIfNotExist=true
+#        CLEARDB_DATABASE_URL: jdbc:mysql://localhost:3306/tacs_db?createDatabaseIfNotExist=true
+      depends_on:
+        - tacs_db
+      restart: unless-stopped
       networks:
         tacs:
 
@@ -25,17 +27,13 @@ services:
       image: mysql:8.0
       command: --default-authentication-plugin=mysql_native_password
       container_name: tacs_db
-      ports: ["3307:3306"]
+      ports:
+        - 3306:3306
       restart: always
       environment:
         MYSQL_DATABASE: tacs_db
-        MYSQL_USER: "tacs"
-        MYSQL_PASSWORD: "tacs"
+        MYSQL_USER: tacs
+        MYSQL_PASSWORD: tacs
         MYSQL_ROOT_PASSWORD: root
-      #    volumes:
-      #    Si queremos levantar la DB partiendo de un script
-      #      - ./db/:/docker-entrypoint-initdb.d/
-      #    Si queremos guardar el estado de la DB tenemos que crear un volumen para mappearlo con un directorio del host
-      #      - ./db/mysql:/var/lib/mysql
       networks:
         tacs:

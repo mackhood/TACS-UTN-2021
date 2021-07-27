@@ -23,11 +23,11 @@ export const SecuredApp = () => {
     useEffect(() => {
         async function fetchData() {
             try {
+                const userResponse = await AdminService.getUsers();
+                dispatch({ type: "LOAD_USERS", payload: userResponse.data.data });
                 const cardResponse = await CommonService.getCards();
                 let validHeroes = _.filter(cardResponse.data.data, (card)=>heroeCardIsValid(card));
                 dispatch({ type: "LOAD_CARDS", payload: validHeroes });
-                const userResponse = await AdminService.getUsers();
-                dispatch({ type: "LOAD_USERS", payload: userResponse.data.data });
                 const deckResponse = await AdminService.getDecks();
                 dispatch({ type: "LOAD_DECKS", payload: deckResponse.data.data });
                 const gamesResponse = await CommonService.getGames();
