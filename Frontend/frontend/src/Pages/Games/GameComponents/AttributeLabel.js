@@ -4,12 +4,13 @@ import * as PropTypes from "prop-types";
 import React from "react";
 
 export function AttributeLabel(props) {
+    const {atributoEnJuego} = props;
     return <Box component="span" display="block" bgcolor="green">
         <Typography gutterBottom variant="h4" component="h2">
             Atributo:
         </Typography>
         <Typography gutterBottom variant="h5" component="h2">
-            {!props.enableGame ? "Aguarda tu turno" : props.atributoEnJuego}
+            {atributoEnJuego}
         </Typography>
     </Box>;
 }

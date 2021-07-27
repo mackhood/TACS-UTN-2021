@@ -4,10 +4,10 @@ import * as PropTypes from "prop-types";
 import React from "react";
 
 export const TurnResult= (props) => {
-    const {result} = props;
+    const {turnNumber, result} = props;
     return (result !== null && <Box component="span" display="block" bgcolor="green">
         <Typography gutterBottom variant="h4" component="h2">
-            Resultado del turno
+            Resultado del turno #{turnNumber}
         </Typography>
         <Typography gutterBottom variant="h5" component="h2">
             {(result && result.result !== "DRAW") ? 'Ganador: ' + result.winner : "Empate"}
