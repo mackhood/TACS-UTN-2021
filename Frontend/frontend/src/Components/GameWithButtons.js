@@ -37,7 +37,7 @@ export default function GameWithButtons(props) {
                 <CardContent>                    
                     <div>
                     <Typography gutterBottom variant="h5" component="h2">
-                            { game.gameStatus }
+                            { game.status }
                         </Typography>
                         <br/>
                         <Typography gutterBottom>
