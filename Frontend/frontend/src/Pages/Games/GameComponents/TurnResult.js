@@ -4,16 +4,28 @@ import * as PropTypes from "prop-types";
 import React from "react";
 
 export const TurnResult= (props) => {
-    const {turnNumber, result} = props;
-    return (result !== null && <Box component="span" display="block" bgcolor="green">
-        <Typography gutterBottom variant="h4" component="h2">
-            Resultado del turno #{turnNumber}
-        </Typography>
-        <Typography gutterBottom variant="h5" component="h2">
-            {(result && result.result !== "DRAW") ? 'Ganador: ' + result.winner : "Empate"}
-        </Typography>
-        <br/>
-        <br/>
+    const {turnNumber, result, jugadorTurno, winnerUsername} = props;
+    return (result !== null &&
+        <Box component="span" display="block" bgcolor="green">
+            {jugadorTurno === "Partido finalizado" && (
+                <>
+                    <Typography gutterBottom variant="h4" component="h2">
+                        Partida finalizada
+                    </Typography>
+                    <Typography gutterBottom variant="h5" component="h2">
+                        Usuario ganador: {winnerUsername}
+                    </Typography>
+                </>
+            )}
+            <br/>
+            <Typography gutterBottom variant="h4" component="h2">
+                Resultado del turno #{turnNumber}
+            </Typography>
+            <Typography gutterBottom variant="h5" component="h2">
+                {(result && result.result !== "DRAW") ? 'Ganador: ' + result.winner : "Empate"}
+            </Typography>
+
+            <br/>
     </Box>);
 }
 

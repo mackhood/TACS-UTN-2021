@@ -35,6 +35,7 @@ export default function Game() {
         attributes,
         getNextTurn,
         enableNextTurnButton,
+        winnerUsername
     ] = usePlayGameTurn({id});
 
 
@@ -57,6 +58,8 @@ export default function Game() {
                                 <Container>
                                     <TurnResult
                                         turnNumber={currentDuel.id}
+                                        jugadorTurno={jugadorTurno}
+                                        winnerUsername={winnerUsername}
                                         result={currentDuel.result}/>
                                         <br/>
                                 </Container>

@@ -18,6 +18,7 @@ export const usePlayGameTurn = (props) => {
     const [loading, setLoading] = useState(true);
     const [showCards, setShowCards] = useState(false);
     const [currentDuel, setCurrentDuel] = useState(null);
+    const [winnerUsername, setWinnerUsername] = useState("");
     const attributes = ["intelligence", "strength", "speed", "durability", "power", "combat"];
 
     /**
@@ -94,6 +95,18 @@ export const usePlayGameTurn = (props) => {
                 setCurrentDuel(NEW_TURN);
             }
         }
+
+        if (game !== null){
+            if (game.game.creator.gainedCards > game.game.challenged.gainedCards) {
+                setWinnerUsername(game.game.creator.username);
+            }else{
+                if (game.game.creator.gainedCards === game.game.challenged.gainedCards){
+                    setWinnerUsername("EMPATE");
+                }else{
+                    setWinnerUsername(game.game.challenged.username);
+                }
+            }
+        }
     }, [game]);
 
     /**
@@ -165,6 +178,7 @@ export const usePlayGameTurn = (props) => {
         if (game.game.challenged.isMyTurn === "true") return game.game.challenged.username;
         return "Partido finalizado";
     }
+
 
     /**
      * Busco turno siguiente y lo seteo o creo uno nuevo si no habia
@@ -275,6 +289,7 @@ export const usePlayGameTurn = (props) => {
         attributes,
         getNextTurn,
         enableNextTurnButton,
+        winnerUsername
     ];
 
 }
