@@ -14,7 +14,7 @@ public class CardWorker {
 
     private ICardRepository cardRepository;
     private Integer callsTillWait = 5; //TODO configurable
-    private Integer maxCards = 20; //Por ahora para la entrega 3 tener cartas, voy a buscar solo las 20 primeras cartas
+    private Integer maxCards = 30; //Por ahora para la entrega 3 tener cartas, voy a buscar solo las 20 primeras cartas
     private Long waitingSeconds = 2L; //TODO Configurable
     private ModelMapper modelMapper;
 
