@@ -27,6 +27,10 @@ class AdminService{
     getUsers(){
         return apiAxiosInstance.get('/users');
     }
+
+    getUserData(username){
+        return apiAxiosInstance.get('/users/' + username);
+    }
     
 }
 

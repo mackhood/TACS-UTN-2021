@@ -3,6 +3,7 @@ import {authContext} from './AuthContext'
 import LoginService from "../Api/LoginService";
 import {NotifyContext} from "../Common/NotifyContextProvider";
 import {apiAxiosInstance} from "../Api/Axios";
+import AdminService from "../Api/AdminService";
 
 export function ProvideAuth({ children }) {
     const auth = useProvideAuth();
@@ -19,6 +20,13 @@ function useProvideAuth() {
     const {setNotify} = useContext(NotifyContext);
     const setUserData = (userData) => {
         setUser(userData);
+    }
+
+    const fetchUserRoles = async () =>{
+        return await AdminService.getUserData(user.username)
+            .then(response => {
+                setUserData({...user, rol: response.data.roles[0]});
+            });
     }
 
     const login = async user => {
@@ -58,7 +66,8 @@ function useProvideAuth() {
         login,
         signout,
         register,
-        setUserData
+        setUserData,
+        fetchUserRoles
     };
 
 }

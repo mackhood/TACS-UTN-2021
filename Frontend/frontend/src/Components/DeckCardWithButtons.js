@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {DeleteDeckButton} from "../Api/Effects/DeleteDeckButton";
 import {ConfirmProvider} from "material-ui-confirm";
+import {useAuth} from "../Auth/useAuth";
 
 const useStyles = makeStyles({
     root: {
@@ -21,6 +22,7 @@ const useStyles = makeStyles({
 
 export default function DeckCardWithButtons(props) {
     const classes = useStyles();
+    let auth = useAuth();
 
     const {deck, navigateToUpdate, navigateToDeckView} = props;
     return (
@@ -41,14 +43,20 @@ export default function DeckCardWithButtons(props) {
                 <Button size="small" color="primary" onClick={() => navigateToDeckView(deck.id)}>
                     Ver
                 </Button>
-                <Button size="small" color="primary" onClick={() => navigateToUpdate(deck.id)}>
-                    Modificar
-                </Button>
-                <ConfirmProvider>
-                    <DeleteDeckButton
-                        deckId={deck.id}
-                    />
-                </ConfirmProvider>
+                {auth.user.rol && auth.user.rol.name === "ADMIN" &&
+                    (
+                        <>
+                            <Button size="small" color="primary" onClick={() => navigateToUpdate(deck.id)}>
+                                Modificar
+                            </Button>
+                            <ConfirmProvider>
+                                <DeleteDeckButton
+                                    deckId={deck.id}
+                                />
+                            </ConfirmProvider>
+                        </>
+                    )
+                }
 
 
             </CardActions>

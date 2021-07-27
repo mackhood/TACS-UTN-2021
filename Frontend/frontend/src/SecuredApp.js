@@ -6,10 +6,12 @@ import Administration from "./Pages/Administration/Administration";
 import {AppContext} from "./Common/AppContext";
 import * as _ from 'lodash';
 import AdminService from "./Api/AdminService";
+import {useAuth} from "./Auth/useAuth";
 
 export const SecuredApp = () => {
 
     const { dispatch } = useContext(AppContext);
+    let auth = useAuth();
 
     const heroeCardIsValid = (card) => {
         return _.values(card).every((attr) => attr !== null)
@@ -27,6 +29,7 @@ export const SecuredApp = () => {
                 dispatch({ type: "LOAD_DECKS", payload: deckResponse.data.data });
                 const gamesResponse = await CommonService.getGames();
                 dispatch({ type: "LOAD_GAMES", payload: gamesResponse.data.data });
+                await auth.fetchUserRoles();
             } catch (e) {
                 console.log(e, 'err cards');
             }

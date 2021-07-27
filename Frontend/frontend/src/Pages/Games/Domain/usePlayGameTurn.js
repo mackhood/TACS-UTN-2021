@@ -91,6 +91,8 @@ export const usePlayGameTurn = (props) => {
                         result: lastTurn.result
                     }
                 );
+            }else{
+                setCurrentDuel(NEW_TURN);
             }
         }
     }, [game]);
@@ -123,8 +125,8 @@ export const usePlayGameTurn = (props) => {
      * Cuando está cargando el game o el sessionUser loading = true
      */
     useEffect(() => {
-        setLoading(game === null || sessionUser === null);
-    }, [game, sessionUser]);
+        setLoading(game === null || sessionUser === null || currentDuel === null);
+    }, [game, sessionUser, currentDuel]);
 
     /**
      * Fetch & load game data

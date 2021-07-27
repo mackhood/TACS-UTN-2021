@@ -17,7 +17,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
 import GamesIcon from '@material-ui/icons/Games';
-import BarChart from '@material-ui/icons/BarChart';
 import {Link, useHistory} from "react-router-dom";
 import {useAuth} from "../Auth/useAuth";
 import Button from "@material-ui/core/Button";
@@ -164,22 +163,19 @@ export default function PersistentDrawerLeft() {
                                     <ListItemText primary="Mis partidas"/>
                                 </ListItem>
                             </Link>
+                            {auth.user.rol && auth.user.rol.name === "ADMIN" &&
+                            (
+                                <Link to="/admin/decks/create">
+                                    <ListItem button>
+                                        <ListItemIcon><MailIcon/></ListItemIcon>
+                                        <ListItemText primary="Crear Mazo"/>
+                                    </ListItem>
+                                </Link>
+                            )}
                             <Link to="/admin/decks">
                                 <ListItem button>
                                     <ListItemIcon><MailIcon/></ListItemIcon>
                                     <ListItemText primary="Mazos"/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/admin/decks/create">
-                                <ListItem button>
-                                    <ListItemIcon><MailIcon/></ListItemIcon>
-                                    <ListItemText primary="Crear Mazo"/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/admin/stats">
-                                <ListItem button>
-                                    <ListItemIcon><BarChart/></ListItemIcon>
-                                    <ListItemText primary="Stats"/>
                                 </ListItem>
                             </Link>
                         </>
