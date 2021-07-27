@@ -10,6 +10,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -23,6 +25,7 @@ public class JwtTokenProvider {
     private final String HEADER = "Authorization";
     private final String PREFIX = "Bearer ";
     private final String SECRET = "mySecretKey";
+    private final Integer minutesTillExpiration = 1440; //1 day, should be in config file
 
     public String doGenerateToken(User user) {
 
@@ -32,10 +35,14 @@ public class JwtTokenProvider {
             authorities.add("ROLE_" + role.getName());
         claims.put("authorities", authorities);
 
+        Instant issuedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        Instant expiration = issuedAt.plus(minutesTillExpiration, ChronoUnit.MINUTES);
+
+
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 600000))
+                .setIssuedAt(Date.from(issuedAt))
+                .setExpiration(Date.from(expiration))
                 .signWith(SignatureAlgorithm.HS256, SECRET.getBytes())
                 .compact();
     }

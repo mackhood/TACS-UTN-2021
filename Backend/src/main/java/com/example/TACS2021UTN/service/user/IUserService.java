@@ -9,6 +9,7 @@ import com.example.TACS2021UTN.DTO.request.UserRegisterRequestDTO;
 import com.example.TACS2021UTN.exceptions.CardNotFoundException;
 import com.example.TACS2021UTN.exceptions.UserAlreadyExistsException;
 import com.example.TACS2021UTN.models.user.User;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -16,5 +17,5 @@ public interface IUserService {
     TokenDTO authenticate(LoginRequestDTO loginRequestDTO);
     UserDTO findByUserName(String username);
     void save(UserRegisterRequestDTO user) throws UserAlreadyExistsException;
-    List<UserSearchDTO> findAllMatchingUsername(String username, Integer page);
+    List<UserSearchDTO> findAllMatchingUsername(String username, Pageable paging);
 }

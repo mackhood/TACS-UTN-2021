@@ -5,10 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DuelResult {
+@Entity
+public class DuelResult extends PersistantEntity{
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User winner;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "result")
     private EResult result;
 }

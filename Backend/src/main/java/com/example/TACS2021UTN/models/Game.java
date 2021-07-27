@@ -12,7 +12,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.Authentication;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,13 +24,21 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class Game extends PersistantEntity {
 
+    @OneToOne(cascade=CascadeType.ALL)
     private PlayerGame creator;
+    @OneToOne(cascade=CascadeType.ALL)
     private PlayerGame challenged;
+    @OneToOne(cascade=CascadeType.ALL)
     private Deck deck;
+    @Column(name = "date_of_creation")
     private LocalDate dateOfCreation;
+    @OneToMany(cascade=CascadeType.ALL)
     private List<Duel> duels = new ArrayList<>();
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "state_id", referencedColumnName = "id")
     private State state;
 
     public Game(User creator, User challenged, Deck deck) {
@@ -108,5 +118,10 @@ public class Game extends PersistantEntity {
 
     public Boolean isUserTurn(User user){
         return getPlayerGameByUser(user).getIsMyTurn();
+    }
+
+    public Card getNextCardForPlayerTurn(User user){
+        return getPlayerGameByUser(user).getNextCard();
+
     }
 }

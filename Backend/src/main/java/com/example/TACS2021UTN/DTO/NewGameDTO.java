@@ -6,7 +6,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class NewGameDTO {
-    public String creatorUsername;
+    //public String creatorUsername;
     public String challengedUsername;
     public Long deckID;
+
 }

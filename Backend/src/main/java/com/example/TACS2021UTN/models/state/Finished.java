@@ -5,9 +5,22 @@ import com.example.TACS2021UTN.models.Duel;
 import com.example.TACS2021UTN.models.Game;
 import com.example.TACS2021UTN.models.attribute.Attribute;
 import com.example.TACS2021UTN.models.user.User;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Entity
+@DiscriminatorValue("finished")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Finished extends State{
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User winner;
 
     public Finished(User player, Game game){
@@ -36,17 +49,7 @@ public class Finished extends State{
     }
 
     @Override
-    public String getName() {
-        return this.toString();
-    }
-
-    @Override
-    public Integer getStateCode() {
-        return State.FINISHED;
-    }
-
-    @Override
-    public String toString(){
-        return "FINISHED";
+    public EState getStateEnum() {
+        return EState.FINISHED;
     }
 }

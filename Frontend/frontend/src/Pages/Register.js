@@ -101,7 +101,6 @@ export default function RegisterForm() {
                     />
 
                 </form>
-                <pre>{JSON.stringify(user, null, 2)}</pre>
             </div>
             <Box mt={8}>
                 <Copyright />

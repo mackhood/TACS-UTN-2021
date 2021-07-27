@@ -9,8 +9,8 @@ import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.exceptions.DeckNotFoundException;
 import com.example.TACS2021UTN.repositories.card.ICardRepository;
 import com.example.TACS2021UTN.repositories.deck.IDeckRepository;
-import com.example.TACS2021UTN.service.card.CardService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,8 +31,8 @@ public class DeckService implements IDeckService {
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
-    public List<DeckDTO> getAllDecks() {
-        List<Deck> decks = deckRepository.findAll();
+    public List<DeckDTO> getAllDecks(Pageable paging) {
+        List<Deck> decks = deckRepository.findAll(paging).toList();
         return decks.stream().map(deck -> modelMapper.map(deck, DeckDTO.class)).collect(Collectors.toList());
     }
 
@@ -48,8 +48,10 @@ public class DeckService implements IDeckService {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void deleteDeckbyId(Long id) {
-        if(!deckRepository.deleteById(id))
-            throw new NotFoundException("Deck not found with id: " + id);
+        Deck deckToDelete = deckRepository.findById(id).orElseThrow(() ->
+                new NotFoundException("Deck not found with id: " + id));
+
+        deckRepository.deleteById(deckToDelete.getId());
     }
 
     public Deck getDeckBy(Long deckId) throws DeckNotFoundException {
@@ -82,7 +84,7 @@ public class DeckService implements IDeckService {
                 );
         deck.setCardList(getCorrectCards(deckRequest));
         deck.setName(deckRequest.getName());
-        deckRepository.update(deck);
+        deckRepository.save(deck);
     }
 
     @Override

@@ -8,13 +8,12 @@ import {useHistory} from 'react-router-dom';
 import * as _ from 'lodash';
 import {UpdateDeckButton} from "../../Api/Effects/UpdateDeckButton";
 
-export const UpdateDeck = (props) => {
+export const UpdateDeck = () => {
 
     const [deckName, setDeckName] = useState("");
     const {state} = useContext(AppContext);
     const [heroeList, setHeroeList] = useState([]);
     const [newDeckCardList, setNewDeckCardList] = useState([]);
-    const {setNotify} = props;
     const [formIsValid, setFormIsValid] = useState(false);
     let history = useHistory();
     const [loading, setLoading] = useState(true);
@@ -49,7 +48,7 @@ export const UpdateDeck = (props) => {
         setNewDeckCardList([]);
     }
     function newDeckIsValid() {
-        return deckName.length > 0 && newDeckCardList.length > 0
+        return deckName.length > 0 && newDeckCardList.length > 0 && newDeckCardList.length % 2 === 0
     }
 
     useEffect(() => {
@@ -69,7 +68,6 @@ export const UpdateDeck = (props) => {
                     disabled={formIsValid}
                     deck={{id: parseInt(id), name: deckName, cardList: newDeckCardList}}
                     resetForm={resetForm}
-                    setNotify={setNotify}
                 />
                 <Grid item xs={12}>
                     <TextField

@@ -8,6 +8,8 @@ import com.example.TACS2021UTN.exceptions.CardNotFoundException;
 import com.example.TACS2021UTN.functions.JSONWrapper;
 import com.example.TACS2021UTN.models.Deck;
 import com.example.TACS2021UTN.service.deck.IDeckService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +22,7 @@ import java.util.List;
 
 @CrossOrigin(origins ="*",maxAge = 3600)
 @RestController
-public class DeckController {
+public class DeckController extends BaseController{
 
     private final IDeckService service;
 
@@ -31,9 +33,12 @@ public class DeckController {
 
     @GetMapping("/decks")
     //@PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<JSONWrapper>  getAllDecks()
+    public ResponseEntity<JSONWrapper>  getAllDecks(@RequestParam(defaultValue = "0") Integer page,
+                                                    @RequestParam(defaultValue = "10") Integer size)
     {
-        return ResponseEntity.ok(new JSONWrapper<>((List<DeckDTO>) service.getAllDecks()));
+        Pageable paging = PageRequest.of(page, getPageSize(size));
+
+        return ResponseEntity.ok(new JSONWrapper<>(service.getAllDecks(paging)));
     } //OK
 
     @GetMapping("/decks/{id}")
