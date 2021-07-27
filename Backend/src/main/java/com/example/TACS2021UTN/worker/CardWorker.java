@@ -3,7 +3,7 @@ package com.example.TACS2021UTN.worker;
 import com.example.TACS2021UTN.client.retrofit.superhero.SuperHeroApiService;
 import com.example.TACS2021UTN.client.retrofit.superhero.entities.SuperHero;
 import com.example.TACS2021UTN.models.Card;
-import com.example.TACS2021UTN.repositories.card.CardRepository;
+import com.example.TACS2021UTN.repositories.card.ICardRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -12,13 +12,13 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class CardWorker {
 
-    private CardRepository cardRepository;
+    private ICardRepository cardRepository;
     private Integer callsTillWait = 5; //TODO configurable
-    private Integer maxCards = 20; //Por ahora para la entrega 3 tener cartas, voy a buscar solo las 20 primeras cartas
+    private Integer maxCards = 30; //Por ahora para la entrega 3 tener cartas, voy a buscar solo las 20 primeras cartas
     private Long waitingSeconds = 2L; //TODO Configurable
     private ModelMapper modelMapper;
 
-    public CardWorker(CardRepository cardRepository, ModelMapper modelMapper){
+    public CardWorker(ICardRepository cardRepository, ModelMapper modelMapper){
         this.cardRepository = cardRepository;
         this.modelMapper = modelMapper;
     }

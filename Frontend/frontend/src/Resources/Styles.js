@@ -6,7 +6,7 @@ export const commonStyles = makeStyles((theme) => ({
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2),
         [theme.breakpoints.up(800 + theme.spacing(2) * 2)]: {
-            width: 800,
+            width: 1200,
             marginLeft: 'auto',
             marginRight: 'auto',
         },

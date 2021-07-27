@@ -7,11 +7,17 @@ import com.example.TACS2021UTN.models.Game;
 import com.example.TACS2021UTN.models.attribute.Attribute;
 import com.example.TACS2021UTN.models.user.PlayerGame;
 import com.example.TACS2021UTN.models.user.User;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+@Entity
+@DiscriminatorValue("created")
+@AllArgsConstructor
 public class Created extends State{
 
     public Created(Game game){
@@ -48,7 +54,7 @@ public class Created extends State{
     }
 
     private void dealCards(Game game){
-        List<List<Card>> partitions = game.getDeck().splitInNParts(2);
+        List<List<Card>> partitions = game.getDeck().divideDeck();
 
         List<PlayerGame> playerGames = new ArrayList<>();
         game.getCreator().setMainCards(partitions.get(0));
@@ -57,17 +63,7 @@ public class Created extends State{
     }
 
     @Override
-    public String getName() {
-        return this.toString();
-    }
-
-    @Override
-    public Integer getStateCode() {
-        return State.CREATED;
-    }
-
-    @Override
-    public String toString(){
-        return "CREATED";
+    public EState getStateEnum() {
+        return EState.CREATED;
     }
 }

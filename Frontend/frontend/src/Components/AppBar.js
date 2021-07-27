@@ -97,9 +97,9 @@ export default function PersistentDrawerLeft() {
     };
 
     const logout = () => {
-        auth.signout(() => {
+        auth.signout().then(() => {
             history.replace('/login');
-        })
+        });
     };
 
     function handleLogin() {
@@ -132,6 +132,9 @@ export default function PersistentDrawerLeft() {
                         (<Button onClick={logout}>Logout</Button>) :
                         (<Button onClick={handleLogin}>Login</Button>)
                     }
+                    {auth.user &&
+                        (<Typography>Usuario: {auth.user.username.toUpperCase()}</Typography>)
+                    }
 
 
                 </Toolbar>
@@ -160,16 +163,19 @@ export default function PersistentDrawerLeft() {
                                     <ListItemText primary="Mis partidas"/>
                                 </ListItem>
                             </Link>
+                            {auth.user.rol && auth.user.rol.name === "ADMIN" &&
+                            (
+                                <Link to="/admin/decks/create">
+                                    <ListItem button>
+                                        <ListItemIcon><MailIcon/></ListItemIcon>
+                                        <ListItemText primary="Crear Mazo"/>
+                                    </ListItem>
+                                </Link>
+                            )}
                             <Link to="/admin/decks">
                                 <ListItem button>
                                     <ListItemIcon><MailIcon/></ListItemIcon>
                                     <ListItemText primary="Mazos"/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/admin/decks/create">
-                                <ListItem button>
-                                    <ListItemIcon><MailIcon/></ListItemIcon>
-                                    <ListItemText primary="Crear Mazo"/>
                                 </ListItem>
                             </Link>
                         </>

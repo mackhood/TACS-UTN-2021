@@ -5,6 +5,7 @@ import {AppContext} from "../../Common/AppContext";
 import TransferList from "../../Components/TransferList";
 import {CreateDeckButton} from "../../Api/Effects/CreateDeckButton";
 import {DeckView} from "./DeckView";
+import * as _ from 'lodash';
 
 export const CreateDeck = (props) => {
 
@@ -12,8 +13,17 @@ export const CreateDeck = (props) => {
     const {state} = useContext(AppContext);
     const [heroeList, setHeroeList] = useState(state.heroes);
     const [newDeckCardList, setNewDeckCardList] = useState([]);
-    const {setNotify} = props;
     const [formIsValid, setFormIsValid] = useState(false);
+
+    const [deckNames, setDeckNames] = useState([]);
+
+    /**
+     * Obtengo lista de nombre de decks para validar duplicados
+     */
+    useEffect(() => {
+        let names = _.map(state.decks,(deck) => {return deck.name});
+        setDeckNames(names);
+    }, []);
 
     function resetForm() {
         setDeckName("");
@@ -21,7 +31,7 @@ export const CreateDeck = (props) => {
         setHeroeList(state.heroes);
     }
     function newDeckIsValid() {
-        return deckName.length > 0 && newDeckCardList.length > 0
+        return deckName.length > 0 && newDeckCardList.length > 0 && !deckNames.includes(deckName) && newDeckCardList.length % 2 === 0;
     }
 
     useEffect(() => {
@@ -39,7 +49,6 @@ export const CreateDeck = (props) => {
                 disabled={formIsValid}
                 deck={{name: deckName, cardList: newDeckCardList}}
                 resetForm={resetForm}
-                setNotify={setNotify}
             />
             <Grid item xs={12}>
                 <TextField

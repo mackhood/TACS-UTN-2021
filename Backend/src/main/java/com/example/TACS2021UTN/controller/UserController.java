@@ -8,6 +8,8 @@ import com.example.TACS2021UTN.functions.JSONWrapper;
 import com.example.TACS2021UTN.models.user.User;
 import com.example.TACS2021UTN.service.user.IUserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +19,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins ="*",maxAge = 3600)
 @RestController
-public class UserController {
+public class UserController extends BaseController{
 
     private final IUserService service;
     public UserController(IUserService service){
@@ -33,10 +35,14 @@ public class UserController {
     @GetMapping("/users")
     public ResponseEntity<JSONWrapper<UserSearchDTO>>getUsers(
             @RequestParam(name = "username",required = false, defaultValue = "") String username,
-            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "4") Integer size
+
     )
     {
-        return ResponseEntity.ok(new JSONWrapper<>(service.findAllMatchingUsername(username, page)));
+        Pageable paging = PageRequest.of(page, getPageSize(size));
+
+        return ResponseEntity.ok(new JSONWrapper<>(service.findAllMatchingUsername(username, paging)));
     }
 
     @PostMapping("/users")

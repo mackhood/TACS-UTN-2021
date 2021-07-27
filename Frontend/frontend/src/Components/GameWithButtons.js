@@ -33,14 +33,13 @@ export default function GameWithButtons(props) {
                         className={classes.media}
                         image="./finished.png"
                         title={game.name ? game.name : "Nombre" }
-                        objectFit= "cover"
                     />
                 <CardContent>                    
                     <div>
                     <Typography gutterBottom variant="h5" component="h2">
-                            { game.gameStatus }
+                            { game.status }
                         </Typography>
-                        <br></br>
+                        <br/>
                         <Typography gutterBottom>
                             Partida: { game.id }          
                         </Typography>
@@ -58,7 +57,7 @@ export default function GameWithButtons(props) {
             </CardActionArea>
             <CardActions>
                 {
-                    (game.state === "IN PROGRESS" || game.state === "CREATED") &&
+                    (game.state === "INPROGRESS" || game.state === "CREATED") &&
                         (
                             <>
                                 <Button size="small" color="primary" onClick={() => {continueGame(game.id)}}>
@@ -71,7 +70,7 @@ export default function GameWithButtons(props) {
                     )
                 }
                 {
-                    (game.gameStatus === "FINISHED") && (
+                    (game.state === "FINISHED") && (
                         <Button size="small" color="primary" onClick={() => {showGame(game)}}>
                             Ver
                         </Button>

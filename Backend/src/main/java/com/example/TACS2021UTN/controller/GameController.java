@@ -7,9 +7,12 @@ import com.example.TACS2021UTN.exceptions.UserWithoutTurnException;
 import com.example.TACS2021UTN.functions.DateAnalizer;
 import com.example.TACS2021UTN.functions.JSONWrapper;
 import com.example.TACS2021UTN.models.Duel;
+import com.example.TACS2021UTN.models.Game;
 import com.example.TACS2021UTN.models.user.PlayerGame;
 import com.example.TACS2021UTN.models.user.User;
 import com.example.TACS2021UTN.service.game.IGameService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +25,7 @@ import java.util.List;
 
 @CrossOrigin(origins ="*",maxAge = 3600)
 @RestController
-public class GameController {
+public class GameController extends BaseController{
 
     private final IGameService service;
 
@@ -33,7 +36,9 @@ public class GameController {
 
     @PostMapping("/games")
     public ResponseEntity<GameDTO> createNewGame(@RequestBody NewGameDTO gameDTO){
-        return ResponseEntity.status(201).body(service.createNewGame(gameDTO));
+        String creatorUsername = super.getAuthenticatedUsername();
+
+        return ResponseEntity.status(201).body(service.createNewGame(gameDTO, creatorUsername));
     }
 
     @PostMapping("/games/{id}/duels")
@@ -42,23 +47,28 @@ public class GameController {
         return ResponseEntity.status(201).body(service.generateDuel(id, user.getName(), duelRequestDTO));
     }
 
+    @GetMapping("/games/{id}/duels")
+    public ResponseEntity<?> showCardForDuel(@PathVariable Long id, Authentication user) {
+        return ResponseEntity.status(200).body(service.showCardForDuel(id, user.getName()));
+    }
 
     @GetMapping("/games/{id}")
     public ResponseEntity<GameDTO> getGame(@PathVariable Long id) {
+
         return ResponseEntity.ok(service.findById(id));
     }
 
     @GetMapping("/games")
-    public ResponseEntity<JSONWrapper> getAllGames(){
-        return ResponseEntity.ok(new JSONWrapper<>(service.getAllGames()));
-        //TODO devuelve el game suelto, sin id
+    public ResponseEntity<JSONWrapper> getAllGames(@RequestParam(defaultValue = "0") Integer page,
+                                                   @RequestParam(defaultValue = "10") Integer size){
+        Pageable paging = PageRequest.of(page, getPageSize(size));
+
+        return ResponseEntity.ok(new JSONWrapper<>(service.getAllGames(paging)));
     }
 
 
     @GetMapping("/games/{id}/replay")
     public ResponseEntity<JSONWrapper> getDuels(@PathVariable Long id) {
-
-
       return ResponseEntity.ok(new JSONWrapper<>(service.getAllDuels(id)));
     }
 
@@ -97,8 +107,6 @@ public class GameController {
         LocalDate dateFrom = DateAnalizer.transformStringToLocalDate(conditionByDateFrom);
         LocalDate dateTo = DateAnalizer.transformStringToLocalDate(conditionByDateTo);
 
-
-
         if(!DateAnalizer.validateOrderOfDatesInserted(dateFrom, dateTo)){
             throw new BadDatesInserted("The dateFrom is greater than the dateTo");
         }
@@ -114,5 +122,12 @@ public class GameController {
         return ResponseEntity.ok().build();
     }
 
+/*    @GetMapping("/games/{id}/cards")
+    public ResponseEntity getUserCards(@PathVariable(value = "id") Long id, Authentication user){
+        String username = super.getAuthenticatedUsername();
 
+        return service.getGameCards(id, username);
+    }
+
+ */
 }
