@@ -48,7 +48,7 @@ export const UpdateDeck = () => {
         setNewDeckCardList([]);
     }
     function newDeckIsValid() {
-        return deckName.length > 0 && newDeckCardList.length > 0
+        return deckName.length > 0 && newDeckCardList.length > 0 && newDeckCardList.length % 2 === 0
     }
 
     useEffect(() => {
